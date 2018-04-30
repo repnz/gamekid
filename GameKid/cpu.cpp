@@ -99,7 +99,7 @@ void cpu::rra()
 void cpu::rl_n(byte* val, const byte rotate)
 {
 	byte bitPlace = 1 << (8 - rotate);
-	carry_flag = ((*val &  bitPlace) == 0) ? 0 : 1;
+	carry_flag = (*val &  bitPlace) ? 1 : 0;
 	*val = (*val << rotate) | (*val >> (8 - rotate) & (bitPlace - 1));
 	zero_flag = (*val == 0);
 	substruct_flag = 0;
@@ -108,9 +108,9 @@ void cpu::rl_n(byte* val, const byte rotate)
 
 void cpu::rlc_n(byte* val, const byte rotate)
 {
-	byte bitPlace = 1 << rotate;
+	byte bitPlace = 1 << (8 - rotate);
 	byte tmp = *val & ((bitPlace - 1));
-	carry_flag = *val & bitPlace;
+	carry_flag = (*val & bitPlace) ? 1 : 0;
 	*val <<= rotate;
 	*val |= tmp << (8 - rotate);
 	zero_flag = (*val == 0);
