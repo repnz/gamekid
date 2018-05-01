@@ -81,13 +81,7 @@ void cpu::scf()
 
 void cpu::rrca()
 {
-	byte old_carry_flag = this->carry_flag;
-	this->carry_flag = this->A & 1; // get bit 1
-	this->A >>= 1;
-	this->A += old_carry_flag<<7;
-	this->substruct_flag = 0;
-	this->half_carry_flag = 0;
-	this->zero_flag = (this->A == 0);
+	rrc_n(&A, 1);
 }
 
 void cpu::rra()
@@ -95,30 +89,16 @@ void cpu::rra()
 	rr_n(&A, 1);
 }
 
-void cpu::rl_n(byte* val, const byte rotate)
+void cpu::rl_n(byte* val, byte rotate)
 {
-	const byte bitPlace = 256 >> rotate;
-	carry_flag = (*val &  bitPlace) ? 1 : 0;
-	const byte right_side = (*val >> (8 - rotate) & (bitPlace - 1));
-	const byte left_side = (*val << rotate);
-	*val = right_side | left_side;
-	zero_flag = (*val == 0);
-	substruct_flag = 0;
-	half_carry_flag = 0;
-}
+	rotate %= 8;
 
-void cpu::rlc_n(byte* val, const byte rotate)
-{
 	if (rotate != 0)
 	{
-		const byte right_side = 
-			*val >> (8 - rotate + 1) &
-			((256 >> rotate) - 2) |
-			carry_flag;
-
-		const byte left_side = (*val << rotate);
-		carry_flag = (*val & (256 >> rotate)) ? 1 : 0;
-		*val = right_side | left_side;
+		word w = *val;
+		w <<= rotate;
+		carry_flag = (w >> 8) & 1;
+		*val = (w & 0xFF) | (w >> 8) & 0xFF;
 	}
 	
 	zero_flag = (*val == 0);
@@ -126,15 +106,42 @@ void cpu::rlc_n(byte* val, const byte rotate)
 	half_carry_flag = 0;
 }
 
-void cpu::rrc_n(byte* val, const byte rotate)
+void cpu::rlc_n(byte* val, byte rotate)
 {
-	byte bitPlace = 1 << rotate;
-	byte old_carry_flag = this->carry_flag;
-	this->carry_flag = *val & bitPlace;
-	this->half_carry_flag = 0;
-	this->substruct_flag = 0;
-	*val = (*val >> rotate) | ((*val << 1)<< (rotate - 1));
-	this->zero_flag = (*val == 0);
+	rotate %= 8; // downgrade to 0-7
+
+	if (rotate != 0)
+	{
+		word w = *val;
+		w <<= 1;
+		w |= carry_flag;
+		w <<= (rotate - 1);
+		carry_flag = (w >> 8) & 1;
+		*val = (w & 0xFF) | (w >> 9) & 0xFF;
+	}
+	
+	zero_flag = (*val == 0);
+	substruct_flag = 0;
+	half_carry_flag = 0;
+}
+
+void cpu::rrc_n(byte* val, byte rotate)
+{
+	rotate %= 8; // downgrade to 0-7
+
+	if (rotate != 0)
+	{
+		word w = *val;
+		w <<= 1;
+		w |= carry_flag;
+		w <<= (8 - rotate);
+		carry_flag = (w >> 8) & 1;
+		*val = (w & 0xFF) | (w >> 9) & 0xFF;
+	}
+
+	zero_flag = (*val == 0);
+	substruct_flag = 0;
+	half_carry_flag = 0;
 }
 
 void cpu::rr_n(byte* val, const byte rotate)

@@ -59,3 +59,23 @@ TEST(Commands, RR_3)
 	ASSERT_EQ(val, 0b10101000);
 	ASSERT_EQ(c.carry_flag, 1);
 }
+
+
+TEST(Commands, RRC_1)
+{
+	cpu c = { 0 };
+	byte val = 1;
+	c.rrc_n(&val, 1);
+	ASSERT_EQ(val, 0);
+	ASSERT_EQ(c.carry_flag, 1) << "carry flag did not update correctly";
+}
+
+TEST(Commands, RRC_3)
+{
+	cpu c = { 0 };
+	c.carry_flag = 1;
+	byte val = 0b01000010;
+	c.rrc_n(&val, 3);
+	ASSERT_EQ(val, 0b10101000);
+	ASSERT_EQ(c.carry_flag, 0) << "carry flag did not update correctly";
+}
