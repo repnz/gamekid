@@ -38,3 +38,14 @@ TEST(Commands, RLC_3)
 	ASSERT_EQ(val, 0b01000010);
 	ASSERT_EQ(c.carry_flag, 1) << "carry flag did not update correctly";
 }
+
+
+
+TEST(Commands, RR_1)
+{
+	cpu c = { 0 };
+	byte val = 1;
+	c.rr_n(&val, 1);
+	ASSERT_EQ(val, 1<<7) << "bit 0 did not move to place 7";
+	ASSERT_EQ(c.carry_flag, 1) << "carry flag did not update correctly";
+}

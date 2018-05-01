@@ -139,14 +139,13 @@ void cpu::rrc_n(byte* val, const byte rotate)
 
 void cpu::rr_n(byte* val, const byte rotate)
 {
-	byte bitPlace = 1 << rotate;
+	byte bitPlace = 1 << (rotate - 1);
 
-	// update carry with old value
-	this->carry_flag = *val & bitPlace;
-	
+	// set old bit 0 data
+	this->carry_flag = *val & 1;
 	
 	// do rotation
-	*val = (*val >> rotate) | (*val << (rotate - 1));
+	*val = (*val >> rotate) | (*val << (8 - rotate));
 
 	// update flags
 	this->half_carry_flag = 0;
