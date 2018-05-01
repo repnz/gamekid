@@ -34,8 +34,9 @@ public:
 	
 	void rl_n(byte* val, byte rotate);
 	void rlc_n(byte* val, byte rotate);
-	void rrc_n(byte* val, byte code_mem);
-	void rr_n(byte* val, byte code_mem);
+	void rrc_n(byte* val, byte rotate);
+	void rr_n(byte* val, byte rotate);
+	void sla_n(byte* val, byte shift);
 	void cb_prefix();
 	void run();
 };

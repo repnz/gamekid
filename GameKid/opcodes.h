@@ -41,3 +41,13 @@
 #define CB_RRC_n_H 0xc
 #define CB_RRC_n_L 0xd
 #define CB_RRC_n_HL 0xe
+
+// SLA_n
+#define CB_SLA_n_A 0x27
+#define CB_SLA_n_B 0x20
+#define CB_SLA_n_C 0x21
+#define CB_SLA_n_D 0x22
+#define CB_SLA_n_E 0x23
+#define CB_SLA_n_H 0x24
+#define CB_SLA_n_L 0x25
+#define CB_SLA_n_HL 0x26

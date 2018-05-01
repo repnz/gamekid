@@ -55,15 +55,6 @@ void cpu::error()
 {
 }
 
-void cpu::rla()
-{
-	rl_n(&A, 1);
-}
-
-void cpu::rlca()
-{
-	rlc_n(&A, 1);
-}
 
 void cpu::ccf()
 {
@@ -77,6 +68,16 @@ void cpu::scf()
 	this->half_carry_flag = 0;
 	this->substruct_flag = 0;
 	this->carry_flag = 1;
+}
+
+void cpu::rla()
+{
+	rl_n(&A, 1);
+}
+
+void cpu::rlca()
+{
+	rlc_n(&A, 1);
 }
 
 void cpu::rrca()
@@ -160,6 +161,11 @@ void cpu::rr_n(byte* val, const byte rotate)
 	this->zero_flag = (*val == 0);
 }
 
+void cpu::sla_n(byte* val, byte shift)
+{
+	// implement
+}
+
 void cpu::cb_prefix()
 {
 	byte second_opcode = *code_mem;
@@ -217,6 +223,25 @@ void cpu::cb_prefix()
 		break;
 	case CB_RRC_n_A:
 		rrc_n(&A, *code_mem);
+		break;
+	case CB_SLA_n_B:
+		sla_n(&B, *code_mem);
+		break;
+	case CB_SLA_n_C:
+		sla_n(&C, *code_mem);
+		break;
+	case CB_SLA_n_D:
+		sla_n(&D, *code_mem);
+		break;
+	case CB_SLA_n_E:
+		sla_n(&E, *code_mem);
+		break;
+	case CB_SLA_n_H:
+		sla_n(&H, *code_mem);
+		break;
+	case CB_SLA_n_HL:
+		// use address space
+		break;
 	default:
 		error();
 		break;
