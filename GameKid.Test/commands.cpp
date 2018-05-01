@@ -101,3 +101,24 @@ TEST(Commands, SLA_3)
 	ASSERT_EQ(val, 0b00010000);
 	ASSERT_EQ(c.carry_flag, 0);
 }
+
+TEST(Commands, SRA_1)
+{
+	cpu c = { 0 };
+	byte val = 0b00000001;
+
+	c.sra_n(&val, 1);
+
+	ASSERT_EQ(val, 0);
+	ASSERT_EQ(c.carry_flag, 1);
+}
+
+
+TEST(Commands, SRA_3)
+{
+	cpu c = { 0 };
+	byte val = 0b00010000;
+	c.sra_n(&val, 3);
+	ASSERT_EQ(val, 0b00000010);
+	ASSERT_EQ(c.carry_flag, 0);
+}

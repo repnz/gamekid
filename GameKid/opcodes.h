@@ -51,3 +51,13 @@
 #define CB_SLA_n_H 0x24
 #define CB_SLA_n_L 0x25
 #define CB_SLA_n_HL 0x26
+
+// SRA_n
+#define CB_SRA_n_A 0x2F
+#define CB_SRA_n_B 0x28
+#define CB_SRA_n_C 0x29
+#define CB_SRA_n_D 0x2A
+#define CB_SRA_n_E 0x2B
+#define CB_SRA_n_H 0x2C
+#define CB_SRA_n_L 0x2D
+#define CB_SRA_n_HL 0x2E

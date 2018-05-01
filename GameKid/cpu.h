@@ -37,6 +37,7 @@ public:
 	void rrc_n(byte* val, byte rotate);
 	void rr_n(byte* val, byte rotate);
 	void sla_n(byte* val, byte shift);
+	void sra_n(byte* val, byte shift);
 	void cb_prefix();
 	void run();
 };

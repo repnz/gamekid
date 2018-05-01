@@ -171,6 +171,15 @@ void cpu::sla_n(byte* val, byte shift)
 	
 }
 
+void cpu::sra_n(byte* val, byte shift)
+{
+	carry_flag = (*val >> (shift - 1)) & 1;
+	*val >>= shift;
+	zero_flag = (*val == 0);
+	half_carry_flag = 0;
+	substruct_flag = 0;
+}
+
 void cpu::cb_prefix()
 {
 	byte second_opcode = *code_mem;
@@ -246,6 +255,9 @@ void cpu::cb_prefix()
 		break;
 	case CB_SLA_n_HL:
 		// use address space
+		break;
+	case CB_SRA_n_A:
+		sra_n(&A, *code_mem);
 		break;
 	default:
 		error();
