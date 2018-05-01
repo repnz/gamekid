@@ -11,18 +11,22 @@ ROM:0000        ld      sp, $FFFE      ; load the stack pointer
 ROM:0003        xor     a
 ROM:0004        ld      hl, $9FFF      ; load the start address of the VRAM to HL
 ROM:0007
-ROM:0007 loc_7:                         ; CODE XREF: boot_gb+A↓j
+ROM:0007 .clear_vram_loop:                         ; CODE XREF: boot_gb+A↓j
 ROM:0007        ldd     [hl], a        ; zero byte in VRAM
 ROM:0008        bit     7, h           ; check if it the end of VRAM by checking the last bit
-ROM:000A        jr      nz, loc_7
+ROM:000A        jr      nz, .clear_vram_loop
 
 
-ROM:000C        ld      hl, $FF26
-ROM:000F        ld      c, $11
-ROM:0011        ld      a, $80
-ROM:0013        ldd     [hl], a
-ROM:0014        ld      [c], a
-ROM:0015        inc     c
+; Start making the boot sound
+
+ROM:000C        ld      hl, $FF26      ; Load sound on/off register
+ROM:000F        ld      c, $11         ; Load FF11 to create sound wave
+ROM:0011        ld      a, $80 
+ROM:0013        ldd     [hl], a ; 0xFF26 = 0x80 -> turn bit 7 on -> all sound on
+ROM:0014        ld      [c], a  ; $FF11 =  0x80 -> Set sound duty to 
+ROM:0015        inc     c       ; 0xFF11++
+
+
 ROM:0016        ld      a, $F3
 ROM:0018        ld      [c], a
 ROM:0019        ldd     [hl], a
