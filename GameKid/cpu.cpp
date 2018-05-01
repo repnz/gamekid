@@ -163,7 +163,12 @@ void cpu::rr_n(byte* val, const byte rotate)
 
 void cpu::sla_n(byte* val, byte shift)
 {
-	// implement
+	carry_flag = (*val >> 7);
+	*val <<= shift;
+	zero_flag = (*val == 0);
+	half_carry_flag = 0;
+	substruct_flag = 0;
+	
 }
 
 void cpu::cb_prefix()
