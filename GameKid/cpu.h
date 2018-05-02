@@ -12,7 +12,6 @@ private:
 	void initialize_bit_opcode(byte startOpcode, byte* address);
 	void initialize_set_opcode(byte startOpcode, byte* address);
 	void initialize_bit_opcodes();
-	void initialize_set_opcodes();
 public:
 	byte A;
 	byte B;

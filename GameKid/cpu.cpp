@@ -135,10 +135,7 @@ void cpu::initialize_bit_opcodes()
 	initialize_bit_opcode(CB_BIT_b_E, &E);
 	initialize_bit_opcode(CB_BIT_b_H, &H);
 	initialize_bit_opcode(CB_BIT_b_L, &L);
-}
 
-void cpu::initialize_set_opcodes()
-{
 	initialize_bit_opcode(CB_SET_b_A, &A);
 	initialize_bit_opcode(CB_SET_b_B, &B);
 	initialize_bit_opcode(CB_SET_b_C, &C);
