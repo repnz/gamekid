@@ -41,9 +41,19 @@ void cpu::adc(byte* val, byte n)
 	add(val, n, true);
 }
 
-void cpu::sub(byte* val, byte n)
+void cpu::sbc(byte* val, byte n)
+{
+	sub(val, n, true);
+}
+
+void cpu::sub(byte* val, byte n, bool carry)
 {
 	byte new_value = *val - n;
+
+	if (carry)
+	{
+		new_value -= carry_flag;
+	}
 
 	zero_flag = *val == 0;
 	substruct_flag = 1;
@@ -239,6 +249,19 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[SUB_A_H] = [this]() { this->sub(&A, H); };
 	opcode_table[SUB_A_L] = [this]() { this->sub(&A, L); };
 	opcode_table[SUB_A_IMM] = [this]()
+	{
+		this->add(&A, *code_mem, true);
+		*code_mem++;
+	};
+
+	opcode_table[SBC_A_A] = [this]() { this->sbc(&A, A); };
+	opcode_table[SBC_A_B] = [this]() { this->sbc(&A, B); };
+	opcode_table[SBC_A_C] = [this]() { this->sbc(&A, C); };
+	opcode_table[SBC_A_D] = [this]() { this->sbc(&A, D); };
+	opcode_table[SBC_A_E] = [this]() { this->sbc(&A, E); };
+	opcode_table[SBC_A_H] = [this]() { this->sbc(&A, H); };
+	opcode_table[SBC_A_L] = [this]() { this->sbc(&A, L); };
+	opcode_table[SBC_A_IMM] = [this]()
 	{
 		this->add(&A, *code_mem, true);
 		*code_mem++;

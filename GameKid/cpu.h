@@ -63,5 +63,6 @@ public:
 	void res(byte* val, byte bit_place);
 	void add(byte* val, byte n, bool carry = false);
 	void adc(byte* val, byte n);
-	void sub(byte* val, byte n);
+	void sub(byte* val, byte n, bool carry = false);
+	void sbc(byte* val, byte n);
 };

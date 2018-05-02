@@ -211,3 +211,13 @@ TEST(Commands, SUB)
 	ASSERT_EQ(val, 15);
 	ASSERT_EQ(c.half_carry_flag, 1);
 }
+
+TEST(Commands, SBC)
+{
+	cpu c = { 0 };
+
+	c.carry_flag = 1;
+	byte val = 10;
+	c.sbc(&val, 2);
+	ASSERT_EQ(val, 7);
+}

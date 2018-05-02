@@ -147,3 +147,14 @@
 #define SUB_A_L 0x95
 #define SUB_A_HL 0x96
 #define SUB_A_IMM 0xD6
+
+// SBC A, n
+#define SBC_A_A 0x9f
+#define SBC_A_B 0x98
+#define SBC_A_C 0x99
+#define SBC_A_D 0x9a
+#define SBC_A_E 0x9b
+#define SBC_A_H 0x9c
+#define SBC_A_L 0x9d
+#define SBC_A_HL 0x9e
+#define SBC_A_IMM 0xde
