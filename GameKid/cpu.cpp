@@ -20,6 +20,16 @@ void cpu::res(byte* val, byte bit_place)
 	*val &= ~(1 << bit_place);
 }
 
+void cpu::add(byte* val, byte n)
+{
+	byte new_value = *val + n;
+	zero_flag = *val == 0;
+	substruct_flag = 0;
+	carry_flag = (new_value < *val) ? 1 : 0;
+	half_carry_flag = ((new_value & 0xF) < (*val & 0xF)) ? 1 : 0;
+	*val = new_value;
+}
+
 void cpu::next()
 {
 	byte current_opcode = *code_mem;
@@ -39,9 +49,11 @@ void cpu::initialize_opcode_table()
 {
 	opcode_table[CB_PREFIX] = [this]() { cb_prefix(); };
 
+	initialize_alu8_opcodes();
 	initialize_misc();
 	initialize_rotate_and_shifts();
 	initialize_bit_opcodes();
+	
 }
 
 void cpu::initialize_rotate_and_shifts()
@@ -167,6 +179,22 @@ void cpu::initialize_bit_opcodes()
 	initialize_res_opcode(CB_RES_b_E, &E);
 	initialize_res_opcode(CB_RES_b_H, &H);
 	initialize_res_opcode(CB_RES_b_L, &L);
+}
+
+void cpu::initialize_alu8_opcodes()
+{
+	opcode_table[ADD_A_A] = [this]() { this->add(&A, A); };
+	opcode_table[ADD_A_B] = [this]() { this->add(&A, B); };
+	opcode_table[ADD_A_C] = [this]() { this->add(&A, C); };
+	opcode_table[ADD_A_D] = [this]() { this->add(&A, D); };
+	opcode_table[ADD_A_E] = [this]() { this->add(&A, E); };
+	opcode_table[ADD_A_H] = [this]() { this->add(&A, H); };
+	opcode_table[ADD_A_L] = [this]() { this->add(&A, L); };
+	opcode_table[ADD_A_IMM] = [this]()
+	{
+		this->add(&A, *code_mem);
+		*code_mem++;
+	};
 }
 
 void cpu::halt()

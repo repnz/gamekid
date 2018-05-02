@@ -13,6 +13,7 @@ private:
 	void initialize_set_opcode(byte startOpcode, byte* address);
 	void initialize_res_opcode(byte startOpcode, byte* address);
 	void initialize_bit_opcodes();
+	void initialize_alu8_opcodes();
 public:
 	byte A;
 	byte B;
@@ -60,4 +61,5 @@ public:
 	void run();
 	void set(byte* val, byte bit_place);
 	void res(byte* val, byte bit_place);
+	void add(byte* val, byte n);
 };

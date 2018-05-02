@@ -113,3 +113,14 @@
 #define CB_RES_b_H 0x84
 #define CB_RES_b_L 0x85
 #define CB_RES_b_HL  0x86
+
+// ADD A, n
+#define ADD_A_A 0x87
+#define ADD_A_B 0x80
+#define ADD_A_C 0x81
+#define ADD_A_D 0x82
+#define ADD_A_E 0x83
+#define ADD_A_H 0x84
+#define ADD_A_L 0x85
+#define ADD_A_HL 0x85
+#define ADD_A_IMM 0xC6

@@ -160,3 +160,22 @@ TEST(Commands, RES)
 	c.res(&val, 2);
 	ASSERT_EQ(val, 2);
 }
+
+TEST(Commands, ADD_A_n)
+{
+	cpu c = { 0 };
+
+	byte val = 10;
+	c.add(&val, 2);
+	ASSERT_EQ(val, 12);
+
+	val = 255;
+	c.add(&val, 1);
+	ASSERT_EQ(val, 0);
+	ASSERT_EQ(c.carry_flag, 1);
+
+	val = 0b00001111;
+	c.add(&val, 1);
+	ASSERT_EQ(val, 16);
+	ASSERT_EQ(c.half_carry_flag, 1);
+}
