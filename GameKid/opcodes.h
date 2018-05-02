@@ -12,7 +12,7 @@
 // All opcodes after the CB prefix
 #define CB_PREFIX    0xcb
 
-// RLC_n
+// RLC n
 #define CB_RLC_A 0x07
 #define CB_RLC_B 0x00
 #define CB_RLC_C 0x01
@@ -22,7 +22,7 @@
 #define CB_RLC_L 0x05
 #define CB_RLC_HL 0x06
 
-// RL_n
+// RL n
 #define CB_RL_A 0x17
 #define CB_RL_B 0x10
 #define CB_RL_C 0x11
@@ -32,7 +32,7 @@
 #define CB_RL_L 0x15
 #define CB_RL_HL 0x16
 
-// RRC_n
+// RRC n
 #define CB_RRC_A 0xf
 #define CB_RRC_B 0xf
 #define CB_RRC_C 0xf
@@ -42,7 +42,7 @@
 #define CB_RRC_L 0xd
 #define CB_RRC_HL 0xe
 
-// SLA_n
+// SLA n
 #define CB_SLA_A 0x27
 #define CB_SLA_B 0x20
 #define CB_SLA_C 0x21
@@ -52,7 +52,7 @@
 #define CB_SLA_L 0x25
 #define CB_SLA_HL 0x26
 
-// SRA_n
+// SRA n
 #define CB_SRA_A 0x2F
 #define CB_SRA_B 0x28
 #define CB_SRA_C 0x29
@@ -62,7 +62,7 @@
 #define CB_SRA_L 0x2D
 #define CB_SRA_HL 0x2E
 
-// SRL_n
+// SRL n
 #define CB_SRL_A 0x3f
 #define CB_SRL_B 0x38
 #define CB_SRL_C 0x39
