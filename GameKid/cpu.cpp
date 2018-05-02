@@ -46,6 +46,14 @@ void cpu::sbc(byte* val, byte n)
 	sub(val, n, true);
 }
 
+void cpu::and_n(byte* val, byte n)
+{
+	*val &= n;
+	zero_flag = (*val == 0) ? 1 : 0;
+	half_carry_flag = 1;
+	carry_flag = 0;
+}
+
 void cpu::sub(byte* val, byte n, bool carry)
 {
 	byte new_value = *val - n;
@@ -237,7 +245,7 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[ADC_A_L] = [this]() { this->adc(&A, L); };
 	opcode_table[ADC_A_IMM] = [this]()
 	{
-		this->add(&A, *code_mem, true);
+		this->adc(&A, *code_mem);
 		*code_mem++;
 	};
 
@@ -250,7 +258,7 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[SUB_A_L] = [this]() { this->sub(&A, L); };
 	opcode_table[SUB_A_IMM] = [this]()
 	{
-		this->add(&A, *code_mem, true);
+		this->sub(&A, *code_mem);
 		*code_mem++;
 	};
 
@@ -263,7 +271,20 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[SBC_A_L] = [this]() { this->sbc(&A, L); };
 	opcode_table[SBC_A_IMM] = [this]()
 	{
-		this->add(&A, *code_mem, true);
+		this->sbc(&A, *code_mem);
+		*code_mem++;
+	};
+
+	opcode_table[AND_A_A] = [this]() { this->and_n(&A, A); };
+	opcode_table[AND_A_B] = [this]() { this->and_n(&A, B); };
+	opcode_table[AND_A_C] = [this]() { this->and_n(&A, C); };
+	opcode_table[AND_A_D] = [this]() { this->and_n(&A, D); };
+	opcode_table[AND_A_E] = [this]() { this->and_n(&A, E); };
+	opcode_table[AND_A_H] = [this]() { this->and_n(&A, H); };
+	opcode_table[AND_A_L] = [this]() { this->and_n(&A, L); };
+	opcode_table[AND_A_IMM] = [this]()
+	{
+		this->and_n(&A, *code_mem);
 		*code_mem++;
 	};
 }

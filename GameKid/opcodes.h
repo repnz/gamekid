@@ -158,3 +158,14 @@
 #define SBC_A_L 0x9d
 #define SBC_A_HL 0x9e
 #define SBC_A_IMM 0xde
+
+// AND A, n
+#define AND_A_A 0xa7
+#define AND_A_B 0xa0
+#define AND_A_C 0xa1
+#define AND_A_D 0xa2
+#define AND_A_E 0xa3
+#define AND_A_H 0xa4
+#define AND_A_L 0xa5
+#define AND_A_HL 0xa6
+#define AND_A_IMM 0xe6

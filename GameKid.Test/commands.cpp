@@ -221,3 +221,15 @@ TEST(Commands, SBC)
 	c.sbc(&val, 2);
 	ASSERT_EQ(val, 7);
 }
+
+
+TEST(Commands, AND)
+{
+	cpu c = { 0 };
+	byte val = 0b1010;
+	
+	c.and_n(&val, 0b0101);
+
+	ASSERT_EQ(val, 0);
+	ASSERT_EQ(c.zero_flag, 1);
+}
