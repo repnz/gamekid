@@ -34,13 +34,24 @@
 
 // RRC n
 #define CB_RRC_A 0xf
-#define CB_RRC_B 0xf
-#define CB_RRC_C 0xf
-#define CB_RRC_D 0xf
+#define CB_RRC_B 0x8
+#define CB_RRC_C 0x9
+#define CB_RRC_D 0xa
 #define CB_RRC_E 0xb
 #define CB_RRC_H 0xc
 #define CB_RRC_L 0xd
 #define CB_RRC_HL 0xe
+
+
+// RR n
+#define CB_RR_A 0x1f
+#define CB_RR_B 0x18
+#define CB_RR_C 0x19
+#define CB_RR_D 0x1a
+#define CB_RR_E 0x1b
+#define CB_RR_H 0x1c
+#define CB_RR_L 0x1d
+#define CB_RR_HL 0x1e
 
 // SLA n
 #define CB_SLA_A 0x27

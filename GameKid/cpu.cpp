@@ -6,41 +6,96 @@ void cpu::run()
 {
 	while (true)
 	{
-		switch (*code_mem)
-		{
-		case RLA:
-			rla();
-			break;
-		case RLCA:
-			rlca();
-			break;
-		case NOP:
-			break;
-		case CCF:
-			ccf();
-			break;
-		case SCF:
-			scf();
-			break;
-		case HALT:
-			halt();
-			break;
-		case RRCA:
-			rrca();
-		case RRA:
-			rra();
-		case CB_PREFIX:
-			cb_prefix();
-		case 1:
-			stop();
-			break;
-		default:
-			error();
-			break;
-		}
-
-		++code_mem;
+		next();
 	}
+}
+
+void cpu::next()
+{
+	byte current_opcode = *code_mem;
+	opcode_table[current_opcode]();
+}
+
+void cpu::initialize_misc()
+{
+	opcode_table[NOP] = [this]() {};
+	opcode_table[CCF] = [this]() { ccf(); };
+	opcode_table[SCF] = [this]() { scf(); };
+	opcode_table[HALT] = [this]() { halt(); };
+	
+}
+
+void cpu::initialize_opcode_table()
+{
+	opcode_table[CB_PREFIX] = [this]() { cb_prefix(); };
+
+	initialize_misc();
+	initialize_rotate_and_shifts();
+}
+
+void cpu::initialize_rotate_and_shifts()
+{
+	opcode_table[RLA] = [this](){ rla(); };
+	opcode_table[RLCA] = [this](){ rlca(); };
+	opcode_table[RRCA] = [this]() { rrca(); };
+	opcode_table[RRA] = [this]() { rra(); };
+	
+	// RLC
+	cb_prefix_table[CB_RLC_A] = [this]() { rlc(&A); };
+	cb_prefix_table[CB_RLC_B] = [this]() { rlc(&B); };
+	cb_prefix_table[CB_RLC_C] = [this]() { rlc(&C); };
+	cb_prefix_table[CB_RLC_D] = [this]() { rlc(&D); };
+	cb_prefix_table[CB_RLC_E] = [this]() { rlc(&E); };
+	cb_prefix_table[CB_RLC_H] = [this]() { rlc(&H); };
+	cb_prefix_table[CB_RLC_L] = [this]() { rlc(&L); };
+
+	cb_prefix_table[CB_RL_A] = [this]() { rl(&A); };
+	cb_prefix_table[CB_RL_B] = [this]() { rl(&B); };
+	cb_prefix_table[CB_RL_C] = [this]() { rl(&C); };
+	cb_prefix_table[CB_RL_D] = [this]() { rl(&D); };
+	cb_prefix_table[CB_RL_E] = [this]() { rl(&E); };
+	cb_prefix_table[CB_RL_H] = [this]() { rl(&H); };
+	cb_prefix_table[CB_RL_L] = [this]() { rl(&L); };
+
+	cb_prefix_table[CB_RR_A] = [this]() { rr(&A); };
+	cb_prefix_table[CB_RR_B] = [this]() { rr(&B); };
+	cb_prefix_table[CB_RR_C] = [this]() { rr(&C); };
+	cb_prefix_table[CB_RR_D] = [this]() { rr(&D); };
+	cb_prefix_table[CB_RR_E] = [this]() { rr(&E); };
+	cb_prefix_table[CB_RR_H] = [this]() { rr(&H); };
+	cb_prefix_table[CB_RR_L] = [this]() { rr(&L); };
+
+	cb_prefix_table[CB_RRC_A] = [this]() { rrc(&A); };
+	cb_prefix_table[CB_RRC_B] = [this]() { rrc(&B); };
+	cb_prefix_table[CB_RRC_C] = [this]() { rrc(&C); };
+	cb_prefix_table[CB_RRC_D] = [this]() { rrc(&D); };
+	cb_prefix_table[CB_RRC_E] = [this]() { rrc(&E); };
+	cb_prefix_table[CB_RRC_H] = [this]() { rrc(&H); };
+	cb_prefix_table[CB_RRC_L] = [this]() { rrc(&L); };
+
+	cb_prefix_table[CB_SLA_A] = [this]() { sla(&A); };
+	cb_prefix_table[CB_SLA_B] = [this]() { sla(&B); };
+	cb_prefix_table[CB_SLA_C] = [this]() { sla(&C); };
+	cb_prefix_table[CB_SLA_D] = [this]() { sla(&D); };
+	cb_prefix_table[CB_SLA_E] = [this]() { sla(&E); };
+	cb_prefix_table[CB_SLA_H] = [this]() { sla(&H); };
+	cb_prefix_table[CB_SLA_L] = [this]() { sla(&L); };
+
+	cb_prefix_table[CB_SRA_A] = [this]() { sra(&A); };
+	cb_prefix_table[CB_SRA_B] = [this]() { sra(&B); };
+	cb_prefix_table[CB_SRA_C] = [this]() { sra(&C); };
+	cb_prefix_table[CB_SRA_D] = [this]() { sra(&D); };
+	cb_prefix_table[CB_SRA_E] = [this]() { sra(&E); };
+	cb_prefix_table[CB_SRA_H] = [this]() { sra(&H); };
+	cb_prefix_table[CB_SRA_L] = [this]() { sra(&L); };
+
+	cb_prefix_table[CB_SRL_A] = [this]() { srl(&A); };
+	cb_prefix_table[CB_SRL_B] = [this]() { srl(&B); };
+	cb_prefix_table[CB_SRL_C] = [this]() { srl(&C); };
+	cb_prefix_table[CB_SRL_D] = [this]() { srl(&D); };
+	cb_prefix_table[CB_SRL_E] = [this]() { srl(&E); };
+	cb_prefix_table[CB_SRL_H] = [this]() { srl(&H); };
+	cb_prefix_table[CB_SRL_L] = [this]() { srl(&L); };
 }
 
 void cpu::halt()
@@ -86,7 +141,7 @@ void cpu::rrca()
 }
 
 void cpu::rra()
-{	
+{
 	rr(&A);
 }
 
@@ -139,7 +194,7 @@ void cpu::sla(byte* val)
 	zero_flag = (*val == 0);
 	half_carry_flag = 0;
 	substruct_flag = 0;
-	
+
 }
 
 void cpu::sra(byte* val)
@@ -164,87 +219,7 @@ void cpu::srl(byte* val)
 
 void cpu::cb_prefix()
 {
-	byte second_opcode = *code_mem;
 	code_mem++;
-	switch (second_opcode)
-	{
-	case CB_RLC_A:
-		rlc(&A);
-		break;
-	case CB_RLC_B:
-		rlc(&B);
-		break;
-	case CB_RLC_C:
-		rlc(&C);
-		break;
-	case CB_RLC_D:
-		rlc(&D);
-		break;
-	case CB_RLC_E:
-		rlc(&E);
-		break;
-	case CB_RLC_H:
-		rlc(&H);
-		break;
-	case CB_RLC_L:
-		rlc(&L);
-		break;
-	case CB_RLC_HL:
-		// fix to memory
-		//rlc_n<unsigned short>(nullptr, *code_mem, &carry_flag);
-		break;
-	case CB_RL_A:
-		rl(&A);
-		break;
-	case CB_RL_B:
-		rl(&B);
-		break;
-	case CB_RL_C:
-		rl(&C);
-		break;
-	case CB_RL_D:
-		rl(&D);
-		break;
-	case CB_RL_E:
-		rl(&E);
-		break;
-	case CB_RL_H:
-		rl(&H);
-		break;
-	case CB_RL_L:
-		rl(&L);
-		break;
-	case CB_RL_HL:
-		// use address space
-		break;
-	case CB_RRC_A:
-		rrc(&A);
-		break;
-	case CB_SLA_B:
-		sla(&B);
-		break;
-	case CB_SLA_C:
-		sla(&C);
-		break;
-	case CB_SLA_D:
-		sla(&D);
-		break;
-	case CB_SLA_E:
-		sla(&E);
-		break;
-	case CB_SLA_H:
-		sla(&H);
-		break;
-	case CB_SLA_HL:
-		// use address space
-		break;
-	case CB_SRA_A:
-		sra(&A);
-		break;
-	case CB_SRL_A:
-		srl(&A);
-	default:
-		error();
-		break;
-	}
+	byte second_opcode = *code_mem;
+	cb_prefix_table[second_opcode]();
 }

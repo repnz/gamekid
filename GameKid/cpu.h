@@ -1,8 +1,14 @@
 #pragma once
 #include <GameKid/types.h>
+#include <map>
+#include <functional>
 
 class cpu
 {
+private:
+	void initialize_misc();
+	void initialize_opcode_table();
+	void initialize_rotate_and_shifts();
 public:
 	byte A;
 	byte B;
@@ -22,6 +28,13 @@ public:
 	byte* memory;
 	byte* code_mem;
 
+	typedef std::function<void()> action;
+
+	std::map<byte, action> opcode_table;
+	std::map<byte, action> cb_prefix_table;
+		
+	void next();
+	
 	void halt();
 	void stop();
 	void error();
