@@ -26,10 +26,10 @@
     <ClInclude Include="cpu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="types.h">
+    <ClInclude Include="opcodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="opcodes.h">
+    <ClInclude Include="cpu_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

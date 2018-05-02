@@ -1,5 +1,5 @@
 #pragma once
-#include <GameKid/types.h>
+#include <GameKid/cpu_types.h>
 #include <map>
 #include <functional>
 
