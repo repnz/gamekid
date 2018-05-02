@@ -152,6 +152,16 @@ void cpu::sra(byte* val)
 	substruct_flag = 0;
 }
 
+void cpu::srl(byte* val)
+{
+	carry_flag = *val & 1;
+	*val >>= 1;
+
+	zero_flag = (*val == 0);
+	half_carry_flag = 0;
+	substruct_flag = 0;
+}
+
 void cpu::cb_prefix()
 {
 	byte second_opcode = *code_mem;
@@ -231,6 +241,8 @@ void cpu::cb_prefix()
 	case CB_SRA_A:
 		sra(&A);
 		break;
+	case CB_SRL_A:
+		srl(&A);
 	default:
 		error();
 		break;

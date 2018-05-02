@@ -101,9 +101,26 @@ TEST(Commands, SRA)
 	ASSERT_EQ(val, 0);
 	ASSERT_EQ(c.carry_flag, 1);
 
-	// -64 sra == -128
+	// -128 sra == -64
 	val = 0b10000000; // -128
 	c.sra(&val);
-	ASSERT_EQ(val, 0b11000000); // -192
+	ASSERT_EQ(val, 0b11000000); // -64
+	ASSERT_EQ(c.carry_flag, 0);
+}
+
+TEST(Commands, SRL)
+{
+	cpu c = { 0 };
+
+	// 1 srl == 0
+	byte val = 0b00000001;
+	c.sra(&val);
+	ASSERT_EQ(val, 0);
+	ASSERT_EQ(c.carry_flag, 1);
+
+	// 128 srl == 64
+	val = 0b10000000; 
+	c.srl(&val);
+	ASSERT_EQ(val, 0b01000000);
 	ASSERT_EQ(c.carry_flag, 0);
 }

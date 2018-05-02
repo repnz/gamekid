@@ -61,3 +61,13 @@
 #define CB_SRA_H 0x2C
 #define CB_SRA_L 0x2D
 #define CB_SRA_HL 0x2E
+
+// SRL_n
+#define CB_SRL_A 0x3f
+#define CB_SRL_B 0x38
+#define CB_SRL_C 0x39
+#define CB_SRL_D 0x3a
+#define CB_SRL_E 0x3b
+#define CB_SRL_H 0x3c
+#define CB_SRL_L 0x3d
+#define CB_SRL_HL 0x3e

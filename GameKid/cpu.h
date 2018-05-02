@@ -38,6 +38,7 @@ public:
 	void rr(byte* val);
 	void sla(byte* val);
 	void sra(byte* val);
+	void srl(byte* val);
 	void cb_prefix();
 	void run();
 };
