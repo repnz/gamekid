@@ -104,7 +104,7 @@
 #define CB_SET_b_L 0xc5
 #define CB_SET_b_HL  0xc6
 
-// SET b, r
+// RES b, r
 #define CB_RES_b_A 0x87
 #define CB_RES_b_B 0x80
 #define CB_RES_b_C 0x81
@@ -124,3 +124,14 @@
 #define ADD_A_L 0x85
 #define ADD_A_HL 0x85
 #define ADD_A_IMM 0xC6
+
+// ADD A, n
+#define ADC_A_A 0x87
+#define ADC_A_B 0x80
+#define ADC_A_C 0x81
+#define ADC_A_D 0x82
+#define ADC_A_E 0x83
+#define ADC_A_H 0x84
+#define ADC_A_L 0x85
+#define ADC_A_HL 0x85
+#define ADC_A_IMM 0xC6
