@@ -67,4 +67,5 @@ public:
 	void sbc(byte* val, byte n);
 	void and_n(byte* val, byte n);
 	void or_n(byte* val, byte n);
+	void xor_n(byte* a, byte byte);
 };

@@ -244,3 +244,14 @@ TEST(Commands, OR)
 	ASSERT_EQ(val, 0b1111);
 	ASSERT_EQ(c.zero_flag, 0);
 }
+
+TEST(Commands, XOR)
+{
+	cpu c = { 0 };
+	byte val = 0b1110;
+
+	c.xor_n(&val, 0b1101);
+
+	ASSERT_EQ(val, 0b0011);
+	ASSERT_EQ(c.zero_flag, 0);
+}

@@ -64,6 +64,15 @@ void cpu::or_n(byte* val, byte n)
 	substruct_flag = 0;
 }
 
+void cpu::xor_n(byte* a, byte byte)
+{
+	*a ^= byte;
+	zero_flag = (*a == 0) ? 1 : 0;
+	half_carry_flag = 0;
+	carry_flag = 0;
+	substruct_flag = 0;
+}
+
 void cpu::sub(byte* val, byte n, bool carry)
 {
 	byte new_value = *val - n;
@@ -308,6 +317,19 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[OR_A_IMM] = [this]()
 	{
 		this->or_n(&A, *code_mem);
+		*code_mem++;
+	};
+
+	opcode_table[XOR_A_A] = [this]() { this->xor_n(&A, A); };
+	opcode_table[XOR_A_B] = [this]() { this->xor_n(&A, B); };
+	opcode_table[XOR_A_C] = [this]() { this->xor_n(&A, C); };
+	opcode_table[XOR_A_D] = [this]() { this->xor_n(&A, D); };
+	opcode_table[XOR_A_E] = [this]() { this->xor_n(&A, E); };
+	opcode_table[XOR_A_H] = [this]() { this->xor_n(&A, H); };
+	opcode_table[XOR_A_L] = [this]() { this->xor_n(&A, L); };
+	opcode_table[XOR_A_IMM] = [this]()
+	{
+		this->xor_n(&A, *code_mem);
 		*code_mem++;
 	};
 }

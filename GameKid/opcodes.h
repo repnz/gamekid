@@ -180,3 +180,14 @@
 #define OR_A_L 0xb5
 #define OR_A_HL 0xb6
 #define OR_A_IMM 0xf6
+
+// XOR A, n
+#define XOR_A_A 0xaf
+#define XOR_A_B 0xa8
+#define XOR_A_C 0xa9
+#define XOR_A_D 0xaa
+#define XOR_A_E 0xab
+#define XOR_A_H 0xac
+#define XOR_A_L 0xad
+#define XOR_A_HL 0xae
+#define XOR_A_IMM 0xee
