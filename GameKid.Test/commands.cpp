@@ -124,3 +124,18 @@ TEST(Commands, SRL)
 	ASSERT_EQ(val, 0b01000000);
 	ASSERT_EQ(c.carry_flag, 0);
 }
+
+TEST(Commands, BIT)
+{
+	cpu c = { 0 };
+
+	// 1 bit 0 => zero_flag = 0
+	byte val = 0b00000001;
+	c.bit(val, 0);
+	ASSERT_EQ(c.zero_flag, 0);
+
+	// 1 bit 1 => zero_flag = 1
+	val = 0b00000001;
+	c.bit(val, 1);
+	ASSERT_EQ(c.zero_flag, 1);
+}

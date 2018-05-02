@@ -170,7 +170,9 @@ void cpu::rra()
 
 void cpu::bit(byte val, byte bitPlace)
 {
-
+	zero_flag = (val & (1 << bitPlace)) ? 0 : 1;
+	substruct_flag = 0;
+	half_carry_flag = 1;
 }
 
 void cpu::rl(byte* val)
