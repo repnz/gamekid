@@ -61,5 +61,8 @@ public:
 	void run();
 	void set(byte* val, byte bit_place);
 	void res(byte* val, byte bit_place);
-	void add(byte* val, byte n);
+	void add(byte* val, byte n, bool carry = false);
+	void adc(byte* val, byte n);
+	void set_half_carry(byte old_value, byte new_value);
+
 };

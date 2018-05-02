@@ -20,14 +20,25 @@ void cpu::res(byte* val, byte bit_place)
 	*val &= ~(1 << bit_place);
 }
 
-void cpu::add(byte* val, byte n)
+void cpu::add(byte* val, byte n, bool carry)
 {
 	byte new_value = *val + n;
+	
+	if (carry)
+	{
+		new_value += carry_flag;
+	}
+
 	zero_flag = *val == 0;
 	substruct_flag = 0;
 	carry_flag = (new_value < *val) ? 1 : 0;
 	half_carry_flag = ((new_value & 0xF) < (*val & 0xF)) ? 1 : 0;
 	*val = new_value;
+}
+
+void cpu::adc(byte* val, byte n)
+{
+	add(val, n, true);
 }
 
 void cpu::next()
@@ -193,6 +204,19 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[ADD_A_IMM] = [this]()
 	{
 		this->add(&A, *code_mem);
+		*code_mem++;
+	};
+
+	opcode_table[ADC_A_A] = [this]() { this->adc(&A, A); };
+	opcode_table[ADC_A_B] = [this]() { this->adc(&A, B); };
+	opcode_table[ADC_A_C] = [this]() { this->adc(&A, C); };
+	opcode_table[ADC_A_D] = [this]() { this->adc(&A, D); };
+	opcode_table[ADC_A_E] = [this]() { this->adc(&A, E); };
+	opcode_table[ADC_A_H] = [this]() { this->adc(&A, H); };
+	opcode_table[ADC_A_L] = [this]() { this->adc(&A, L); };
+	opcode_table[ADC_A_IMM] = [this]()
+	{
+		this->add(&A, *code_mem, true);
 		*code_mem++;
 	};
 }

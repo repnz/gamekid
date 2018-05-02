@@ -179,3 +179,16 @@ TEST(Commands, ADD)
 	ASSERT_EQ(val, 16);
 	ASSERT_EQ(c.half_carry_flag, 1);
 }
+
+TEST(Commands, ADC)
+{
+	cpu c = { 0 };
+
+	byte val = 10;
+	c.carry_flag = 1;
+	c.adc(&val, 1);
+	
+	// 10 + carry_flag + 1 = 12
+
+	ASSERT_EQ(val, 12);
+}

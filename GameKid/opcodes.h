@@ -125,7 +125,7 @@
 #define ADD_A_HL 0x85
 #define ADD_A_IMM 0xC6
 
-// ADD A, n
+// ADC A, n
 #define ADC_A_A 0x87
 #define ADC_A_B 0x80
 #define ADC_A_C 0x81
