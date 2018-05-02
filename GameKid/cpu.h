@@ -32,12 +32,12 @@ public:
 	void rrca();
 	void rra();
 	
-	void rl_n(byte* val, byte rotate);
-	void rlc_n(byte* val, byte rotate);
-	void rrc_n(byte* val, byte rotate);
-	void rr_n(byte* val, byte rotate);
-	void sla_n(byte* val, byte shift);
-	void sra_n(byte* val, byte shift);
+	void rl(byte* val);
+	void rlc(byte* val);
+	void rrc(byte* val);
+	void rr(byte* val);
+	void sla(byte* val);
+	void sra(byte* val);
 	void cb_prefix();
 	void run();
 };

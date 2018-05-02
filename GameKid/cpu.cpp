@@ -72,88 +72,59 @@ void cpu::scf()
 
 void cpu::rla()
 {
-	rl_n(&A, 1);
+	rl(&A);
 }
 
 void cpu::rlca()
 {
-	rlc_n(&A, 1);
+	rlc(&A);
 }
 
 void cpu::rrca()
 {
-	rrc_n(&A, 1);
+	rrc(&A);
 }
 
 void cpu::rra()
 {	
-	rr_n(&A, 1);
+	rr(&A);
 }
 
-void cpu::rl_n(byte* val, byte rotate)
+void cpu::rl(byte* val)
 {
-	rotate %= 8;
-
-	if (rotate != 0)
-	{
-		word w = *val;
-		w <<= rotate;
-		carry_flag = (w >> 8) & 1;
-		*val = (w & 0xFF) | (w >> 8) & 0xFF;
-	}
-	
+	carry_flag = (*val & 128) ? 1 : 0;
+	*val = (*val << 1) | carry_flag;
 	zero_flag = (*val == 0);
 	substruct_flag = 0;
 	half_carry_flag = 0;
 }
 
-void cpu::rlc_n(byte* val, byte rotate)
+void cpu::rlc(byte* val)
 {
-	rotate %= 8; // downgrade to 0-7
-
-	if (rotate != 0)
-	{
-		word w = *val;
-		w <<= 1;
-		w |= carry_flag;
-		w <<= (rotate - 1);
-		carry_flag = (w >> 8) & 1;
-		*val = (w & 0xFF) | (w >> 9) & 0xFF;
-	}
-	
-	zero_flag = (*val == 0);
-	substruct_flag = 0;
-	half_carry_flag = 0;
-}
-
-void cpu::rrc_n(byte* val, byte rotate)
-{
-	rotate %= 8; // downgrade to 0-7
-
-	if (rotate != 0)
-	{
-		word w = *val;
-		w <<= 1;
-		w |= carry_flag;
-		w <<= (8 - rotate);
-		carry_flag = (w >> 8) & 1;
-		*val = (w & 0xFF) | (w >> 9) & 0xFF;
-	}
+	byte old_carry = carry_flag;
+	carry_flag = (*val & 128) ? 1 : 0;
+	*val = (*val << 1) | old_carry;
 
 	zero_flag = (*val == 0);
 	substruct_flag = 0;
 	half_carry_flag = 0;
 }
 
-void cpu::rr_n(byte* val, const byte rotate)
+void cpu::rrc(byte* val)
 {
-	byte bitPlace = 1 << (rotate - 1);
+	byte old_carry = carry_flag;
+	carry_flag = (*val & 1) ? 1 : 0;
+	*val = (*val >> 1) | (old_carry << 7);
 
-	// set old bit 0 data
-	this->carry_flag = *val & 1;
-	
-	// do rotation
-	*val = (*val >> rotate) | (*val << (8 - rotate));
+	zero_flag = (*val == 0);
+	substruct_flag = 0;
+	half_carry_flag = 0;
+}
+
+void cpu::rr(byte* val)
+{
+	carry_flag = (*val & 1) ? 1 : 0;
+	*val = (*val >> 1) | (carry_flag << 7);
 
 	// update flags
 	this->half_carry_flag = 0;
@@ -161,20 +132,21 @@ void cpu::rr_n(byte* val, const byte rotate)
 	this->zero_flag = (*val == 0);
 }
 
-void cpu::sla_n(byte* val, byte shift)
+void cpu::sla(byte* val)
 {
-	carry_flag = (*val >> (8 - shift)) & 1;
-	*val <<= shift;
+	carry_flag = (*val & 128) ? 1 : 0;
+	*val <<= 1;
 	zero_flag = (*val == 0);
 	half_carry_flag = 0;
 	substruct_flag = 0;
 	
 }
 
-void cpu::sra_n(byte* val, byte shift)
+void cpu::sra(byte* val)
 {
-	carry_flag = (*val >> (shift - 1)) & 1;
-	*val >>= shift;
+	carry_flag = *val & 1;
+	*val = ((char)*val) >> 1;
+
 	zero_flag = (*val == 0);
 	half_carry_flag = 0;
 	substruct_flag = 0;
@@ -184,80 +156,80 @@ void cpu::cb_prefix()
 {
 	byte second_opcode = *code_mem;
 	code_mem++;
-	switch (*code_mem)
+	switch (second_opcode)
 	{
-	case CB_RLC_n_A:
-		rlc_n(&A, *code_mem);
+	case CB_RLC_A:
+		rlc(&A);
 		break;
-	case CB_RLC_n_B:
-		rlc_n(&B, *code_mem);
+	case CB_RLC_B:
+		rlc(&B);
 		break;
-	case CB_RLC_n_C:
-		rlc_n(&C, *code_mem);
+	case CB_RLC_C:
+		rlc(&C);
 		break;
-	case CB_RLC_n_D:
-		rlc_n(&D, *code_mem);
+	case CB_RLC_D:
+		rlc(&D);
 		break;
-	case CB_RLC_n_E:
-		rlc_n(&E, *code_mem);
+	case CB_RLC_E:
+		rlc(&E);
 		break;
-	case CB_RLC_n_H:
-		rlc_n(&H, *code_mem);
+	case CB_RLC_H:
+		rlc(&H);
 		break;
-	case CB_RLC_n_L:
-		rlc_n(&L, *code_mem);
+	case CB_RLC_L:
+		rlc(&L);
 		break;
-	case CB_RLC_n_HL:
+	case CB_RLC_HL:
 		// fix to memory
 		//rlc_n<unsigned short>(nullptr, *code_mem, &carry_flag);
 		break;
-	case CB_RL_n_A:
-		rl_n(&A, *code_mem);
+	case CB_RL_A:
+		rl(&A);
 		break;
-	case CB_RL_n_B:
-		rl_n(&B, *code_mem);
+	case CB_RL_B:
+		rl(&B);
 		break;
-	case CB_RL_n_C:
-		rl_n(&C, *code_mem);
+	case CB_RL_C:
+		rl(&C);
 		break;
-	case CB_RL_n_D:
-		rl_n(&D, *code_mem);
+	case CB_RL_D:
+		rl(&D);
 		break;
-	case CB_RL_n_E:
-		rl_n(&E, *code_mem);
+	case CB_RL_E:
+		rl(&E);
 		break;
-	case CB_RL_n_H:
-		rl_n(&H, *code_mem);
+	case CB_RL_H:
+		rl(&H);
 		break;
-	case CB_RL_n_L:
-		rl_n(&L, *code_mem);
+	case CB_RL_L:
+		rl(&L);
 		break;
-	case CB_RL_n_HL:
+	case CB_RL_HL:
 		// use address space
 		break;
-	case CB_RRC_n_A:
-		rrc_n(&A, *code_mem);
+	case CB_RRC_A:
+		rrc(&A);
 		break;
-	case CB_SLA_n_B:
-		sla_n(&B, *code_mem);
+	case CB_SLA_B:
+		sla(&B);
 		break;
-	case CB_SLA_n_C:
-		sla_n(&C, *code_mem);
+	case CB_SLA_C:
+		sla(&C);
 		break;
-	case CB_SLA_n_D:
-		sla_n(&D, *code_mem);
+	case CB_SLA_D:
+		sla(&D);
 		break;
-	case CB_SLA_n_E:
-		sla_n(&E, *code_mem);
+	case CB_SLA_E:
+		sla(&E);
 		break;
-	case CB_SLA_n_H:
-		sla_n(&H, *code_mem);
+	case CB_SLA_H:
+		sla(&H);
 		break;
-	case CB_SLA_n_HL:
+	case CB_SLA_HL:
 		// use address space
 		break;
-	case CB_SRA_n_A:
-		sra_n(&A, *code_mem);
+	case CB_SRA_A:
+		sra(&A);
 		break;
 	default:
 		error();
