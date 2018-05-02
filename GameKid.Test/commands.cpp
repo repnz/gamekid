@@ -161,7 +161,7 @@ TEST(Commands, RES)
 	ASSERT_EQ(val, 2);
 }
 
-TEST(Commands, ADD_A_n)
+TEST(Commands, ADD)
 {
 	cpu c = { 0 };
 
