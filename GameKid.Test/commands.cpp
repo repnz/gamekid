@@ -192,3 +192,22 @@ TEST(Commands, ADC)
 
 	ASSERT_EQ(val, 12);
 }
+
+TEST(Commands, SUB)
+{
+	cpu c = { 0 };
+
+	byte val = 10;
+	c.sub(&val, 2);
+	ASSERT_EQ(val, 8);
+
+	val = 0;
+	c.sub(&val, 1);
+	ASSERT_EQ(val, 255);
+	ASSERT_EQ(c.carry_flag, 1);
+
+	val = 0b00010000;
+	c.sub(&val, 1);
+	ASSERT_EQ(val, 15);
+	ASSERT_EQ(c.half_carry_flag, 1);
+}

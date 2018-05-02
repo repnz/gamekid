@@ -135,3 +135,15 @@
 #define ADC_A_L 0x85
 #define ADC_A_HL 0x85
 #define ADC_A_IMM 0xC6
+
+
+// SUB A, n
+#define SUB_A_A 0x97
+#define SUB_A_B 0x90
+#define SUB_A_C 0x91
+#define SUB_A_D 0x92
+#define SUB_A_E 0x93
+#define SUB_A_H 0x94
+#define SUB_A_L 0x95
+#define SUB_A_HL 0x96
+#define SUB_A_IMM 0xD6
