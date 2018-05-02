@@ -10,6 +10,11 @@ void cpu::run()
 	}
 }
 
+void cpu::set(byte* address, int bit_place)
+{
+	// implement
+}
+
 void cpu::next()
 {
 	byte current_opcode = *code_mem;
@@ -110,6 +115,17 @@ void cpu::initialize_bit_opcode(byte startOpcode, byte* address)
 	}
 }
 
+void cpu::initialize_set_opcode(byte startOpcode, byte* address)
+{
+	for (int bitPlace = 0; bitPlace<8; ++bitPlace)
+	{
+		cb_prefix_table[startOpcode + bitPlace * 8] = [this, address, bitPlace]()
+		{
+			set(address, bitPlace);
+		};
+	}
+}
+
 void cpu::initialize_bit_opcodes()
 {
 	initialize_bit_opcode(CB_BIT_b_A, &A);
@@ -119,6 +135,17 @@ void cpu::initialize_bit_opcodes()
 	initialize_bit_opcode(CB_BIT_b_E, &E);
 	initialize_bit_opcode(CB_BIT_b_H, &H);
 	initialize_bit_opcode(CB_BIT_b_L, &L);
+}
+
+void cpu::initialize_set_opcodes()
+{
+	initialize_bit_opcode(CB_SET_b_A, &A);
+	initialize_bit_opcode(CB_SET_b_B, &B);
+	initialize_bit_opcode(CB_SET_b_C, &C);
+	initialize_bit_opcode(CB_SET_b_D, &D);
+	initialize_bit_opcode(CB_SET_b_E, &E);
+	initialize_bit_opcode(CB_SET_b_H, &H);
+	initialize_bit_opcode(CB_SET_b_L, &L);
 }
 
 void cpu::halt()

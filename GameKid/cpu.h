@@ -10,7 +10,9 @@ private:
 	void initialize_opcode_table();
 	void initialize_rotate_and_shifts();
 	void initialize_bit_opcode(byte startOpcode, byte* address);
+	void initialize_set_opcode(byte startOpcode, byte* address);
 	void initialize_bit_opcodes();
+	void initialize_set_opcodes();
 public:
 	byte A;
 	byte B;
@@ -57,4 +59,5 @@ public:
 	void srl(byte* val);
 	void cb_prefix();
 	void run();
+	void set(byte* address, int bit_place);
 };

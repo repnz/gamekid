@@ -93,3 +93,13 @@
 #define CB_BIT_b_H 0x44
 #define CB_BIT_b_L 0x45
 #define CB_BIT_b_HL  0x46
+
+// SET b, r
+#define CB_SET_b_A 0xc7
+#define CB_SET_b_B 0xc0
+#define CB_SET_b_C 0xc1
+#define CB_SET_b_D 0xc2
+#define CB_SET_b_E 0xc3
+#define CB_SET_b_H 0xc4
+#define CB_SET_b_L 0xc5
+#define CB_SET_b_HL  0xc6
