@@ -233,3 +233,14 @@ TEST(Commands, AND)
 	ASSERT_EQ(val, 0);
 	ASSERT_EQ(c.zero_flag, 1);
 }
+
+TEST(Commands, OR)
+{
+	cpu c = { 0 };
+	byte val = 0b1010;
+
+	c.or_n(&val, 0b0101);
+
+	ASSERT_EQ(val, 0b1111);
+	ASSERT_EQ(c.zero_flag, 0);
+}

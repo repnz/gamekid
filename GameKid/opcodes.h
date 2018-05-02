@@ -169,3 +169,14 @@
 #define AND_A_L 0xa5
 #define AND_A_HL 0xa6
 #define AND_A_IMM 0xe6
+
+// OR A, n
+#define OR_A_A 0xb7
+#define OR_A_B 0xb0
+#define OR_A_C 0xb1
+#define OR_A_D 0xb2
+#define OR_A_E 0xb3
+#define OR_A_H 0xb4
+#define OR_A_L 0xb5
+#define OR_A_HL 0xb6
+#define OR_A_IMM 0xf6

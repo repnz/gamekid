@@ -50,8 +50,18 @@ void cpu::and_n(byte* val, byte n)
 {
 	*val &= n;
 	zero_flag = (*val == 0) ? 1 : 0;
+	substruct_flag = 0;
 	half_carry_flag = 1;
 	carry_flag = 0;
+}
+
+void cpu::or_n(byte* val, byte n)
+{
+	*val |= n;
+	zero_flag = (*val == 0) ? 1 : 0;
+	half_carry_flag = 0;
+	carry_flag = 0;
+	substruct_flag = 0;
 }
 
 void cpu::sub(byte* val, byte n, bool carry)
@@ -285,6 +295,19 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[AND_A_IMM] = [this]()
 	{
 		this->and_n(&A, *code_mem);
+		*code_mem++;
+	};
+
+	opcode_table[OR_A_A] = [this]() { this->or_n(&A, A); };
+	opcode_table[OR_A_B] = [this]() { this->or_n(&A, B); };
+	opcode_table[OR_A_C] = [this]() { this->or_n(&A, C); };
+	opcode_table[OR_A_D] = [this]() { this->or_n(&A, D); };
+	opcode_table[OR_A_E] = [this]() { this->or_n(&A, E); };
+	opcode_table[OR_A_H] = [this]() { this->or_n(&A, H); };
+	opcode_table[OR_A_L] = [this]() { this->or_n(&A, L); };
+	opcode_table[OR_A_IMM] = [this]()
+	{
+		this->or_n(&A, *code_mem);
 		*code_mem++;
 	};
 }

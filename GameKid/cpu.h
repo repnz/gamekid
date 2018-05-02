@@ -66,4 +66,5 @@ public:
 	void sub(byte* val, byte n, bool carry = false);
 	void sbc(byte* val, byte n);
 	void and_n(byte* val, byte n);
+	void or_n(byte* val, byte n);
 };
