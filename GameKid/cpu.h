@@ -63,9 +63,10 @@ public:
 	void res(byte* val, byte bit_place);
 	void add(byte* val, byte n, bool carry = false);
 	void adc(byte* val, byte n);
-	void sub(byte* val, byte n, bool carry = false);
+	void sub(byte* val, byte n, bool carry = false, bool save_result = true);
 	void sbc(byte* val, byte n);
 	void and_n(byte* val, byte n);
 	void or_n(byte* val, byte n);
 	void xor_n(byte* a, byte byte);
+	void cp(byte val, byte byte);
 };

@@ -255,3 +255,20 @@ TEST(Commands, XOR)
 	ASSERT_EQ(val, 0b0011);
 	ASSERT_EQ(c.zero_flag, 0);
 }
+
+TEST(Commands, CP)
+{
+	cpu c = { 0 };
+
+	byte val = 10;
+	c.cp(val, 10);
+	ASSERT_EQ(c.zero_flag, 1);
+
+	val = 0;
+	c.cp(val, 1);
+	ASSERT_EQ(c.carry_flag, 1);
+
+	val = 100;
+	c.cp(val, 50);
+	ASSERT_EQ(c.zero_flag | c.carry_flag, 0);
+}

@@ -191,3 +191,14 @@
 #define XOR_A_L 0xad
 #define XOR_A_HL 0xae
 #define XOR_A_IMM 0xee
+
+// CP A, n
+#define CP_A_A 0xbf
+#define CP_A_B 0xb8
+#define CP_A_C 0xb9
+#define CP_A_D 0xba
+#define CP_A_E 0xbb
+#define CP_A_H 0xbc
+#define CP_A_L 0xbd
+#define CP_A_HL 0xbe
+#define CP_A_IMM 0xfe

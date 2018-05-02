@@ -73,7 +73,12 @@ void cpu::xor_n(byte* a, byte byte)
 	substruct_flag = 0;
 }
 
-void cpu::sub(byte* val, byte n, bool carry)
+void cpu::cp(byte val, byte byte)
+{
+	sub(&val, byte, false, false);
+}
+
+void cpu::sub(byte* val, byte n, bool carry, bool save_result)
 {
 	byte new_value = *val - n;
 
@@ -82,11 +87,15 @@ void cpu::sub(byte* val, byte n, bool carry)
 		new_value -= carry_flag;
 	}
 
-	zero_flag = *val == 0;
+	zero_flag = new_value == 0 ? 1 : 0;
 	substruct_flag = 1;
 	carry_flag = (new_value > *val) ? 1 : 0;
 	half_carry_flag = ((new_value & 0xF) > (*val & 0xF)) ? 1 : 0;
-	*val = new_value;
+
+	if (save_result)
+	{
+		*val = new_value;
+	}
 }
 
 void cpu::next()
@@ -330,6 +339,19 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[XOR_A_IMM] = [this]()
 	{
 		this->xor_n(&A, *code_mem);
+		*code_mem++;
+	};
+
+	opcode_table[CP_A_A] = [this]() { this->cp(A, A); };
+	opcode_table[CP_A_B] = [this]() { this->cp(A, B); };
+	opcode_table[CP_A_C] = [this]() { this->cp(A, C); };
+	opcode_table[CP_A_D] = [this]() { this->cp(A, D); };
+	opcode_table[CP_A_E] = [this]() { this->cp(A, E); };
+	opcode_table[CP_A_H] = [this]() { this->cp(A, H); };
+	opcode_table[CP_A_L] = [this]() { this->cp(A, L); };
+	opcode_table[CP_A_IMM] = [this]()
+	{
+		this->cp(A, *code_mem);
 		*code_mem++;
 	};
 }
