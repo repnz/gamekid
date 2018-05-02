@@ -10,9 +10,9 @@ void cpu::run()
 	}
 }
 
-void cpu::set(byte* address, int bit_place)
+void cpu::set(byte* val, byte bit_place)
 {
-	// implement
+	*val |= 1 << bit_place;
 }
 
 void cpu::next()

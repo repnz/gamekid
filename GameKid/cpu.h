@@ -49,7 +49,6 @@ public:
 	void rrca();
 	void rra();
 	void bit(byte val, byte bitPlace);
-
 	void rl(byte* val);
 	void rlc(byte* val);
 	void rrc(byte* val);
@@ -59,5 +58,5 @@ public:
 	void srl(byte* val);
 	void cb_prefix();
 	void run();
-	void set(byte* address, int bit_place);
+	void set(byte* val, byte bit_place);
 };

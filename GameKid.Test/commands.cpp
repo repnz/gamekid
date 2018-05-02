@@ -139,3 +139,13 @@ TEST(Commands, BIT)
 	c.bit(val, 1);
 	ASSERT_EQ(c.zero_flag, 1);
 }
+
+TEST(Commands, SET)
+{
+	cpu c = { 0 };
+
+	// 0 set 3 => 0b00000100 => 4
+	byte val = 0b00000000;
+	c.set(&val, 2);
+	ASSERT_EQ(val, 4);
+}
