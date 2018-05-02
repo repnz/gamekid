@@ -82,3 +82,14 @@
 #define CB_SRL_H 0x3c
 #define CB_SRL_L 0x3d
 #define CB_SRL_HL 0x3e
+
+
+// BIT b, r
+#define CB_BIT_b_A 0x47
+#define CB_BIT_b_B 0x40
+#define CB_BIT_b_C 0x41
+#define CB_BIT_b_D 0x42
+#define CB_BIT_b_E 0x43
+#define CB_BIT_b_H 0x44
+#define CB_BIT_b_L 0x45
+#define CB_BIT_b_HL  0x46

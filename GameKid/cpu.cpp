@@ -31,6 +31,7 @@ void cpu::initialize_opcode_table()
 
 	initialize_misc();
 	initialize_rotate_and_shifts();
+	initialize_bit_opcodes();
 }
 
 void cpu::initialize_rotate_and_shifts()
@@ -98,6 +99,28 @@ void cpu::initialize_rotate_and_shifts()
 	cb_prefix_table[CB_SRL_L] = [this]() { srl(&L); };
 }
 
+void cpu::initialize_bit_opcode(byte startOpcode, byte* address)
+{
+	for (int bitPlace = 0; bitPlace<8; ++bitPlace)
+	{
+		cb_prefix_table[startOpcode + bitPlace*8] = [this, address, bitPlace]()
+		{
+			bit(*address, bitPlace);
+		};
+	}
+}
+
+void cpu::initialize_bit_opcodes()
+{
+	initialize_bit_opcode(CB_BIT_b_A, &A);
+	initialize_bit_opcode(CB_BIT_b_B, &B);
+	initialize_bit_opcode(CB_BIT_b_C, &C);
+	initialize_bit_opcode(CB_BIT_b_D, &D);
+	initialize_bit_opcode(CB_BIT_b_E, &E);
+	initialize_bit_opcode(CB_BIT_b_H, &H);
+	initialize_bit_opcode(CB_BIT_b_L, &L);
+}
+
 void cpu::halt()
 {
 }
@@ -143,6 +166,11 @@ void cpu::rrca()
 void cpu::rra()
 {
 	rr(&A);
+}
+
+void cpu::bit(byte val, byte bitPlace)
+{
+
 }
 
 void cpu::rl(byte* val)
