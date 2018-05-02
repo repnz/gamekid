@@ -103,3 +103,13 @@
 #define CB_SET_b_H 0xc4
 #define CB_SET_b_L 0xc5
 #define CB_SET_b_HL  0xc6
+
+// SET b, r
+#define CB_RES_b_A 0x87
+#define CB_RES_b_B 0x80
+#define CB_RES_b_C 0x81
+#define CB_RES_b_D 0x82
+#define CB_RES_b_E 0x83
+#define CB_RES_b_H 0x84
+#define CB_RES_b_L 0x85
+#define CB_RES_b_HL  0x86

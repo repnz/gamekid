@@ -149,3 +149,14 @@ TEST(Commands, SET)
 	c.set(&val, 2);
 	ASSERT_EQ(val, 4);
 }
+
+
+TEST(Commands, RES)
+{
+	cpu c = { 0 };
+
+	// 6 res 3 == 2
+	byte val = 0b00000110;
+	c.res(&val, 2);
+	ASSERT_EQ(val, 2);
+}
