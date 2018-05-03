@@ -291,3 +291,21 @@ TEST(Commands, INC)
 	c.inc(&val);
 	ASSERT_EQ(c.zero_flag, 1);
 }
+
+TEST(Commands, DEC)
+{
+	cpu c = { 0 };
+
+	byte val = 10;
+	c.dec(&val);
+	ASSERT_EQ(val, 9);
+	ASSERT_EQ(c.zero_flag, 0);
+
+	val = 0b00011111;
+	c.dec(&val);
+	ASSERT_EQ(c.half_carry_flag, 1);
+
+	val = 1;
+	c.dec(&val);
+	ASSERT_EQ(c.zero_flag, 1);
+}

@@ -85,10 +85,18 @@ void cpu::set_zero_flag(byte val)
 
 void cpu::inc(byte* val)
 {
-	half_carry_flag = (*val == 0b1111) ? 1 : 0;
+	half_carry_flag = ((*val & 0xF) == 0b1111) ? 1 : 0;
 	(*val)++;
 	set_zero_flag(*val);
 	substruct_flag = 0;
+}
+
+void cpu::dec(byte* val)
+{
+	half_carry_flag = ((*val >> 4) == 0b0001) ? 1 : 0;
+	(*val)--;
+	set_zero_flag(*val);
+	substruct_flag = 1;
 }
 
 void cpu::sub(byte* val, byte n, bool carry, bool save_result)
@@ -375,6 +383,14 @@ void cpu::initialize_alu8_opcodes()
 	opcode_table[INC_E] = [this]() { this->inc(&E); };
 	opcode_table[INC_H] = [this]() { this->inc(&H); };
 	opcode_table[INC_L] = [this]() { this->inc(&L); };
+
+	opcode_table[DEC_A] = [this]() { this->dec(&A); };
+	opcode_table[DEC_B] = [this]() { this->dec(&B); };
+	opcode_table[DEC_C] = [this]() { this->dec(&C); };
+	opcode_table[DEC_D] = [this]() { this->dec(&D); };
+	opcode_table[DEC_E] = [this]() { this->dec(&E); };
+	opcode_table[DEC_H] = [this]() { this->dec(&H); };
+	opcode_table[DEC_L] = [this]() { this->dec(&L); };
 }
 
 void cpu::halt()

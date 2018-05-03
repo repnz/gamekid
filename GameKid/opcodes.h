@@ -213,3 +213,14 @@
 #define INC_H 0x24
 #define INC_L 0x2c
 #define INC_HL 0x34
+
+// DEC n
+#define DEC_A 0x3d
+#define DEC_B 0x05
+#define DEC_C 0x0d
+#define DEC_D 0x15
+#define DEC_E 0x1d
+#define DEC_H 0x25
+#define DEC_L 0x2d
+#define DEC_HL 0x35
+
