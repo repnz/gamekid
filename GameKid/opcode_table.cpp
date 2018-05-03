@@ -165,8 +165,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[ADD_A_L] = [this]() { _cpu->add(&_cpu->A, _cpu->L); };
 	_opcode_table[ADD_A_IMM] = [this]()
 	{
-		_cpu->add(&_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->add(&_cpu->A, _cpu->mem.load(_cpu->PC+1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[ADC_A_A] = [this]() { _cpu->adc(&_cpu->A, _cpu->A); };
@@ -178,8 +178,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[ADC_A_L] = [this]() { _cpu->adc(&_cpu->A, _cpu->L); };
 	_opcode_table[ADC_A_IMM] = [this]()
 	{
-		_cpu->adc(&_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->adc(&_cpu->A, _cpu->mem.load(_cpu->PC + 1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[SUB_A_A] = [this]() { _cpu->sub(&_cpu->A, _cpu->A); };
@@ -191,8 +191,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[SUB_A_L] = [this]() { _cpu->sub(&_cpu->A, _cpu->L); };
 	_opcode_table[SUB_A_IMM] = [this]()
 	{
-		_cpu->sub(&_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->sub(&_cpu->A, _cpu->mem.load(_cpu->PC + 1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[SBC_A_A] = [this]() { _cpu->sbc(&_cpu->A, _cpu->A); };
@@ -204,8 +204,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[SBC_A_L] = [this]() { _cpu->sbc(&_cpu->A, _cpu->L); };
 	_opcode_table[SBC_A_IMM] = [this]()
 	{
-		_cpu->sbc(&_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->sbc(&_cpu->A, _cpu->mem.load(_cpu->PC + 1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[AND_A_A] = [this]() { _cpu->and_n(&_cpu->A, _cpu->A); };
@@ -217,8 +217,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[AND_A_L] = [this]() { _cpu->and_n(&_cpu->A, _cpu->L); };
 	_opcode_table[AND_A_IMM] = [this]()
 	{
-		_cpu->and_n(&_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->and_n(&_cpu->A, _cpu->mem.load(_cpu->PC+1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[OR_A_A] = [this]() { _cpu->or_n(&_cpu->A, _cpu->A); };
@@ -230,8 +230,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[OR_A_L] = [this]() { _cpu->or_n(&_cpu->A, _cpu->L); };
 	_opcode_table[OR_A_IMM] = [this]()
 	{
-		_cpu->or_n(&_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->or_n(&_cpu->A, _cpu->mem.load(_cpu->PC+1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[XOR_A_A] = [this]() { _cpu->xor_n(&_cpu->A, _cpu->A); };
@@ -243,8 +243,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[XOR_A_L] = [this]() { _cpu->xor_n(&_cpu->A, _cpu->L); };
 	_opcode_table[XOR_A_IMM] = [this]()
 	{
-		_cpu->xor_n(&_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->xor_n(&_cpu->A, _cpu->mem.load(_cpu->PC+1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[CP_A_A] = [this]() { _cpu->cp(_cpu->A, _cpu->A); };
@@ -256,8 +256,8 @@ void opcode_table::initialize_alu8_opcodes()
 	_opcode_table[CP_A_L] = [this]() { _cpu->cp(_cpu->A, _cpu->L); };
 	_opcode_table[CP_A_IMM] = [this]()
 	{
-		_cpu->cp(_cpu->A, *_cpu->code_mem);
-		*_cpu->code_mem++;
+		_cpu->cp(_cpu->A, _cpu->mem.load(_cpu->PC+1));
+		_cpu->PC += 2;
 	};
 
 	_opcode_table[INC_A] = [this]() { _cpu->inc(&_cpu->A); };
@@ -279,7 +279,7 @@ void opcode_table::initialize_alu8_opcodes()
 
 void opcode_table::cb_prefix()
 {
-	_cb_prefix_table[*_cpu->code_mem]();
+	_cb_prefix_table[_cpu->mem.load(_cpu->PC+1)]();
 }
 
 opcode_table::opcode_table(cpu* c) : _cpu(c)
@@ -288,5 +288,5 @@ opcode_table::opcode_table(cpu* c) : _cpu(c)
 
 void opcode_table::execute()
 {
-	_opcode_table[*_cpu->code_mem]();
+	_opcode_table[_cpu->mem.load(_cpu->PC)]();
 }

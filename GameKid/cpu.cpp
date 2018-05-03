@@ -3,9 +3,7 @@
 
 cpu::cpu() : _opcode_table(this),
 A(0), B(0), C(0), D(0), E(0), H(0), L(0), SP(0), PC(0),
-zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0),
-memory(nullptr), code_mem(nullptr)
-
+zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0)
 {
 }
 

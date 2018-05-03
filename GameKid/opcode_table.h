@@ -26,5 +26,4 @@ private:
 public:
 	explicit opcode_table(cpu* c);
 	void execute();
-	
 };

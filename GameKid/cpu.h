@@ -1,6 +1,7 @@
 #pragma once
 #include <GameKid/cpu_types.h>
 #include <GameKid/opcode_table.h>
+#include <GameKid/memory.h>
 
 class cpu
 {	
@@ -22,9 +23,8 @@ public:
 	byte half_carry_flag;
 	byte carry_flag;
 
-	byte* memory;
-	byte* code_mem;
-	
+	memory mem;
+
 	cpu();
 
 	void next();
