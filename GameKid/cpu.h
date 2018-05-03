@@ -1,19 +1,11 @@
 #pragma once
 #include <GameKid/cpu_types.h>
-#include <map>
-#include <functional>
+#include <GameKid/opcode_table.h>
 
 class cpu
-{
+{	
 private:
-	void initialize_misc();
-	void initialize_opcode_table();
-	void initialize_rotate_and_shifts();
-	void initialize_bit_opcode(byte startOpcode, byte* address);
-	void initialize_set_opcode(byte startOpcode, byte* address);
-	void initialize_res_opcode(byte startOpcode, byte* address);
-	void initialize_bit_opcodes();
-	void initialize_alu8_opcodes();
+	opcode_table _opcode_table;
 public:
 	byte A;
 	byte B;
@@ -32,12 +24,9 @@ public:
 
 	byte* memory;
 	byte* code_mem;
+	
+	cpu();
 
-	typedef std::function<void()> action;
-
-	std::map<byte, action> opcode_table;
-	std::map<byte, action> cb_prefix_table;
-		
 	void next();
 	
 	void halt();
@@ -57,7 +46,6 @@ public:
 	void sla(byte* val);
 	void sra(byte* val);
 	void srl(byte* val);
-	void cb_prefix();
 	void run();
 	void set(byte* val, byte bit_place);
 	void res(byte* val, byte bit_place);

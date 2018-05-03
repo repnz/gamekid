@@ -4,7 +4,7 @@
 
 TEST(Commands, RL) 
 {
-	cpu c = { 0 };
+	cpu c;
 	
 	// 128 rl = 1
 	byte val = 1<<7; 
@@ -21,7 +21,7 @@ TEST(Commands, RL)
 
 TEST(Commands, RLC) 
 {
-	cpu c = { 0 };
+	cpu c;
 	
 	// 128 rlc (carry = 0) = 0
 	byte val = 1<<7;
@@ -40,7 +40,7 @@ TEST(Commands, RLC)
 
 TEST(Commands, RR)
 {
-	cpu c = { 0 };
+	cpu c;
 	
 	// 1 rr == 128
 	byte val = 1;
@@ -58,7 +58,7 @@ TEST(Commands, RR)
 
 TEST(Commands, RRC)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	// 1 rrc (carry = 0) == 0
 	byte val = 1;
@@ -76,7 +76,7 @@ TEST(Commands, RRC)
 
 TEST(Commands, SLA)
 {
-	cpu c = { 0 };
+	cpu c;
 	
 	// 128 sla == 0
 	byte val = 0b10000000;
@@ -93,7 +93,7 @@ TEST(Commands, SLA)
 
 TEST(Commands, SRA)
 {
-	cpu c = { 0 };
+	cpu c;
 	
 	// 1 sra == 0
 	byte val = 0b00000001;
@@ -110,7 +110,7 @@ TEST(Commands, SRA)
 
 TEST(Commands, SRL)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	// 1 srl == 0
 	byte val = 0b00000001;
@@ -127,7 +127,7 @@ TEST(Commands, SRL)
 
 TEST(Commands, BIT)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	// 1 bit 0 => zero_flag = 0
 	byte val = 0b00000001;
@@ -142,7 +142,7 @@ TEST(Commands, BIT)
 
 TEST(Commands, SET)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	// 0 set 3 => 0b00000100 => 4
 	byte val = 0b00000000;
@@ -153,7 +153,7 @@ TEST(Commands, SET)
 
 TEST(Commands, RES)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	// 6 res 3 == 2
 	byte val = 0b00000110;
@@ -163,7 +163,7 @@ TEST(Commands, RES)
 
 TEST(Commands, ADD)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	byte val = 10;
 	c.add(&val, 2);
@@ -182,7 +182,7 @@ TEST(Commands, ADD)
 
 TEST(Commands, ADC)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	byte val = 10;
 	c.carry_flag = 1;
@@ -195,7 +195,7 @@ TEST(Commands, ADC)
 
 TEST(Commands, SUB)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	byte val = 10;
 	c.sub(&val, 2);
@@ -214,7 +214,7 @@ TEST(Commands, SUB)
 
 TEST(Commands, SBC)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	c.carry_flag = 1;
 	byte val = 10;
@@ -225,7 +225,7 @@ TEST(Commands, SBC)
 
 TEST(Commands, AND)
 {
-	cpu c = { 0 };
+	cpu c;
 	byte val = 0b1010;
 	
 	c.and_n(&val, 0b0101);
@@ -236,7 +236,7 @@ TEST(Commands, AND)
 
 TEST(Commands, OR)
 {
-	cpu c = { 0 };
+	cpu c;
 	byte val = 0b1010;
 
 	c.or_n(&val, 0b0101);
@@ -247,7 +247,7 @@ TEST(Commands, OR)
 
 TEST(Commands, XOR)
 {
-	cpu c = { 0 };
+	cpu c;
 	byte val = 0b1110;
 
 	c.xor_n(&val, 0b1101);
@@ -258,7 +258,7 @@ TEST(Commands, XOR)
 
 TEST(Commands, CP)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	byte val = 10;
 	c.cp(val, 10);
@@ -276,7 +276,7 @@ TEST(Commands, CP)
 
 TEST(Commands, INC)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	byte val = 10;
 	c.inc(&val);
@@ -294,7 +294,7 @@ TEST(Commands, INC)
 
 TEST(Commands, DEC)
 {
-	cpu c = { 0 };
+	cpu c;
 
 	byte val = 10;
 	c.dec(&val);
