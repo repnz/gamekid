@@ -69,4 +69,6 @@ public:
 	void or_n(byte* val, byte n);
 	void xor_n(byte* a, byte byte);
 	void cp(byte val, byte byte);
+	void set_zero_flag(byte val);
+	void inc(byte* val);
 };

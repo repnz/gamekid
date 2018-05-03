@@ -202,3 +202,14 @@
 #define CP_A_L 0xbd
 #define CP_A_HL 0xbe
 #define CP_A_IMM 0xfe
+
+
+// INC n
+#define INC_A 0x3c
+#define INC_B 0x04
+#define INC_C 0x0c
+#define INC_D 0x14
+#define INC_E 0x1c
+#define INC_H 0x24
+#define INC_L 0x2c
+#define INC_HL 0x34

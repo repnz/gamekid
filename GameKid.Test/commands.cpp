@@ -272,3 +272,22 @@ TEST(Commands, CP)
 	c.cp(val, 50);
 	ASSERT_EQ(c.zero_flag | c.carry_flag, 0);
 }
+
+
+TEST(Commands, INC)
+{
+	cpu c = { 0 };
+
+	byte val = 10;
+	c.inc(&val);
+	ASSERT_EQ(val, 11);
+	ASSERT_EQ(c.zero_flag, 0);
+
+	val = 0b1111;
+	c.inc(&val);
+	ASSERT_EQ(c.half_carry_flag, 1);
+
+	val = 255;
+	c.inc(&val);
+	ASSERT_EQ(c.zero_flag, 1);
+}
