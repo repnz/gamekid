@@ -60,4 +60,5 @@ public:
 	void set_zero_flag(byte val);
 	void inc(byte* val);
 	void dec(byte* val);
+	void swap(byte* val);
 };

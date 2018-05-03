@@ -9,6 +9,13 @@ void opcode_table::initialize_misc()
 	_opcode_table[SCF] = [this]() { _cpu->scf(); };
 	_opcode_table[HALT] = [this]() { _cpu->halt(); };
 
+	_cb_prefix_table[CB_SWAP_A] = [this]() {_cpu->swap(&_cpu->A); };
+	_cb_prefix_table[CB_SWAP_B] = [this]() {_cpu->swap(&_cpu->B); };
+	_cb_prefix_table[CB_SWAP_C] = [this]() {_cpu->swap(&_cpu->C); };
+	_cb_prefix_table[CB_SWAP_D] = [this]() {_cpu->swap(&_cpu->D); };
+	_cb_prefix_table[CB_SWAP_E] = [this]() {_cpu->swap(&_cpu->E); };
+	_cb_prefix_table[CB_SWAP_H] = [this]() {_cpu->swap(&_cpu->H); };
+	_cb_prefix_table[CB_SWAP_L] = [this]() {_cpu->swap(&_cpu->L); };
 }
 
 void opcode_table::initialize_opcode_table()

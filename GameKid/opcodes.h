@@ -224,3 +224,13 @@
 #define DEC_L 0x2d
 #define DEC_HL 0x35
 
+// SWAP n
+#define CB_SWAP_A 0x37
+#define CB_SWAP_B 0x30
+#define CB_SWAP_C 0x31
+#define CB_SWAP_D 0x32
+#define CB_SWAP_E 0x33
+#define CB_SWAP_H 0x34
+#define CB_SWAP_L 0x35
+#define CB_SWAP_HL 0x36
+

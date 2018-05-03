@@ -107,6 +107,15 @@ void cpu::dec(byte* val)
 	substruct_flag = 1;
 }
 
+void cpu::swap(byte* val)
+{
+	*val = *val >> 4 | *val << 4;
+	set_zero_flag(*val);
+	half_carry_flag = 0;
+	substruct_flag = 0;
+	carry_flag = 0;
+}
+
 void cpu::sub(byte* val, byte n, bool carry, bool save_result)
 {
 	byte new_value = *val - n;
