@@ -243,7 +243,6 @@
 #define LD_L_n 0x2e
 
 // LD r1, r2
-#define LD_A_A 0x7f
 #define LD_A_r2 0x78
 #define LD_B_r2 0x40
 #define LD_C_r2 0x48
@@ -253,4 +252,9 @@
 #define LD_L_r2 0x68
 #define LD_HL_r2 0x70
 
-
+#define LD_A_A 0x7f
+#define LD_A_BC 0xa
+#define LD_A_DE 0x1a
+#define LD_A_HL 0x7e
+#define LD_A_MEM 0xfa
+#define LD_A_IMM 0x3e

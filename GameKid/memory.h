@@ -8,5 +8,6 @@ private:
 
 public:
 	void store(word address, byte value);
-	byte load(word address);
+	byte load_byte(word address);
+	word load_word_le(word address);
 };

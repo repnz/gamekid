@@ -116,12 +116,27 @@ void cpu::swap(byte* val)
 
 void cpu::ld(byte* val)
 {
-	*val = mem.load(PC + 1);
+	*val = mem.load_byte(PC + 1);
 }
 
-void cpu::ld(byte* r1, byte* r2)
+void cpu::ld(byte* r1, byte r2)
 {
-	*r1 = *r2;
+	*r1 = r2;
+}
+
+word cpu::BC()
+{
+	return B << 8 | A;
+}
+
+word cpu::DE()
+{
+	return D << 8 | E;
+}
+
+word cpu::HL()
+{
+	return H << 8 | L;
 }
 
 void cpu::sub(byte* val, byte n, bool carry, bool save_result)

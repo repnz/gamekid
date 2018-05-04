@@ -62,5 +62,10 @@ public:
 	void dec(byte* val);
 	void swap(byte* val);
 	void ld(byte* val);
-	void ld(byte* r1, byte* r2);
+	void ld(byte* r1, byte r2);
+	
+	word BC();
+	word DE();
+	word HL();
+	
 };
