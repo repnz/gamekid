@@ -12,6 +12,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BootRom", "BootRom", "{3865
 		BootRom\boot_rom.asm = BootRom\boot_rom.asm
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F7ECDAF1-8331-4F24-B1AC-782FEFF64145}"
+	ProjectSection(SolutionItems) = preProject
+		docs\CPU.md = docs\CPU.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2FC55192-A9AE-49E6-867D-344AEFABBB3B}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
