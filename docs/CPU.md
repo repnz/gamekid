@@ -14,24 +14,19 @@ Emulator, Debugger, Disassembler, Assembler easier.
 
 The Load instruction comes in 4 variants:
 
-1) Immidiate to Register
-2) Register to Register
-3) Memory to Register
-4) Register to Memory
+1) Immidiate -> Register
+2) Register -> Register
+3) Memory ->  Register
+4) Register ->  Memory
+5) Immidiate -> Memory 
 
 ### Immidiate to Register
 
 8 cycles.
 
-| Register | Opcode|
-|----------|-------|
-| A  | 0x3E
-|  B |  0x06 |
-|  C |  0x0E |
-|  D |  0x16 |
-|  E |  0x1E |
-|  H |  0x26 |
-|  L |  0x2E |
+|Register |A   |B   |C   |D   |E   |H   |L   |
+|-------- |--- |----|----|----|----|----|----|
+|Opcode   |0x3E|0x06|0x0E|0x16|0x1E|0x26|0x2E|
 
 
 #### Examples
@@ -63,3 +58,12 @@ The Load instruction comes in 4 variants:
 |**L** |0x6F|0x68|0x69|0x6A|0x6B|0x6C|0x6D|
 
 ### Register to Memory
+
+Unless moved to register A, memory access must be done
+by putting the address in register HL, and using it as a pointer.
+
+#### Moving from register to HL memory
+
+|Register |A   |B   |C   |D   |E   |H   |L   |
+|-------- |--- |----|----|----|----|----|----|
+|Opcode   |0x77|0x70|0x71|0x72|0x73|0x74|0x75| 
