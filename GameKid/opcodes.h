@@ -241,3 +241,16 @@
 #define LD_E_n 0x1e
 #define LD_H_n 0x26
 #define LD_L_n 0x2e
+
+// LD r1, r2
+#define LD_A_A 0x7f
+#define LD_A_r2 0x78
+#define LD_B_r2 0x40
+#define LD_C_r2 0x48
+#define LD_D_r2 0x50
+#define LD_E_r2 0x58
+#define LD_H_r2 0x60
+#define LD_L_r2 0x68
+#define LD_HL_r2 0x70
+
+

@@ -10,6 +10,7 @@ class opcode_table
 private:
 	cpu* _cpu;
 	void initialize_misc();
+	void initialize_ld_r1_r2_opcodes(byte startOpcode, byte* address);
 	void initialize_loads8();
 	void initialize_opcode_table();
 	void initialize_rotate_and_shifts();

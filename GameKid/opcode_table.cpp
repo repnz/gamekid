@@ -1,6 +1,44 @@
-#include "opcode_table.h"
+#include <GameKid/opcode_table.h>
 #include <GameKid/opcodes.h>
 #include <GameKid/cpu.h>
+
+void opcode_table::initialize_opcode_table()
+{
+	_opcode_table[CB_PREFIX] = [this]() { this->cb_prefix(); };
+
+	initialize_loads8();
+	initialize_alu8_opcodes();
+	initialize_misc();
+	initialize_rotate_and_shifts();
+	initialize_bit_opcodes();
+}
+
+void opcode_table::initialize_loads8()
+{
+	_opcode_table[LD_B_n] = [this]() { _cpu->ld(&_cpu->B); };
+	_opcode_table[LD_C_n] = [this]() { _cpu->ld(&_cpu->C); };
+	_opcode_table[LD_D_n] = [this]() { _cpu->ld(&_cpu->D); };
+	_opcode_table[LD_E_n] = [this]() { _cpu->ld(&_cpu->E); };
+	_opcode_table[LD_H_n] = [this]() { _cpu->ld(&_cpu->H); };
+	_opcode_table[LD_L_n] = [this]() { _cpu->ld(&_cpu->L); };
+
+	initialize_ld_r1_r2_opcodes(LD_B_n, &_cpu->B);
+	initialize_ld_r1_r2_opcodes(LD_C_n, &_cpu->C);
+	initialize_ld_r1_r2_opcodes(LD_D_n, &_cpu->D);
+	initialize_ld_r1_r2_opcodes(LD_E_n, &_cpu->E);
+	initialize_ld_r1_r2_opcodes(LD_H_n, &_cpu->H);
+	initialize_ld_r1_r2_opcodes(LD_L_n, &_cpu->L);
+}
+
+void opcode_table::initialize_ld_r1_r2_opcodes(byte startOpcode, byte* address)
+{
+	_opcode_table[startOpcode] = [this, address]() { _cpu->ld(address, &_cpu->B); };
+	_opcode_table[startOpcode + 1] = [this, address]() { _cpu->ld(address, &_cpu->C); };
+	_opcode_table[startOpcode + 2] = [this, address]() { _cpu->ld(address, &_cpu->D); };
+	_opcode_table[startOpcode + 3] = [this, address]() { _cpu->ld(address, &_cpu->E); };
+	_opcode_table[startOpcode + 4] = [this, address]() { _cpu->ld(address, &_cpu->H); };
+	_opcode_table[startOpcode + 5] = [this, address]() { _cpu->ld(address, &_cpu->L); };
+}
 
 void opcode_table::initialize_misc()
 {
@@ -16,29 +54,6 @@ void opcode_table::initialize_misc()
 	_cb_prefix_table[CB_SWAP_E] = [this]() {_cpu->swap(&_cpu->E); };
 	_cb_prefix_table[CB_SWAP_H] = [this]() {_cpu->swap(&_cpu->H); };
 	_cb_prefix_table[CB_SWAP_L] = [this]() {_cpu->swap(&_cpu->L); };
-}
-
-void opcode_table::initialize_loads8()
-{
-	_opcode_table[LD_B_n] = [this]() { _cpu->ld(&_cpu->B); };
-	_opcode_table[LD_C_n] = [this]() { _cpu->ld(&_cpu->C); };
-	_opcode_table[LD_D_n] = [this]() { _cpu->ld(&_cpu->D); };
-	_opcode_table[LD_E_n] = [this]() { _cpu->ld(&_cpu->E); };
-	_opcode_table[LD_H_n] = [this]() { _cpu->ld(&_cpu->H); };
-	_opcode_table[LD_L_n] = [this]() { _cpu->ld(&_cpu->L); };
-}
-
-void opcode_table::initialize_opcode_table()
-{
-	_opcode_table[CB_PREFIX] = [this]() { this->cb_prefix(); };
-
-	initialize_loads8();
-	initialize_alu8_opcodes();
-	initialize_misc();
-	initialize_rotate_and_shifts();
-	initialize_bit_opcodes();
-
-
 }
 
 void opcode_table::initialize_rotate_and_shifts()
@@ -106,6 +121,33 @@ void opcode_table::initialize_rotate_and_shifts()
 	_cb_prefix_table[CB_SRL_L] = [this]() { _cpu->srl(&_cpu->L); };
 }
 
+void opcode_table::initialize_bit_opcodes()
+{
+	initialize_bit_opcode(CB_BIT_b_A, &_cpu->A);
+	initialize_bit_opcode(CB_BIT_b_B, &_cpu->B);
+	initialize_bit_opcode(CB_BIT_b_C, &_cpu->C);
+	initialize_bit_opcode(CB_BIT_b_D, &_cpu->D);
+	initialize_bit_opcode(CB_BIT_b_E, &_cpu->E);
+	initialize_bit_opcode(CB_BIT_b_H, &_cpu->H);
+	initialize_bit_opcode(CB_BIT_b_L, &_cpu->L);
+
+	initialize_bit_opcode(CB_SET_b_A, &_cpu->A);
+	initialize_bit_opcode(CB_SET_b_B, &_cpu->B);
+	initialize_bit_opcode(CB_SET_b_C, &_cpu->C);
+	initialize_bit_opcode(CB_SET_b_D, &_cpu->D);
+	initialize_bit_opcode(CB_SET_b_E, &_cpu->E);
+	initialize_bit_opcode(CB_SET_b_H, &_cpu->H);
+	initialize_bit_opcode(CB_SET_b_L, &_cpu->L);
+
+	initialize_res_opcode(CB_RES_b_A, &_cpu->A);
+	initialize_res_opcode(CB_RES_b_B, &_cpu->B);
+	initialize_res_opcode(CB_RES_b_C, &_cpu->C);
+	initialize_res_opcode(CB_RES_b_D, &_cpu->D);
+	initialize_res_opcode(CB_RES_b_E, &_cpu->E);
+	initialize_res_opcode(CB_RES_b_H, &_cpu->H);
+	initialize_res_opcode(CB_RES_b_L, &_cpu->L);
+}
+
 void opcode_table::initialize_bit_opcode(byte startOpcode, byte* address)
 {
 	for (int bitPlace = 0; bitPlace<8; ++bitPlace)
@@ -137,33 +179,6 @@ void opcode_table::initialize_res_opcode(byte startOpcode, byte* address)
 			_cpu->res(address, bitPlace);
 		};
 	}
-}
-
-void opcode_table::initialize_bit_opcodes()
-{
-	initialize_bit_opcode(CB_BIT_b_A, &_cpu->A);
-	initialize_bit_opcode(CB_BIT_b_B, &_cpu->B);
-	initialize_bit_opcode(CB_BIT_b_C, &_cpu->C);
-	initialize_bit_opcode(CB_BIT_b_D, &_cpu->D);
-	initialize_bit_opcode(CB_BIT_b_E, &_cpu->E);
-	initialize_bit_opcode(CB_BIT_b_H, &_cpu->H);
-	initialize_bit_opcode(CB_BIT_b_L, &_cpu->L);
-
-	initialize_bit_opcode(CB_SET_b_A, &_cpu->A);
-	initialize_bit_opcode(CB_SET_b_B, &_cpu->B);
-	initialize_bit_opcode(CB_SET_b_C, &_cpu->C);
-	initialize_bit_opcode(CB_SET_b_D, &_cpu->D);
-	initialize_bit_opcode(CB_SET_b_E, &_cpu->E);
-	initialize_bit_opcode(CB_SET_b_H, &_cpu->H);
-	initialize_bit_opcode(CB_SET_b_L, &_cpu->L);
-
-	initialize_res_opcode(CB_RES_b_A, &_cpu->A);
-	initialize_res_opcode(CB_RES_b_B, &_cpu->B);
-	initialize_res_opcode(CB_RES_b_C, &_cpu->C);
-	initialize_res_opcode(CB_RES_b_D, &_cpu->D);
-	initialize_res_opcode(CB_RES_b_E, &_cpu->E);
-	initialize_res_opcode(CB_RES_b_H, &_cpu->H);
-	initialize_res_opcode(CB_RES_b_L, &_cpu->L);
 }
 
 void opcode_table::initialize_alu8_opcodes()
