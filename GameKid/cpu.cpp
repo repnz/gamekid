@@ -114,6 +114,11 @@ void cpu::swap(byte* val)
 	carry_flag = 0;
 }
 
+void cpu::ld(byte* val)
+{
+	*val = mem.load(PC + 1);
+}
+
 void cpu::sub(byte* val, byte n, bool carry, bool save_result)
 {
 	byte new_value = *val - n;

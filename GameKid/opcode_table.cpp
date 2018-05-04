@@ -18,14 +18,26 @@ void opcode_table::initialize_misc()
 	_cb_prefix_table[CB_SWAP_L] = [this]() {_cpu->swap(&_cpu->L); };
 }
 
+void opcode_table::initialize_loads8()
+{
+	_opcode_table[LD_B_n] = [this]() { _cpu->ld(&_cpu->B); };
+	_opcode_table[LD_C_n] = [this]() { _cpu->ld(&_cpu->C); };
+	_opcode_table[LD_D_n] = [this]() { _cpu->ld(&_cpu->D); };
+	_opcode_table[LD_E_n] = [this]() { _cpu->ld(&_cpu->E); };
+	_opcode_table[LD_H_n] = [this]() { _cpu->ld(&_cpu->H); };
+	_opcode_table[LD_L_n] = [this]() { _cpu->ld(&_cpu->L); };
+}
+
 void opcode_table::initialize_opcode_table()
 {
 	_opcode_table[CB_PREFIX] = [this]() { this->cb_prefix(); };
 
+	initialize_loads8();
 	initialize_alu8_opcodes();
 	initialize_misc();
 	initialize_rotate_and_shifts();
 	initialize_bit_opcodes();
+
 
 }
 

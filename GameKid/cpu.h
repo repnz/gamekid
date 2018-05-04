@@ -61,4 +61,5 @@ public:
 	void inc(byte* val);
 	void dec(byte* val);
 	void swap(byte* val);
+	void ld(byte* val);
 };

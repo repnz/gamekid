@@ -234,3 +234,10 @@
 #define CB_SWAP_L 0x35
 #define CB_SWAP_HL 0x36
 
+// LD nn, n
+#define LD_B_n 0x6
+#define LD_C_n 0xe
+#define LD_D_n 0x16
+#define LD_E_n 0x1e
+#define LD_H_n 0x26
+#define LD_L_n 0x2e
