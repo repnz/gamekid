@@ -67,3 +67,54 @@ by putting the address in register HL, and using it as a pointer.
 |Register |A   |B   |C   |D   |E   |H   |L   |
 |-------- |--- |----|----|----|----|----|----|
 |Opcode   |0x77|0x70|0x71|0x72|0x73|0x74|0x75| 
+
+Examples
+```assembly
+77 : ld [HL], A
+72 : ld [HL], D
+```
+
+#### Moving A register to BC, DE, HL
+
+
+|Register |BC   |DE   |HL|
+|-------- |--- |----|----|
+|Opcode   |0x02|0x12|0x77|
+
+
+Examples
+```assembly
+02 : ld [BC], A
+77 : ld [HL], A
+```
+
+#### Moving from A register to memory address
+
+memory write can be done by specifying the memory address in the code as 
+an opcode parameter.
+
+Opcode=0xEA
+- LD (nn), A
+  - nn is the address to write to, encoded as little endian after the opcode.
+- Cycles = 16
+
+Examples
+```assembly
+EA 0F 00 : ld [0x000f], A
+EA 0E FF : ld [0xff0e], A
+```
+
+#### Using the C register as a memory pointer
+
+the C register is used to access memory from 0xFF00+C.
+
+Opcode=0xE2
+- LD (C), A
+- Cycles = 8
+
+Example
+```assembly
+0E 20 : ld c, 0x20
+E2    : ld [c], A ; Write A to 0xFF20 
+```
+
