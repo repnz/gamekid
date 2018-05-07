@@ -1,7 +1,8 @@
 #pragma once
-#include "cpu_types.h"
 #include <map>
 #include <functional>
+#include <GameKid/cpu_types.h>
+
 
 class cpu;
 

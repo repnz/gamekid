@@ -1,4 +1,5 @@
 #pragma once
+class cpu;
 #include <GameKid/cpu_types.h>
 #include <GameKid/opcode_table.h>
 #include <GameKid/memory.h>

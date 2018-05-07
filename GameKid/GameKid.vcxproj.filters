@@ -53,5 +53,8 @@
     <ClInclude Include="cpu\instruction_set.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\alu_8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

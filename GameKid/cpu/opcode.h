@@ -4,48 +4,68 @@
 #include "GameKid/cpu.h"
 #include <vector>
 
+
 class opcode
 {
+protected:
+	cpu & _cpu;
 public:
-	virtual ~opcode() = default;
 	std::string name;
 	std::vector<byte> bytes;
-
-	opcode(const std::string& name, std::vector<byte> bytes)
-		: name(name), bytes(bytes)
+	
+	opcode(cpu& cpu, const std::string& name, std::vector<byte> bytes)
+		: _cpu(cpu), name(name), bytes(bytes)
 	{
 	}
 
+	opcode& operator=(const opcode& op)
+	{
+		_cpu = op._cpu;
+		name = op.name;
+		bytes = op.bytes;
+		return *this;
+	}
+
 	virtual std::string to_str(byte* next) = 0;
-	virtual void run(cpu* cpu) = 0;
+	virtual void run() = 0;
+	virtual ~opcode() = default;
 };
 
 class register_opcode : public opcode
 {
 private:
-	std::function<void(cpu* cpu, byte* addr)> _operation;
+	std::function<void(byte* addr)> _operation;
 public:
 	std::string register_name;
 	byte* register_address;
 
-
+	
 	register_opcode(
+		cpu& cpu,
 		const std::string& name,
-		const std::vector<byte>& opcode,
-		const std::function<void(cpu* cpu, byte* addr)>& operation,
+		const std::vector<byte>& bytes,
+		const std::function<void(byte* addr)>& operation,
 		const std::string& register_name,
 		byte* register_address
 	)
-		: opcode(name, opcode),
+		: opcode(cpu, name, bytes),
 		_operation(operation),
 		register_name(register_name),
 		register_address(register_address)
 	{
 	}
-
-	void run(cpu* cpu) override
+	
+	register_opcode& operator=(const register_opcode& op)
 	{
-		_operation(cpu, register_address);
+		opcode::operator=(op);
+		register_name = op.register_name;
+		register_address = op.register_address;
+		return *this;
+	}
+
+	void run() override
+	{
+		_operation(register_address);
 	}
 
 	std::string to_str(byte* next) override
