@@ -139,6 +139,7 @@
     <ClCompile Include="opcode_table.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="instruction_set.h" />
     <ClInclude Include="cpu.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />
