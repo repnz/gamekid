@@ -137,6 +137,7 @@
     <ClCompile Include="cpu.cpp" />
     <ClCompile Include="cpu\instruction_set.cpp" />
     <ClCompile Include="cpu\opcode_decoder.cpp" />
+    <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="memory.cpp" />
     <ClCompile Include="opcode_table.cpp" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="cpu\opcode.h" />
     <ClInclude Include="cpu.h" />
     <ClInclude Include="cpu\opcode_decoder.h" />
+    <ClInclude Include="cpu\opcode_encoder.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />
     <ClInclude Include="cpu_types.h" />

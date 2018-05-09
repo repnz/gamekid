@@ -7,21 +7,22 @@ class instruction
 {
 protected:
 	cpu & _cpu;
+	instruction(cpu& cpu, const std::string& name) : _cpu(cpu), name(name) {}
 public:
 
 	std::string name;
 	std::vector<opcode*> opcodes;
 
-	instruction(cpu& cpu, const std::string& name) : _cpu(cpu), name(name) {}
 	virtual ~instruction() = default;
+	virtual std::vector<byte> parse(const std::vector<std::string>& operands) = 0;
 
 };
 
 class register_instruction : public instruction
 {
 private:
-	std::vector<register_opcode> _register_opcodes;
-public:
+	std::map<std::string, register_opcode> _register_opcodes;
+protected:
 	register_instruction(cpu& cpu, std::string name, bool cb_prefix, byte a, byte b, byte c,
 		byte d, byte e, byte h, byte l) : instruction(cpu, name)
 	{
@@ -34,6 +35,28 @@ public:
 		add_register_opcode(e, "E", &cpu.E, cb_prefix);
 		add_register_opcode(h, "H", &cpu.H, cb_prefix);
 		add_register_opcode(l, "L", &cpu.L, cb_prefix);
+	}
+public:
+	
+
+	std::vector<byte> parse(const std::vector<std::string>& operands) override
+	{
+		if (operands.size() != 1)
+		{
+			return {};
+		}
+
+		const std::string& register_name = operands[0];
+
+		auto it = _register_opcodes.find(register_name);
+
+		if (it == _register_opcodes.end())
+		{
+			return {};
+		}
+
+		return it->second.bytes();
+
 	}
 
 	virtual void run_on_byte(byte* val) = 0;
@@ -48,7 +71,7 @@ private:
 		bool cb_prefix
 		)
 	{
-		_register_opcodes.push_back(register_opcode(
+		_register_opcodes.insert(make_pair(register_name, register_opcode(
 			_cpu, 
 			name, 
 			value, 
@@ -56,8 +79,8 @@ private:
 			register_name, 
 			register_address,
 			cb_prefix
-		));
-		
-		opcodes.push_back(&_register_opcodes[_register_opcodes.size() - 1]);
+		)));
+			
+		opcodes.push_back(&_register_opcodes.at(register_name));
 	}
 };

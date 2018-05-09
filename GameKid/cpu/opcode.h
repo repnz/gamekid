@@ -19,6 +19,21 @@ public:
 	{
 	}
 
+	virtual std::vector<byte> bytes(const std::vector<std::string>& operands)
+	{
+		return bytes();
+	}
+
+	virtual std::vector<byte> bytes()
+	{
+		if (cb_prefix)
+		{
+			return { 0xCB, value };
+		}
+
+		return { value };
+	}
+
 	virtual std::string to_str(byte* next) = 0;
 	virtual void run() = 0;
 	virtual ~opcode() = default;
