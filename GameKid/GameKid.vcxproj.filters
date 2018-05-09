@@ -41,9 +41,6 @@
     <ClInclude Include="memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="instruction_set.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cpu\opcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>

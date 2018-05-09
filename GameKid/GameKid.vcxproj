@@ -143,7 +143,6 @@
     <ClInclude Include="cpu\instruction.h" />
     <ClInclude Include="cpu\instruction_set.h" />
     <ClInclude Include="cpu\opcode.h" />
-    <ClInclude Include="instruction_set.h" />
     <ClInclude Include="cpu.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />

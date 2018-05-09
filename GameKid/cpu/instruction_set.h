@@ -5,7 +5,7 @@
 
 class instruction_set
 {
-	std::vector<instruction> instructions;
+	std::vector<std::unique_ptr<instruction>> instructions;
 
 	instruction_set();
 };

@@ -3,6 +3,7 @@
 #include <GameKid/cpu.h>
 #include <GameKid/cpu_types.h>
 #include <GameKid/cpu/opcode.h>
+#include <memory>
 
 class instruction
 {
@@ -11,7 +12,7 @@ protected:
 public:
 
 	std::string name;
-	std::vector<opcode*> opcodes;
+	std::vector<std::unique_ptr<opcode>> opcodes;
 
 	instruction(cpu& cpu, const std::string& name) : _cpu(cpu), name(name) {}
 	virtual ~instruction() = default;
@@ -38,7 +39,6 @@ public:
 	virtual void run_on_byte(byte* val) = 0;
 
 private:
-	std::vector<register_opcode> register_opcodes;
 	std::function<void(byte*)> _operation;
 
 	void add_register_opcode(
@@ -47,7 +47,7 @@ private:
 		byte* register_address
 		)
 	{
-		register_opcodes.push_back(register_opcode(
+		opcodes.push_back(std::make_unique<register_opcode>(
 			_cpu, 
 			name, 
 			bytes, 
