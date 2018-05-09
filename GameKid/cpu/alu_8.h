@@ -2,11 +2,11 @@
 #include <GameKid/cpu/instruction.h>
 #include "GameKid/opcodes.h"
 
-class sub_instruction : register_instruction
+class sub_instruction : public register_instruction
 {
 public:
 	explicit sub_instruction(cpu& cpu)
-		: register_instruction(cpu, "sub",
+		: register_instruction(cpu, "sub", false,
 			SUB_A_A, 
 			SUB_A_B, 
 			SUB_A_C,

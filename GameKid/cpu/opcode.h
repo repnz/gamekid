@@ -11,19 +11,12 @@ protected:
 	cpu & _cpu;
 public:
 	std::string name;
-	std::vector<byte> bytes;
+	byte value;
+	bool cb_prefix;
 	
-	opcode(cpu& cpu, const std::string& name, std::vector<byte> bytes)
-		: _cpu(cpu), name(name), bytes(bytes)
+	opcode(cpu& cpu, const std::string& name, byte value, bool cb_prefix)
+		: _cpu(cpu), name(name), value(value), cb_prefix(cb_prefix)
 	{
-	}
-
-	opcode& operator=(const opcode& op)
-	{
-		_cpu = op._cpu;
-		name = op.name;
-		bytes = op.bytes;
-		return *this;
 	}
 
 	virtual std::string to_str(byte* next) = 0;
@@ -43,26 +36,19 @@ public:
 	register_opcode(
 		cpu& cpu,
 		const std::string& name,
-		const std::vector<byte>& bytes,
+		const byte value,
 		const std::function<void(byte* addr)>& operation,
 		const std::string& register_name,
-		byte* register_address
+		byte* register_address,
+		bool cb_prefix
 	)
-		: opcode(cpu, name, bytes),
+		: opcode(cpu, name, value, cb_prefix),
 		_operation(operation),
 		register_name(register_name),
 		register_address(register_address)
 	{
 	}
 	
-	register_opcode& operator=(const register_opcode& op)
-	{
-		opcode::operator=(op);
-		register_name = op.register_name;
-		register_address = op.register_address;
-		return *this;
-	}
-
 	void run() override
 	{
 		_operation(register_address);
