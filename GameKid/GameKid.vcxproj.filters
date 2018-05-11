@@ -68,5 +68,8 @@
     <ClInclude Include="cpu\opcode_encoder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\rotates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

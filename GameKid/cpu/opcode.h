@@ -34,7 +34,11 @@ public:
 		return { value };
 	}
 
-	virtual std::string to_str(byte* next) = 0;
+	virtual std::string to_str(byte* next)
+	{
+		return name;
+	}
+
 	virtual void run() = 0;
 	virtual ~opcode() = default;
 };

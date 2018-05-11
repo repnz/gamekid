@@ -18,7 +18,6 @@ private:
 		instruction* ptr = _instructions[_instructions.size() - 1].get();
 		_ptr_instructions.push_back(ptr);
 	}
-
 public:
 	const std::vector<instruction*>& instructions();
 	explicit instruction_set(cpu& cpu);

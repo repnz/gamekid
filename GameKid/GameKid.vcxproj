@@ -149,6 +149,7 @@
     <ClInclude Include="cpu.h" />
     <ClInclude Include="cpu\opcode_decoder.h" />
     <ClInclude Include="cpu\opcode_encoder.h" />
+    <ClInclude Include="cpu\rotates.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />
     <ClInclude Include="cpu_types.h" />
