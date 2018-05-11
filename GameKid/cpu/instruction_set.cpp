@@ -5,6 +5,7 @@
 instruction_set::instruction_set(cpu& cpu)
 {
 	_instructions.push_back(std::make_unique<sub_instruction>(cpu));
+	_instructions.push_back(std::make_unique<add_instruction>(cpu));
 
 	for (std::unique_ptr<instruction>& ptr : _instructions)
 	{
