@@ -10,7 +10,7 @@ opcode_decoder::opcode_decoder(instruction_set & set)
 
 void opcode_decoder::initialize_tables()
 {
-	for (std::unique_ptr<instruction>& instruction : _set.instructions)
+	for (instruction* instruction : _set.instructions())
 	{
 		for (opcode* op : instruction->opcodes)
 		{

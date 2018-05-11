@@ -6,9 +6,10 @@
 
 class instruction_set
 {
+	std::vector<std::unique_ptr<instruction>> _instructions;
+	std::vector<instruction*> _ptr_instructions;
 public:
-	std::vector<std::unique_ptr<instruction>> instructions;
-	instruction_set(cpu& cpu);
-	std::unique_ptr<instruction>* get_instruction(const std::string& name);
-	
+	const std::vector<instruction*>& instructions();
+	explicit instruction_set(cpu& cpu);
+
 };

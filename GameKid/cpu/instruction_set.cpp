@@ -1,21 +1,18 @@
 #include <GameKid/cpu/instruction_set.h>
 #include <GameKid/cpu/alu_8.h>
 
+
 instruction_set::instruction_set(cpu& cpu)
 {
-	instructions.push_back(std::make_unique<sub_instruction>(cpu));
-}
+	_instructions.push_back(std::make_unique<sub_instruction>(cpu));
 
-std::unique_ptr<instruction>* instruction_set::get_instruction(const std::string& name)
-{
-	for (std::unique_ptr<::instruction>& current_instruction : instructions)
+	for (std::unique_ptr<instruction>& ptr : _instructions)
 	{
-		if (current_instruction->name == name)
-		{
-			return &current_instruction;
-		}
+		_ptr_instructions.push_back(ptr.get());
 	}
-
-	return nullptr;
 }
 
+const std::vector<instruction*>& instruction_set::instructions()
+{
+	return _ptr_instructions;
+}

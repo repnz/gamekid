@@ -6,19 +6,23 @@ std::vector<std::string> split(const std::string &s, char delim);
 
 opcode_encoder::opcode_encoder(instruction_set& set) : _set(set)
 {
+	for (instruction* ins : set.instructions())
+	{
+		_instruction_map[ins->name] = ins;
+	}
 }
 
 std::vector<byte> opcode_encoder::encode(const std::string& instruction)
 {
 	std::vector<std::string> splitted = split(instruction, ' ');
-	std::unique_ptr<::instruction>* ins = _set.get_instruction(splitted[0]);
+	const auto& ins = _instruction_map.find(splitted[0]);
 
-	if (ins == nullptr)
+	if (ins == _instruction_map.end())
 	{
 		return {};
 	}
 
-	return (*ins)->parse(splitted);
+	return ins->second->parse(splitted);
 }
 
 template<typename Out>
