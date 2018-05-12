@@ -71,5 +71,8 @@
     <ClInclude Include="cpu\rotates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\bit_instructions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
