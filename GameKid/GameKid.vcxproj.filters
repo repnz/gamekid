@@ -194,5 +194,8 @@
     <ClInclude Include="cpu\base_opcodes\function_opcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\instructions\misc\daa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
