@@ -1,5 +1,5 @@
 #include <GameKid/cpu.h>
-#include <GameKid/opcodes.h>
+
 
 cpu::cpu() : _opcode_table(this),
 A(0), B(0), C(0), D(0), E(0), H(0), L(0), SP(0), PC(0),

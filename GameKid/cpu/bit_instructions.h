@@ -1,6 +1,7 @@
 #pragma once
 #include "instruction.h"
 #include <sstream>
+#include "GameKid/opcodes.h"
 
 class bit_operation_opcode : public opcode
 {
@@ -39,13 +40,29 @@ public:
 	}
 };
 
-class bit_operation_instruction : instruction
+class bit_operation_instruction : public instruction
 {
 public:
-	bit_operation_instruction(cpu& cpu, const std::string& name, byte value, bool cb_prefix)
-		: instruction(cpu, name), _value(value), _cb_prefix(cb_prefix)
+	bit_operation_instruction(cpu& cpu, const std::string& name,
+		byte a,
+		byte b,
+		byte c,
+		byte d,
+		byte e,
+		byte h, 
+		byte l
+		, bool cb_prefix)
+		: instruction(cpu, name), _cb_prefix(cb_prefix)
 	{
 		_operation = [this](byte* address, byte bit) { this->run(address, bit); };
+
+		add_register_opcodes("A", &cpu.A, a);
+		add_register_opcodes("B", &cpu.B, b);
+		add_register_opcodes("C", &cpu.C, c);
+		add_register_opcodes("D", &cpu.D, d);
+		add_register_opcodes("E", &cpu.E, e);
+		add_register_opcodes("H", &cpu.H, h);
+		add_register_opcodes("L", &cpu.L, l);
 	}
 
 	std::vector<byte> parse(const std::vector<std::string>& operands) override
@@ -61,7 +78,8 @@ public:
 
 	virtual void run(byte* address, byte bit) = 0;
 private:
-	void add_register_opcodes(const std::string& register_name, byte* register_address)
+	void add_register_opcodes(const std::string& register_name, byte* register_address, 
+		byte base_value)
 	{
 		for (byte bit = 0; bit<8; ++bit)
 		{
@@ -69,7 +87,7 @@ private:
 				bit_operation_opcode(
 					_cpu,
 					name,
-					_value,
+					base_value,
 					register_name,
 					register_address,
 					_cb_prefix,
@@ -82,20 +100,73 @@ private:
 
 	std::function<void(byte*, byte)> _operation;
 	bool _cb_prefix;
-	byte _value;
 	std::map<std::string, std::vector<bit_operation_opcode>> _bit_opcodes;
 
 };
 
-class bit_instruction : bit_operation_instruction
+class bit_instruction : public bit_operation_instruction
 {
 public:
 	explicit bit_instruction(cpu& cpu)
-		: bit_operation_instruction()
+		: bit_operation_instruction(cpu, "bit",
+			CB_BIT_b_A,
+			CB_BIT_b_B,
+			CB_BIT_b_C,
+			CB_BIT_b_D,
+			CB_BIT_b_E,
+			CB_BIT_b_H,
+			CB_BIT_b_L,
+			true)
 	{
 	}
 
 	void run(byte* val, byte bit) override
 	{
+		_cpu.bit(*val, bit);
+	}
+};
+
+class set_instruction : public bit_operation_instruction
+{
+public:
+	explicit set_instruction(cpu& cpu)
+		: bit_operation_instruction(cpu, "set",
+			CB_SET_b_A,
+			CB_SET_b_B,
+			CB_SET_b_C,
+			CB_SET_b_D,
+			CB_SET_b_E,
+			CB_SET_b_H,
+			CB_SET_b_L,
+			true)
+	{
+	}
+
+	void run(byte* val, byte bit) override
+	{
+		_cpu.set(val, bit);
+	}
+};
+
+
+class res_instruction : public bit_operation_instruction
+{
+public:
+	explicit res_instruction(cpu& cpu)
+		: bit_operation_instruction(cpu, "res",
+			CB_RES_b_A,
+			CB_RES_b_B,
+			CB_RES_b_C,
+			CB_RES_b_D,
+			CB_RES_b_E,
+			CB_RES_b_H,
+			CB_RES_b_L,
+			true)
+	{
+	}
+
+	void run(byte* val, byte bit) override
+	{
+		_cpu.res(val, bit);
 	}
 };

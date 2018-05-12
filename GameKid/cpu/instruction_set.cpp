@@ -1,6 +1,7 @@
 #include <GameKid/cpu/instruction_set.h>
 #include <GameKid/cpu/alu_8.h>
 #include "rotates.h"
+#include "bit_instructions.h"
 
 
 instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
@@ -30,6 +31,10 @@ instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
 	add<sra_instruction>();
 	add<srl_instruction>();
 
+	// bit operations
+	add<bit_instruction>();
+	add<set_instruction>();
+	add<res_instruction>();
 }
 
 const std::vector<instruction*>& instruction_set::instructions()
