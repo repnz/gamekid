@@ -135,6 +135,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cpu.cpp" />
+    <ClCompile Include="cpu\base_instructions\bitmask_instruction.cpp" />
+    <ClCompile Include="cpu\base_instructions\register_instruction.cpp" />
+    <ClCompile Include="cpu\instructions\alu_8.cpp" />
+    <ClCompile Include="cpu\instructions\bitmask.cpp" />
+    <ClCompile Include="cpu\instructions\rotation.cpp" />
     <ClCompile Include="cpu\instruction_set.cpp" />
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
@@ -142,15 +147,41 @@
     <ClCompile Include="opcode_table.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cpu\alu_8.h" />
-    <ClInclude Include="cpu\bit_instructions.h" />
+    <ClInclude Include="cpu\base_instructions\bitmask_instruction.h" />
+    <ClInclude Include="cpu\instructions\alu_8\adc.h" />
+    <ClInclude Include="cpu\instructions\alu_8\add.h" />
+    <ClInclude Include="cpu\instructions\alu_8.h" />
+    <ClInclude Include="cpu\instructions\alu_8\and.h" />
+    <ClInclude Include="cpu\instructions\alu_8\cp.h" />
+    <ClInclude Include="cpu\instructions\alu_8\dec.h" />
+    <ClInclude Include="cpu\instructions\alu_8\inc.h" />
+    <ClInclude Include="cpu\instructions\alu_8\or.h" />
+    <ClInclude Include="cpu\instructions\alu_8\sbc.h" />
+    <ClInclude Include="cpu\instructions\alu_8\sub.h" />
+    <ClInclude Include="cpu\instructions\alu_8\xor.h" />
+    <ClInclude Include="cpu\instructions\bitmask\bit.h" />
+    <ClInclude Include="cpu\instructions\bitmask.h" />
+    <ClInclude Include="cpu\instructions\bitmask\res.h" />
+    <ClInclude Include="cpu\instructions\bitmask\set.h" />
+    <ClInclude Include="cpu\base_instructions\register_instruction.h" />
     <ClInclude Include="cpu\instruction.h" />
+    <ClInclude Include="cpu\instructions\rotation\rla.h" />
+    <ClInclude Include="cpu\instructions\rotation\rlca.h" />
+    <ClInclude Include="cpu\instructions\rotation\rlc.h" />
+    <ClInclude Include="cpu\instructions\rotation\rl.h" />
+    <ClInclude Include="cpu\instructions\rotation.h" />
+    <ClInclude Include="cpu\instructions\rotation\rra.h" />
+    <ClInclude Include="cpu\instructions\rotation\rrca.h" />
+    <ClInclude Include="cpu\instructions\rotation\rrc.h" />
+    <ClInclude Include="cpu\instructions\rotation\rr.h" />
+    <ClInclude Include="cpu\instructions\rotation\sla.h" />
+    <ClInclude Include="cpu\instructions\rotation\sra.h" />
+    <ClInclude Include="cpu\instructions\rotation\srl.h" />
     <ClInclude Include="cpu\instruction_set.h" />
     <ClInclude Include="cpu\opcode.h" />
     <ClInclude Include="cpu.h" />
     <ClInclude Include="cpu\opcode_decoder.h" />
     <ClInclude Include="cpu\opcode_encoder.h" />
-    <ClInclude Include="cpu\rotates.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />
     <ClInclude Include="cpu_types.h" />
