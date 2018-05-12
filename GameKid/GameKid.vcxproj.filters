@@ -185,5 +185,8 @@
     <ClInclude Include="cpu\instructions\misc\scf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\instructions\misc\nop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

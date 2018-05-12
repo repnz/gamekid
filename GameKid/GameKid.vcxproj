@@ -169,6 +169,7 @@
     <ClInclude Include="cpu\instruction.h" />
     <ClInclude Include="cpu\instructions\misc.h" />
     <ClInclude Include="cpu\instructions\misc\ccf.h" />
+    <ClInclude Include="cpu\instructions\misc\nop.h" />
     <ClInclude Include="cpu\instructions\misc\scf.h" />
     <ClInclude Include="cpu\instructions\misc\swap.h" />
     <ClInclude Include="cpu\instructions\rotation\rla.h" />
