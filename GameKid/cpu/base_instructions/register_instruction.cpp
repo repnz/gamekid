@@ -6,14 +6,15 @@ register_instruction::register_instruction(cpu& cpu, std::string name,
 	byte d, byte e, byte h, byte l) : instruction(cpu, name)
 {
 	_operation = [this](byte* addr) { run(addr); };
+	byte cycles = (cb_prefix) ? 4 : 8;
 
-	add_register_opcode(a, "A", &cpu.A, cb_prefix);
-	add_register_opcode(b, "B", &cpu.B, cb_prefix);
-	add_register_opcode(c, "C", &cpu.C, cb_prefix);
-	add_register_opcode(d, "D", &cpu.D, cb_prefix);
-	add_register_opcode(e, "E", &cpu.E, cb_prefix);
-	add_register_opcode(h, "H", &cpu.H, cb_prefix);
-	add_register_opcode(l, "L", &cpu.L, cb_prefix);
+	add_register_opcode(a, "A", &cpu.A, cb_prefix, cycles);
+	add_register_opcode(b, "B", &cpu.B, cb_prefix, cycles);
+	add_register_opcode(c, "C", &cpu.C, cb_prefix, cycles);
+	add_register_opcode(d, "D", &cpu.D, cb_prefix, cycles);
+	add_register_opcode(e, "E", &cpu.E, cb_prefix, cycles);
+	add_register_opcode(h, "H", &cpu.H, cb_prefix, cycles);
+	add_register_opcode(l, "L", &cpu.L, cb_prefix, cycles);
 }
 
 std::vector<byte> register_instruction::parse(const std::vector<std::string>& operands)
@@ -35,8 +36,9 @@ std::vector<byte> register_instruction::parse(const std::vector<std::string>& op
 	return it->second.bytes();
 }
 
-void register_instruction::add_register_opcode(const byte value, const std::string& register_name,
-	byte* register_address, bool cb_prefix)
+void register_instruction::add_register_opcode(const byte value, 
+	const std::string& register_name,
+	byte* register_address, bool cb_prefix, byte cycles)
 {
 	_register_opcodes.insert(make_pair(register_name, register_opcode(
 		_cpu,
@@ -45,7 +47,8 @@ void register_instruction::add_register_opcode(const byte value, const std::stri
 		_operation,
 		register_name,
 		register_address,
-		cb_prefix
+		cb_prefix,
+		cycles
 	)));
 
 	opcodes.push_back(&_register_opcodes.at(register_name));

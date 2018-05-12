@@ -7,8 +7,8 @@ private:
 	std::function<void()> _function;
 public:
 	function_opcode(cpu& cpu, const std::string& name, byte value,
-		bool cb_prefix, std::function<void()> f)
-		: opcode(cpu, name, value, cb_prefix)
+		bool cb_prefix, byte cycles, std::function<void()> f)
+		: opcode(cpu, name, value, cb_prefix, cycles)
 	{
 	}
 

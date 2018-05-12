@@ -8,7 +8,7 @@ class rrca_opcode : public opcode
 {
 public:
 	explicit rrca_opcode(cpu& cpu)
-		: opcode(cpu, "rrca", RRCA, false)
+		: opcode(cpu, "rrca", RRCA, false, 4)
 	{
 	}
 

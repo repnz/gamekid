@@ -7,7 +7,7 @@ class nop_instruction : public single_opcode_instruction
 {
 public:
 	explicit nop_instruction(cpu& cpu)
-		: single_opcode_instruction(cpu, "nop", NOP, false)
+		: single_opcode_instruction(cpu, "nop", NOP, false, 4)
 	{
 	}
 

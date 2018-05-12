@@ -18,9 +18,10 @@ public:
 		const std::function<void(byte* addr)>& operation,
 		const std::string& register_name,
 		byte* register_address,
-		bool cb_prefix
+		bool cb_prefix,
+		byte cycles
 	)
-		: opcode(cpu, name, value, cb_prefix),
+		: opcode(cpu, name, value, cb_prefix, cycles),
 		_operation(operation),
 		register_name(register_name),
 		register_address(register_address)

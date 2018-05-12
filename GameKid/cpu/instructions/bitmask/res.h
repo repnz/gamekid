@@ -14,8 +14,7 @@ public:
 			CB_RES_b_D,
 			CB_RES_b_E,
 			CB_RES_b_H,
-			CB_RES_b_L,
-			true)
+			CB_RES_b_L)
 	{
 	}
 

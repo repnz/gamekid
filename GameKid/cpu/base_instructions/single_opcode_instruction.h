@@ -8,8 +8,8 @@ private:
 	function_opcode _op;
 public:
 	single_opcode_instruction(cpu& cpu, const std::string& name,
-		byte value, byte cb_prefix)
-		: instruction(cpu, name), _op(cpu, name, value, cb_prefix, [this]() {run(); })
+		byte value, byte cb_prefix, byte cycles)
+		: instruction(cpu, name), _op(cpu, name, value, cb_prefix, cycles, [this]() {run(); })
 	{
 		opcodes.push_back(&_op);
 	}

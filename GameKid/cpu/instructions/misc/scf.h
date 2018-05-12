@@ -7,7 +7,7 @@ class scf_instruction : public single_opcode_instruction
 {
 public:
 	explicit scf_instruction(cpu& cpu)
-		: single_opcode_instruction(cpu, "scf", SCF, false)
+		: single_opcode_instruction(cpu, "scf", SCF, false, 4)
 	{
 	}
 

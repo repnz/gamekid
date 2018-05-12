@@ -13,9 +13,10 @@ public:
 	std::string name;
 	byte value;
 	bool cb_prefix;
+	byte cycles;
 	
-	opcode(cpu& cpu, const std::string& name, byte value, bool cb_prefix)
-		: _cpu(cpu), name(name), value(value), cb_prefix(cb_prefix)
+	opcode(cpu& cpu, const std::string& name, byte value, bool cb_prefix, byte cycles)
+		: _cpu(cpu), name(name), value(value), cb_prefix(cb_prefix), cycles(cycles)
 	{
 	}
 

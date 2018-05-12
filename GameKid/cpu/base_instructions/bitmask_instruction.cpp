@@ -18,8 +18,8 @@ std::string bitmask_opcode::to_str(byte* next)
 
 bitmask_instruction::bitmask_instruction(cpu& cpu, 
 	const std::string& name, byte a, byte b, byte c,
-	byte d, byte e, byte h, byte l, bool cb_prefix) :
-	instruction(cpu, name), _cb_prefix(cb_prefix)
+	byte d, byte e, byte h, byte l) :
+	instruction(cpu, name)
 {
 	_operation = [this](byte* address, byte bit) { this->run(address, bit); };
 
@@ -55,7 +55,6 @@ void bitmask_instruction::add_register_opcodes(const std::string& register_name,
 				base_value,
 				register_name,
 				register_address,
-				_cb_prefix,
 				_operation,
 				bit
 			)

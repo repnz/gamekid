@@ -12,8 +12,7 @@ public:
 			CB_BIT_b_D,
 			CB_BIT_b_E,
 			CB_BIT_b_H,
-			CB_BIT_b_L,
-			true)
+			CB_BIT_b_L)
 	{
 	}
 

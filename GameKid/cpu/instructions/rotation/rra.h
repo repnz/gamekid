@@ -10,7 +10,7 @@ class rra_opcode : public opcode
 {
 public:
 	explicit rra_opcode(cpu& cpu)
-		: opcode(cpu, "rra", RRA, false)
+		: opcode(cpu, "rra", RRA, false, 4)
 	{
 	}
 

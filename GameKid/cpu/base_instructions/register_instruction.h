@@ -23,7 +23,8 @@ private:
 		const byte value,
 		const std::string& register_name,
 		byte* register_address,
-		bool cb_prefix
+		bool cb_prefix,
+		byte cycles
 	);
 };
 
