@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpu\base_instructions\bitmask_instruction.h" />
+    <ClInclude Include="cpu\base_instructions\single_opcode_instruction.h" />
     <ClInclude Include="cpu\instructions\alu_8\adc.h" />
     <ClInclude Include="cpu\instructions\alu_8\add.h" />
     <ClInclude Include="cpu\instructions\alu_8.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="cpu\base_instructions\register_instruction.h" />
     <ClInclude Include="cpu\instruction.h" />
     <ClInclude Include="cpu\instructions\misc.h" />
+    <ClInclude Include="cpu\instructions\misc\ccf.h" />
     <ClInclude Include="cpu\instructions\misc\swap.h" />
     <ClInclude Include="cpu\instructions\rotation\rla.h" />
     <ClInclude Include="cpu\instructions\rotation\rlca.h" />

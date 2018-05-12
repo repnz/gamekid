@@ -176,5 +176,11 @@
     <ClInclude Include="cpu\instructions\misc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\instructions\misc\ccf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\base_instructions\single_opcode_instruction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
