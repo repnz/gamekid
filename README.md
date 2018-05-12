@@ -1,5 +1,9 @@
 # gamekid
 
-GameKid -> Gameboy Emulation library
+The purpose of this project is to research the GameBoy system and build a cross 
+platform emulation library that comes with - 
 
-GameKid.Test -> Unit testing with Google Unit Test Framework
+- Emulator
+- Debugger
+- Disassembler
+- Assembler
