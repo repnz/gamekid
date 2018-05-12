@@ -3,16 +3,16 @@
 #include "GameKid/cpu/base_instructions/single_opcode_instruction.h"
 #include "GameKid/opcodes.h"
 
-class ccf_instruction : public single_opcode_instruction
+class scf_instruction : public single_opcode_instruction
 {
 public:
-	explicit ccf_instruction(cpu& cpu)
-		: single_opcode_instruction(cpu, "ccf", CCF, false)
+	explicit scf_instruction(cpu& cpu)
+		: single_opcode_instruction(cpu, "scf", SCF, false)
 	{
 	}
 
 	void run() override
 	{
-		_cpu.ccf();
+		_cpu.scf();
 	}
 };
