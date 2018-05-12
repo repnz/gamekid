@@ -25,15 +25,6 @@ public:
     std::string to_str(byte* next) override;
 };
 
-inline bitmask_opcode::bitmask_opcode(cpu& cpu, const std::string& name,
-    byte base_value, const std::string& register_name, byte* register_address,
-    std::function<void(byte*, byte)> operation, byte bit) :
-    opcode(cpu, name, base_value + bit * 8, true, 8),
-    _bit(bit), _operation(operation), register_address(register_address),
-    register_name(register_name)
-{
-}
-
 class bitmask_instruction : public instruction
 {
 public:
