@@ -150,6 +150,8 @@
   <ItemGroup>
     <ClInclude Include="cpu\base_instructions\bitmask_instruction.h" />
     <ClInclude Include="cpu\base_instructions\single_opcode_instruction.h" />
+    <ClInclude Include="cpu\base_opcodes\function_opcode.h" />
+    <ClInclude Include="cpu\base_opcodes\register_opcode.h" />
     <ClInclude Include="cpu\instructions\alu_8\adc.h" />
     <ClInclude Include="cpu\instructions\alu_8\add.h" />
     <ClInclude Include="cpu\instructions\alu_8.h" />

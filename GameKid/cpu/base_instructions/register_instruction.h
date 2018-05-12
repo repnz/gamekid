@@ -1,5 +1,6 @@
 #pragma once
 #include "GameKid/cpu/instruction.h"
+#include "GameKid/cpu/base_opcodes/register_opcode.h"
 
 class register_instruction : public instruction
 {
