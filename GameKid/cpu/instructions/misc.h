@@ -4,5 +4,5 @@
 class misc
 {
 public:
-	static void add_instructions(instruction_set& set);
+    static void add_instructions(instruction_set& set);
 };

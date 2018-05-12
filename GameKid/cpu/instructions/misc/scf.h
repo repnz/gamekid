@@ -6,13 +6,13 @@
 class scf_instruction : public single_opcode_instruction
 {
 public:
-	explicit scf_instruction(cpu& cpu)
-		: single_opcode_instruction(cpu, "scf", SCF, false, 4)
-	{
-	}
+    explicit scf_instruction(cpu& cpu)
+        : single_opcode_instruction(cpu, "scf", SCF, false, 4)
+    {
+    }
 
-	void run() override
-	{
-		_cpu.scf();
-	}
+    void run() override
+    {
+        _cpu.scf();
+    }
 };

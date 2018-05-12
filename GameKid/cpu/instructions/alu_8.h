@@ -4,5 +4,5 @@
 class alu_8
 {
 public:
-	static void add_instructions(instruction_set& set);
+    static void add_instructions(instruction_set& set);
 };

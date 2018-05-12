@@ -2,49 +2,49 @@
 #include <memory>
 #include <set>
 
-opcode_decoder::opcode_decoder(instruction_set & set) 
-	: _set(set)
+opcode_decoder::opcode_decoder(instruction_set & set)
+    : _set(set)
 {
-	initialize_tables();
+    initialize_tables();
 }
 
 void opcode_decoder::initialize_tables()
 {
-	for (instruction* instruction : _set.instructions())
-	{
-		for (opcode* op : instruction->opcodes)
-		{
-			if (op->cb_prefix)
-			{
-				_cb_prefix_table[op->value] = op;
-			}
-			else
-			{
-				_main_table[op->value] = op;
-			}
-		}
-	}
+    for (instruction* instruction : _set.instructions())
+    {
+        for (opcode* op : instruction->opcodes)
+        {
+            if (op->cb_prefix)
+            {
+                _cb_prefix_table[op->value] = op;
+            }
+            else
+            {
+                _main_table[op->value] = op;
+            }
+        }
+    }
 }
 
 opcode* opcode_decoder::decode(byte* bytes)
 {
-	std::map<byte, opcode*>* correct_table;
-	
-	if (bytes[0] == 0xCB)
-	{
-		correct_table = &_cb_prefix_table;
-		bytes++;
-	}
-	else
-	{
-		correct_table = &_main_table;
-	}
-	auto opcode_key = correct_table->find(bytes[0]);
+    std::map<byte, opcode*>* correct_table;
 
-	if (opcode_key == _cb_prefix_table.end())
-	{
-		return nullptr;
-	}
+    if (bytes[0] == 0xCB)
+    {
+        correct_table = &_cb_prefix_table;
+        bytes++;
+    }
+    else
+    {
+        correct_table = &_main_table;
+    }
+    auto opcode_key = correct_table->find(bytes[0]);
 
-	return opcode_key->second;
+    if (opcode_key == _cb_prefix_table.end())
+    {
+        return nullptr;
+    }
+
+    return opcode_key->second;
 }

@@ -12,14 +12,14 @@
 
 void alu_8::add_instructions(instruction_set & set)
 {
-	set.add<add_instruction>();
-	set.add<adc_instruction>();
-	set.add<sub_instruction>();
-	set.add<sbc_instruction>();
-	set.add<xor_instruction>();
-	set.add<or_instruction>();
-	set.add<and_instruction>();
-	set.add<cp_instruction>();
-	set.add<inc_instruction>();
-	set.add<dec_instruction>();
+    set.add<add_instruction>();
+    set.add<adc_instruction>();
+    set.add<sub_instruction>();
+    set.add<sbc_instruction>();
+    set.add<xor_instruction>();
+    set.add<or_instruction>();
+    set.add<and_instruction>();
+    set.add<cp_instruction>();
+    set.add<inc_instruction>();
+    set.add<dec_instruction>();
 }

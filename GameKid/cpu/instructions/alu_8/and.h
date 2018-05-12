@@ -6,22 +6,22 @@
 class and_instruction : public register_instruction
 {
 public:
-	explicit and_instruction(cpu& cpu);
-	void run(byte* val) override;
+    explicit and_instruction(cpu& cpu);
+    void run(byte* val) override;
 };
 
 and_instruction::and_instruction(cpu& cpu) : register_instruction(cpu, "and", false,
-	AND_A_A,
-	AND_A_B,
-	AND_A_C,
-	AND_A_D,
-	AND_A_E,
-	AND_A_H,
-	AND_A_L)
+    AND_A_A,
+    AND_A_B,
+    AND_A_C,
+    AND_A_D,
+    AND_A_E,
+    AND_A_H,
+    AND_A_L)
 {
 }
 
 void and_instruction::run(byte* val)
 {
-	_cpu.and_n(&_cpu.A, *val);
+    _cpu.and_n(&_cpu.A, *val);
 }

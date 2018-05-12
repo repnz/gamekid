@@ -8,38 +8,38 @@
 class opcode
 {
 protected:
-	cpu & _cpu;
+    cpu & _cpu;
 public:
-	std::string name;
-	byte value;
-	bool cb_prefix;
-	byte cycles;
-	
-	opcode(cpu& cpu, const std::string& name, byte value, bool cb_prefix, byte cycles)
-		: _cpu(cpu), name(name), value(value), cb_prefix(cb_prefix), cycles(cycles)
-	{
-	}
+    std::string name;
+    byte value;
+    bool cb_prefix;
+    byte cycles;
 
-	virtual std::vector<byte> bytes(const std::vector<std::string>& operands)
-	{
-		return bytes();
-	}
+    opcode(cpu& cpu, const std::string& name, byte value, bool cb_prefix, byte cycles)
+        : _cpu(cpu), name(name), value(value), cb_prefix(cb_prefix), cycles(cycles)
+    {
+    }
 
-	virtual std::vector<byte> bytes()
-	{
-		if (cb_prefix)
-		{
-			return { 0xCB, value };
-		}
+    virtual std::vector<byte> bytes(const std::vector<std::string>& operands)
+    {
+        return bytes();
+    }
 
-		return { value };
-	}
+    virtual std::vector<byte> bytes()
+    {
+        if (cb_prefix)
+        {
+            return { 0xCB, value };
+        }
 
-	virtual std::string to_str(byte* next)
-	{
-		return name;
-	}
+        return { value };
+    }
 
-	virtual void run() = 0;
-	virtual ~opcode() = default;
+    virtual std::string to_str(byte* next)
+    {
+        return name;
+    }
+
+    virtual void run() = 0;
+    virtual ~opcode() = default;
 };

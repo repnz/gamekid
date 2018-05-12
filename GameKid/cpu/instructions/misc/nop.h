@@ -6,13 +6,13 @@
 class nop_instruction : public single_opcode_instruction
 {
 public:
-	explicit nop_instruction(cpu& cpu)
-		: single_opcode_instruction(cpu, "nop", NOP, false, 4)
-	{
-	}
+    explicit nop_instruction(cpu& cpu)
+        : single_opcode_instruction(cpu, "nop", NOP, false, 4)
+    {
+    }
 
-	void run() override
-	{
-		// do nothing 
-	}
+    void run() override
+    {
+        // do nothing 
+    }
 };

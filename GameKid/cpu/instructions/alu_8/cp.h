@@ -6,23 +6,23 @@
 class cp_instruction : public register_instruction
 {
 public:
-	explicit cp_instruction(cpu& cpu);
-	void run(byte* val) override;
+    explicit cp_instruction(cpu& cpu);
+    void run(byte* val) override;
 };
 
 cp_instruction::cp_instruction(cpu& cpu) : register_instruction(cpu, "cp", false,
-	CP_A_A,
-	CP_A_B,
-	CP_A_C,
-	CP_A_D,
-	CP_A_E,
-	CP_A_H,
-	CP_A_L)
+    CP_A_A,
+    CP_A_B,
+    CP_A_C,
+    CP_A_D,
+    CP_A_E,
+    CP_A_H,
+    CP_A_L)
 {
 }
 
 void cp_instruction::run(byte* val)
 {
-	_cpu.or_n(&_cpu.A, *val);
+    _cpu.or_n(&_cpu.A, *val);
 }
 

@@ -6,7 +6,7 @@
 
 inline void bitmask::add_instructions(instruction_set& set)
 {
-	set.add<bit_instruction>();
-	set.add<res_instruction>();
-	set.add<set_instruction>();
+    set.add<bit_instruction>();
+    set.add<res_instruction>();
+    set.add<set_instruction>();
 }
