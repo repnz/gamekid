@@ -33,7 +33,7 @@ The Load instruction comes in 4 variants:
 
 ```assembly
 06 0A : ld B, 10 
-06 64 : ld A, 100
+3E 64 : ld A, 100
 ```
 
 ### Register to Register
