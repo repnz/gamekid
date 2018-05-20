@@ -1,9 +1,9 @@
 #include <GameKid/cpu.h>
 
 
-cpu::cpu() : _opcode_table(this),
+cpu::cpu() : 
 A(0), B(0), C(0), D(0), E(0), H(0), L(0), SP(0), PC(0),
-zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0)
+zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0), regs(*this)
 {
 }
 
@@ -161,7 +161,6 @@ void cpu::sub(byte* val, byte n, bool carry, bool save_result)
 
 void cpu::next()
 {
-    _opcode_table.execute();
 }
 
 void cpu::halt()

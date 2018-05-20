@@ -4,10 +4,30 @@ class cpu;
 #include <GameKid/opcode_table.h>
 #include <GameKid/memory.h>
 
+struct reg
+{
+    std::string name;
+    byte* address;
+
+    reg(const std::string& name, byte* address) : name(name), address(address) {}
+
+};
+
+struct regs
+{
+    reg A;
+    reg B;
+    reg C;
+    reg D;
+    reg E;
+    reg H;
+    reg L;
+
+    explicit regs(cpu& cpu);
+};
+
 class cpu
 {
-private:
-    opcode_table _opcode_table;
 public:
     byte A;
     byte B;
@@ -25,6 +45,7 @@ public:
     byte carry_flag;
 
     memory mem;
+    regs regs;
 
     cpu();
 
@@ -70,3 +91,15 @@ public:
     word HL();
 
 };
+
+
+regs::regs(cpu& cpu) :
+        A("A", &cpu.A),
+        B("B", &cpu.B),
+        C("C", &cpu.C),
+        D("D", &cpu.D),
+        E("E", &cpu.E),
+        H("H", &cpu.H),
+        L("L", &cpu.L)
+{
+}
