@@ -7,7 +7,6 @@
 
 instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
 {
-    // 8 bit arithmetic
     alu_8::add_instructions(*this);
     rotation::add_instructions(*this);
     bitmask::add_instructions(*this);

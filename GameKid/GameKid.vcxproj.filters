@@ -200,5 +200,8 @@
     <ClInclude Include="cpu\instructions\misc\cpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\instructions\mem\ld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
