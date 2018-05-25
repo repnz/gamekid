@@ -1,15 +1,15 @@
 #include <GameKid/cpu/instructions/rotation.h>
-#include <GameKid/cpu/instructions/rotation/srl.h>
-#include <GameKid/cpu/instructions/rotation/rla.h>
-#include <GameKid/cpu/instructions/rotation/rrc.h>
-#include <GameKid/cpu/instructions/rotation/rrca.h>
-#include <GameKid/cpu/instructions/rotation/sla.h>
-#include <GameKid/cpu/instructions/rotation/rr.h>
-#include <GameKid/cpu/instructions/rotation/rl.h>
-#include <GameKid/cpu/instructions/rotation/rra.h>
-#include <GameKid/cpu/instructions/rotation/rlca.h>
-#include <GameKid/cpu/instructions/rotation/rlc.h>
-#include <GameKid/cpu/instructions/rotation/sra.h>
+#include "rotation/srl.h"
+#include "rotation/rla.h"
+#include "rotation/rrc.h"
+#include "rotation/rrca.h"
+#include "rotation/sla.h"
+#include "rotation/rr.h"
+#include "rotation/rl.h"
+#include "rotation/rra.h"
+#include "rotation/rlca.h"
+#include "rotation/rlc.h"
+#include "rotation/sra.h"
 
 void rotation::add_instructions(instruction_set & set)
 {

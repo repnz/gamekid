@@ -51,6 +51,9 @@
     <ClCompile Include="cpu\instructions\misc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cpu\instructions\mem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpu.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cpu\instructions\mem\ld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\instructions\mem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

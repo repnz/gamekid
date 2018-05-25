@@ -2,7 +2,7 @@
 #include "GameKid/cpu/instruction.h"
 #include "GameKid/cpu/base_opcodes/register_opcode.h"
 
-class reg_to_reg_opcode : opcode
+class reg_to_reg_opcode : public opcode
 {
 private:
     reg src;
@@ -24,15 +24,15 @@ public:
     }
 };
 
-class ld_instruction : instruction
+class ld_instruction : public instruction
 {
 private:
     std::vector<register_opcode> _imm_to_reg;
     std::vector<reg_to_reg_opcode> _reg_to_reg;
 
 public:
-    ld_instruction(cpu& cpu, const std::string& name)
-        : instruction(cpu, name)
+    explicit ld_instruction(cpu& cpu)
+        : instruction(cpu, "ld")
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
         add_imm_to_reg(0x06, cpu.regs.B);

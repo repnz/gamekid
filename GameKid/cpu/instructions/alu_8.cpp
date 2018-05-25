@@ -1,14 +1,14 @@
-#include <GameKid/cpu/instructions/alu_8.h>
-#include <GameKid/cpu/instructions/alu_8/inc.h>
-#include <GameKid/cpu/instructions/alu_8/or.h>
-#include <GameKid/cpu/instructions/alu_8/xor.h>
-#include <GameKid/cpu/instructions/alu_8/and.h>
-#include <GameKid/cpu/instructions/alu_8/dec.h>
-#include <GameKid/cpu/instructions/alu_8/cp.h>
-#include <GameKid/cpu/instructions/alu_8/adc.h>
-#include <GameKid/cpu/instructions/alu_8/sbc.h>
-#include <GameKid/cpu/instructions/alu_8/add.h>
-#include <GameKid/cpu/instructions/alu_8/sub.h>
+#include "alu_8.h"
+#include "alu_8/inc.h"
+#include "alu_8/or.h"
+#include "alu_8/xor.h"
+#include "alu_8/and.h"
+#include "alu_8/dec.h"
+#include "alu_8/cp.h"
+#include "alu_8/adc.h"
+#include "alu_8/sbc.h"
+#include "alu_8/add.h"
+#include "alu_8/sub.h"
 
 void alu_8::add_instructions(instruction_set & set)
 {

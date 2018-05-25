@@ -17,8 +17,9 @@ public:
     template <typename T>
     void add()
     {
-        _instructions.push_back(std::make_unique<T>(_cpu));
-        instruction* ptr = _instructions[_instructions.size() - 1].get();
+        std::unique_ptr<T> smart_ptr = std::make_unique<T>(_cpu);
+        instruction* ptr = smart_ptr.get();
+        _instructions.push_back(std::move(smart_ptr));
         _ptr_instructions.push_back(ptr);
     }
 

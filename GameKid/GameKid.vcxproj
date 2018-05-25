@@ -139,6 +139,7 @@
     <ClCompile Include="cpu\base_instructions\register_instruction.cpp" />
     <ClCompile Include="cpu\instructions\alu_8.cpp" />
     <ClCompile Include="cpu\instructions\bitmask.cpp" />
+    <ClCompile Include="cpu\instructions\mem.cpp" />
     <ClCompile Include="cpu\instructions\misc.cpp" />
     <ClCompile Include="cpu\instructions\rotation.cpp" />
     <ClCompile Include="cpu\instruction_set.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="cpu\instructions\bitmask\set.h" />
     <ClInclude Include="cpu\base_instructions\register_instruction.h" />
     <ClInclude Include="cpu\instruction.h" />
+    <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
     <ClInclude Include="cpu\instructions\misc.h" />
     <ClInclude Include="cpu\instructions\misc\ccf.h" />

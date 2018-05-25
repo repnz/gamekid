@@ -3,6 +3,7 @@
 #include <GameKid/cpu/instructions/rotation.h>
 #include <GameKid/cpu/instructions/bitmask.h>
 #include <GameKid/cpu/instructions/misc.h>
+#include "instructions/mem.h"
 
 
 instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
@@ -11,6 +12,7 @@ instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
     rotation::add_instructions(*this);
     bitmask::add_instructions(*this);
     misc::add_instructions(*this);
+    mem::add_instructions(*this);
 }
 
 const std::vector<instruction*>& instruction_set::instructions()

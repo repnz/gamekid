@@ -1,8 +1,8 @@
 #include <GameKid/cpu/instruction_set.h>
-#include <GameKid/cpu/instructions/bitmask.h>
-#include <GameKid/cpu/instructions/bitmask/set.h>
-#include <GameKid/cpu/instructions/bitmask/res.h>
-#include <GameKid/cpu/instructions/bitmask/bit.h>
+#include "bitmask.h"
+#include "bitmask/set.h"
+#include "bitmask/res.h"
+#include "bitmask/bit.h"
 
 inline void bitmask::add_instructions(instruction_set& set)
 {
