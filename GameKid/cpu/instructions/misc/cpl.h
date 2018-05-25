@@ -14,7 +14,7 @@ public:
 
     void run() override
     {
-        _cpu.A = ~_cpu.A;
+        *_cpu.regs.A.address = ~*_cpu.regs.A.address;
         _cpu.half_carry_flag = 1;
         _cpu.substruct_flag = 1;
     }

@@ -6,9 +6,9 @@
 class imm_to_reg_opcode : public opcode
 {
 private:
-    reg _reg;
+    reg8 _reg;
 public:
-    imm_to_reg_opcode(cpu& cpu, const reg& reg, byte value)
+    imm_to_reg_opcode(cpu& cpu, const reg8& reg, byte value)
         : opcode(cpu, "ld", value, false, 8), _reg(reg)
     {
     }

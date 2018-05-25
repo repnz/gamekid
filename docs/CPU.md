@@ -79,15 +79,15 @@ Examples
 #### Moving A register to BC, DE, HL
 
 
-|Register |BC   |DE   |HL|
-|-------- |--- |----|----|
-|Opcode   |0x02|0x12|0x77|
+|Register |BC   |DE  
+|-------- |--- |----|
+|Opcode   |0x02|0x12|
 
 
 Examples
 ```assembly
 02 : ld [BC], A
-77 : ld [HL], A
+12 : ld [DE], A
 ```
 
 #### Moving from A register to memory address

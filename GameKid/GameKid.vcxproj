@@ -146,7 +146,6 @@
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="memory.cpp" />
-    <ClCompile Include="opcode_table.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpu\base_instructions\bitmask_instruction.h" />
@@ -172,8 +171,8 @@
     <ClInclude Include="cpu\instruction.h" />
     <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
+    <ClInclude Include="cpu\instructions\mem\opcodes\reg_to_mem_opcode.h" />
     <ClInclude Include="cpu\instructions\mem\opcodes\imm_to_reg_opcode.h" />
-    <ClInclude Include="cpu\instructions\mem\opcodes\reg_to_hl_opcode.h" />
     <ClInclude Include="cpu\instructions\mem\opcodes\reg_to_reg_opcode.h" />
     <ClInclude Include="cpu\instructions\misc.h" />
     <ClInclude Include="cpu\instructions\misc\ccf.h" />
@@ -202,7 +201,6 @@
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />
     <ClInclude Include="cpu_types.h" />
-    <ClInclude Include="opcode_table.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

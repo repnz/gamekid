@@ -36,7 +36,7 @@ std::vector<byte> register_instruction::parse(const std::vector<std::string>& op
 }
 
 void register_instruction::add_register_opcode(const byte value,
-    const reg& reg, bool cb_prefix, byte cycles)
+    const reg8& reg, bool cb_prefix, byte cycles)
 {
     _register_opcodes.insert(std::make_pair(reg.name, register_opcode(
         _cpu,

@@ -23,5 +23,5 @@ sub_instruction::sub_instruction(cpu& cpu) : register_instruction(cpu, "sub", fa
 
 void sub_instruction::run(byte* val)
 {
-    _cpu.sub(&_cpu.A, *val);
+    _cpu.sub(_cpu.regs.A.address, *val);
 }

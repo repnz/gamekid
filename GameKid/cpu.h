@@ -1,44 +1,66 @@
 #pragma once
+#include <string>
 class cpu;
 #include <GameKid/cpu_types.h>
-#include <GameKid/opcode_table.h>
 #include <GameKid/memory.h>
 
-struct reg
+struct reg8
 {
     std::string name;
     byte* address;
 
-    reg(const std::string& name, byte* address) : name(name), address(address) {}
+    reg8(const std::string& name, byte* address) : name(name), address(address) {}
 
+};
+
+struct reg16
+{
+    std::string name;
+    byte* high;
+    byte* low;
+
+    reg16(const std::string& name, byte* high, byte* low) : name(name), high(high), low(low){}
+
+    void set(word w)
+    {
+        *low = w & 0xff;
+        *high = w >> 8;
+    }
+
+    word get()
+    {
+        return (*high << 8) + *low;
+    }
 };
 
 struct regs
 {
-    reg A;
-    reg B;
-    reg C;
-    reg D;
-    reg E;
-    reg H;
-    reg L;
-
+    reg8 A;
+    reg8 B;
+    reg8 C;
+    reg8 D;
+    reg8 E;
+    reg8 H;
+    reg8 L;
+    reg16 BC;
+    reg16 DE;
+    reg16 HL;
     explicit regs(cpu& cpu);
 };
 
 class cpu
 {
+private:
+    byte _A;
+    byte _B;
+    byte _C;
+    byte _D;
+    byte _E;
+    byte _H;
+    byte _L;
 public:
-    byte A;
-    byte B;
-    byte C;
-    byte D;
-    byte E;
-    byte H;
-    byte L;
     word SP;
     word PC;
-
     byte zero_flag;
     byte substruct_flag;
     byte half_carry_flag;
@@ -86,20 +108,20 @@ public:
     void ld(byte* val);
     void ld(byte* r1, byte r2);
 
-    word BC();
-    word DE();
-    word HL();
-
+    friend struct regs;
 };
 
 
 inline regs::regs(cpu& cpu) :
-        A("A", &cpu.A),
-        B("B", &cpu.B),
-        C("C", &cpu.C),
-        D("D", &cpu.D),
-        E("E", &cpu.E),
-        H("H", &cpu.H),
-        L("L", &cpu.L)
+        A("A", &cpu._A),
+        B("B", &cpu._B),
+        C("C", &cpu._C),
+        D("D", &cpu._D),
+        E("E", &cpu._E),
+        H("H", &cpu._H),
+        L("L", &cpu._L),
+        BC("BC", &cpu._B, &cpu._C),
+        DE("DE", &cpu._D, &cpu._D),
+        HL("HL", &cpu._H, &cpu._L)
 {
 }

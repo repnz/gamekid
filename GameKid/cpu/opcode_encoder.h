@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "instruction_set.h"
+#include <map>
 
 class opcode_encoder
 {

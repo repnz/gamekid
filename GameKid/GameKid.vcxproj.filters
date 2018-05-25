@@ -18,9 +18,6 @@
     <ClCompile Include="cpu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="opcode_table.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="memory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,9 +60,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cpu_types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="opcode_table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="memory.h">
@@ -215,7 +209,7 @@
     <ClInclude Include="cpu\instructions\mem\opcodes\imm_to_reg_opcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cpu\instructions\mem\opcodes\reg_to_hl_opcode.h">
+    <ClInclude Include="cpu\instructions\mem\opcodes\reg_to_mem_opcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

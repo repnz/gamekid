@@ -2,19 +2,21 @@
 #include "GameKid/cpu/opcode.h"
 #include "GameKid/cpu/instruction.h"
 #include "GameKid/cpu/base_opcodes/register_opcode.h"
+#include <functional>
+#include <map>
 
 class bitmask_opcode : public opcode
 {
 private:
     byte _bit;
     std::function<void(byte*, byte)> _operation;
-    reg _register;
+    reg8 _register;
 public:
     bitmask_opcode(
         cpu& cpu,
         const std::string& name,
         byte base_value,
-        const reg& reg,
+        const reg8& reg,
         std::function<void(byte*, byte)> operation,
         byte bit
     );
@@ -33,7 +35,7 @@ public:
 
     virtual void run(byte* address, byte bit) = 0;
 private:
-    void add_register_opcodes(const reg& reg, byte base_value);
+    void add_register_opcodes(const reg8& reg, byte base_value);
 
     std::function<void(byte*, byte)> _operation;
     bool _cb_prefix;

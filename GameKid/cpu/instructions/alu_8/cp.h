@@ -23,6 +23,6 @@ cp_instruction::cp_instruction(cpu& cpu) : register_instruction(cpu, "cp", false
 
 void cp_instruction::run(byte* val)
 {
-    _cpu.or_n(&_cpu.A, *val);
+    _cpu.cp(*_cpu.regs.A.address, *val);
 }
 

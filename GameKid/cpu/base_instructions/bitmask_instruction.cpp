@@ -6,7 +6,7 @@
 #include "GameKid/cpu/base_opcodes/register_opcode.h"
 
 bitmask_opcode::bitmask_opcode(cpu& cpu, const std::string& name, 
-    byte base_value, const reg& reg,
+    byte base_value, const reg8& reg,
     std::function<void(byte*, byte)> operation, byte bit) :
     opcode(cpu, name, base_value + (bit * 8), true, 8),
     _bit(bit), _operation(operation), _register(reg)
@@ -51,7 +51,7 @@ std::vector<byte> bitmask_instruction::parse(const std::vector<std::string>& ope
     return _bit_opcodes[reg][bit].bytes();
 }
 
-void bitmask_instruction::add_register_opcodes(const reg& r, byte base_value)
+void bitmask_instruction::add_register_opcodes(const reg8& r, byte base_value)
 {
     for (byte bit = 0; bit < 8; ++bit)
     {

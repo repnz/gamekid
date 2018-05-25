@@ -2,7 +2,7 @@
 
 
 cpu::cpu() : 
-A(0), B(0), C(0), D(0), E(0), H(0), L(0), SP(0), PC(0),
+_A(0), _B(0), _C(0), _D(0), _E(0), _H(0), _L(0), SP(0), PC(0),
 zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0), regs(*this)
 {
 }
@@ -124,21 +124,6 @@ void cpu::ld(byte* r1, byte r2)
     *r1 = r2;
 }
 
-word cpu::BC()
-{
-    return B << 8 | A;
-}
-
-word cpu::DE()
-{
-    return D << 8 | E;
-}
-
-word cpu::HL()
-{
-    return H << 8 | L;
-}
-
 void cpu::sub(byte* val, byte n, bool carry, bool save_result)
 {
     byte new_value = *val - n;
@@ -192,22 +177,22 @@ void cpu::scf()
 
 void cpu::rla()
 {
-    rl(&A);
+    rl(&_A);
 }
 
 void cpu::rlca()
 {
-    rlc(&A);
+    rlc(&_A);
 }
 
 void cpu::rrca()
 {
-    rrc(&A);
+    rrc(&_A);
 }
 
 void cpu::rra()
 {
-    rr(&A);
+    rr(&_A);
 }
 
 void cpu::bit(byte val, byte bitPlace)

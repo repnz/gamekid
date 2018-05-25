@@ -1,5 +1,6 @@
 #pragma once
 #include "GameKid/cpu/opcode.h"
+#include <functional>
 
 
 struct register_opcode_values
@@ -18,7 +19,7 @@ class register_opcode : public opcode
 private:
     std::function<void(byte* addr)> _operation;
 public:
-    reg _register;
+    reg8 _register;
 
 
     register_opcode(
@@ -26,7 +27,7 @@ public:
         const std::string& name,
         const byte value,
         const std::function<void(byte* addr)>& operation,
-        const reg& reg,
+        const reg8& reg,
         bool cb_prefix,
         byte cycles
     )

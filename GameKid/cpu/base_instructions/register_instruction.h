@@ -1,6 +1,7 @@
 #pragma once
 #include "GameKid/cpu/instruction.h"
 #include "GameKid/cpu/base_opcodes/register_opcode.h"
+#include <map>
 
 class register_instruction : public instruction
 {
@@ -20,7 +21,7 @@ private:
 
     void add_register_opcode(
         const byte value,
-        const reg& reg,
+        const reg8& reg,
         bool cb_prefix,
         byte cycles
     );
