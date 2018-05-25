@@ -64,6 +64,8 @@ by putting the address in register HL, and using it as a pointer.
 
 #### Moving from register to HL memory
 
+8 cycles.
+
 |Register |A   |B   |C   |D   |E   |H   |L   |
 |-------- |--- |----|----|----|----|----|----|
 |Opcode   |0x77|0x70|0x71|0x72|0x73|0x74|0x75| 
