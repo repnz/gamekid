@@ -4,6 +4,7 @@
 #include "opcodes/reg_to_reg_opcode.h"
 #include "opcodes/reg_to_reg16_mem_opcode.h"
 #include "opcodes/a_to_c_mem_opcode.h"
+#include "opcodes/a_to_imm_mem_opcode.h"
 
 class ld_instruction : public instruction
 {
@@ -11,10 +12,11 @@ private:
     std::vector<imm_to_reg_opcode> _imm_to_reg;
     std::vector<reg_to_reg_opcode> _reg_to_reg;
     std::vector<reg_to_reg16_mem_opcode> _reg_to_mem;
-    a_to_c_mem_opcode _a_to_mem_opcode;
+    a_to_c_mem_opcode _a_to_c_mem_opcode;
+    a_to_imm_mem_opcode _a_to_imm_mem_opcode;
 public:
     explicit ld_instruction(cpu& cpu)
-        : instruction(cpu, "ld"), _a_to_mem_opcode(cpu)
+        : instruction(cpu, "ld"), _a_to_c_mem_opcode(cpu), _a_to_imm_mem_opcode(cpu)
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
         add_imm_to_reg(0x06, cpu.regs.B);
@@ -47,8 +49,8 @@ public:
         add_reg_to_mem(0x02, cpu.regs.A, cpu.regs.BC);
         add_reg_to_mem(0x12, cpu.regs.A, cpu.regs.DE);
 
-        // Move A Register to C+0xFF00
-        opcodes.push_back(&_a_to_mem_opcode);
+        opcodes.push_back(&_a_to_c_mem_opcode);
+        opcodes.push_back(&_a_to_imm_mem_opcode);
     }
 
     void reg_to_imm(byte* reg_address)

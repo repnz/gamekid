@@ -172,6 +172,7 @@
     <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
     <ClInclude Include="cpu\instructions\mem\opcodes\a_to_c_mem_opcode.h" />
+    <ClInclude Include="cpu\instructions\mem\opcodes\a_to_imm_mem_opcode.h" />
     <ClInclude Include="cpu\instructions\mem\opcodes\reg_to_reg16_mem_opcode.h" />
     <ClInclude Include="cpu\instructions\mem\opcodes\imm_to_reg_opcode.h" />
     <ClInclude Include="cpu\instructions\mem\opcodes\reg_to_reg_opcode.h" />
