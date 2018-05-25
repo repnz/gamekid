@@ -8,13 +8,13 @@ class set_instruction : public bitmask_instruction
 public:
     explicit set_instruction(cpu& cpu)
         : bitmask_instruction(cpu, "set",
-            CB_SET_b_A,
+            { CB_SET_b_A,
             CB_SET_b_B,
             CB_SET_b_C,
             CB_SET_b_D,
             CB_SET_b_E,
             CB_SET_b_H,
-            CB_SET_b_L)
+            CB_SET_b_L })
     {
     }
 

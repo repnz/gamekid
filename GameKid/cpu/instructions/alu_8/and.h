@@ -11,13 +11,13 @@ public:
 };
 
 and_instruction::and_instruction(cpu& cpu) : register_instruction(cpu, "and", false,
-    AND_A_A,
+    { AND_A_A,
     AND_A_B,
     AND_A_C,
     AND_A_D,
     AND_A_E,
     AND_A_H,
-    AND_A_L)
+    AND_A_L })
 {
 }
 

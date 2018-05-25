@@ -2,19 +2,18 @@
 
 register_instruction::register_instruction(cpu& cpu, std::string name,
     bool cb_prefix,
-    byte a, byte b, byte c,
-    byte d, byte e, byte h, byte l) : instruction(cpu, name)
+    const register_opcode_values& values) : instruction(cpu, name)
 {
     _operation = [this](byte* addr) { run(addr); };
     byte cycles = (cb_prefix) ? 4 : 8;
 
-    add_register_opcode(a, "A", &cpu.A, cb_prefix, cycles);
-    add_register_opcode(b, "B", &cpu.B, cb_prefix, cycles);
-    add_register_opcode(c, "C", &cpu.C, cb_prefix, cycles);
-    add_register_opcode(d, "D", &cpu.D, cb_prefix, cycles);
-    add_register_opcode(e, "E", &cpu.E, cb_prefix, cycles);
-    add_register_opcode(h, "H", &cpu.H, cb_prefix, cycles);
-    add_register_opcode(l, "L", &cpu.L, cb_prefix, cycles);
+    add_register_opcode(values.A, cpu.regs.A, cb_prefix, cycles);
+    add_register_opcode(values.B, cpu.regs.B, cb_prefix, cycles);
+    add_register_opcode(values.C, cpu.regs.C, cb_prefix, cycles);
+    add_register_opcode(values.D, cpu.regs.D, cb_prefix, cycles);
+    add_register_opcode(values.E, cpu.regs.E, cb_prefix, cycles);
+    add_register_opcode(values.H, cpu.regs.H, cb_prefix, cycles);
+    add_register_opcode(values.L, cpu.regs.L, cb_prefix, cycles);
 }
 
 std::vector<byte> register_instruction::parse(const std::vector<std::string>& operands)
@@ -37,19 +36,17 @@ std::vector<byte> register_instruction::parse(const std::vector<std::string>& op
 }
 
 void register_instruction::add_register_opcode(const byte value,
-    const std::string& register_name,
-    byte* register_address, bool cb_prefix, byte cycles)
+    const reg& reg, bool cb_prefix, byte cycles)
 {
-    _register_opcodes.insert(make_pair(register_name, register_opcode(
+    _register_opcodes.insert(std::make_pair(reg.name, register_opcode(
         _cpu,
         name,
         value,
         _operation,
-        register_name,
-        register_address,
+        reg,
         cb_prefix,
         cycles
     )));
 
-    opcodes.push_back(&_register_opcodes.at(register_name));
+    opcodes.push_back(&_register_opcodes.at(reg.name));
 }

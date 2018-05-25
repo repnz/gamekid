@@ -10,13 +10,13 @@ public:
 };
 
 inline dec_instruction::dec_instruction(cpu& cpu) : register_instruction(cpu, "dec", false,
-    DEC_A,
+    { DEC_A,
     DEC_B,
     DEC_C,
     DEC_D,
     DEC_E,
     DEC_H,
-    DEC_L)
+    DEC_L })
 {
 }
 

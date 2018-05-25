@@ -11,13 +11,13 @@ public:
 };
 
 inline inc_instruction::inc_instruction(cpu& cpu) : register_instruction(cpu, "inc", false,
-    INC_A,
+    { INC_A,
     INC_B,
     INC_C,
     INC_D,
     INC_E,
     INC_H,
-    INC_L)
+    INC_L })
 {
 }
 

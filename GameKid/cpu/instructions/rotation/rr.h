@@ -8,13 +8,13 @@ class rr_instruction : public register_instruction
 public:
     explicit rr_instruction(cpu& cpu)
         : register_instruction(cpu, "rr", true,
-            CB_RR_A,
+            { CB_RR_A,
             CB_RR_B,
             CB_RR_C,
             CB_RR_D,
             CB_RR_E,
             CB_RR_H,
-            CB_RR_L)
+            CB_RR_L })
     {
     }
 

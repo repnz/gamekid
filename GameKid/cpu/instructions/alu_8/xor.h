@@ -11,13 +11,13 @@ public:
 };
 
 xor_instruction::xor_instruction(cpu& cpu) : register_instruction(cpu, "xor", false,
-    XOR_A_A,
+    { XOR_A_A,
     XOR_A_B,
     XOR_A_C,
     XOR_A_D,
     XOR_A_E,
     XOR_A_H,
-    XOR_A_L)
+    XOR_A_L })
 {
 }
 

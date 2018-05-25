@@ -12,13 +12,13 @@ public:
 
 
 adc_instruction::adc_instruction(cpu& cpu) : register_instruction(cpu, "adc", false,
-    ADC_A_A,
+    { ADC_A_A,
     ADC_A_B,
     ADC_A_C,
     ADC_A_D,
     ADC_A_E,
     ADC_A_H,
-    ADC_A_L)
+    ADC_A_L })
 {
 }
 

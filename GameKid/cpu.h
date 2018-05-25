@@ -93,7 +93,7 @@ public:
 };
 
 
-regs::regs(cpu& cpu) :
+inline regs::regs(cpu& cpu) :
         A("A", &cpu.A),
         B("B", &cpu.B),
         C("C", &cpu.C),

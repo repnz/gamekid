@@ -11,13 +11,13 @@ public:
 };
 
 cp_instruction::cp_instruction(cpu& cpu) : register_instruction(cpu, "cp", false,
-    CP_A_A,
+    { CP_A_A,
     CP_A_B,
     CP_A_C,
     CP_A_D,
     CP_A_E,
     CP_A_H,
-    CP_A_L)
+    CP_A_L })
 {
 }
 

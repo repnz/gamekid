@@ -7,8 +7,7 @@ class register_instruction : public instruction
 private:
     std::map<std::string, register_opcode> _register_opcodes;
 protected:
-    register_instruction(cpu& cpu, std::string name, bool cb_prefix, byte a, byte b, byte c,
-        byte d, byte e, byte h, byte l);
+    register_instruction(cpu& cpu, std::string name, bool cb_prefix, const register_opcode_values& values);
 public:
 
 
@@ -21,8 +20,7 @@ private:
 
     void add_register_opcode(
         const byte value,
-        const std::string& register_name,
-        byte* register_address,
+        const reg& reg,
         bool cb_prefix,
         byte cycles
     );

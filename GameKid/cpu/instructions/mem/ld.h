@@ -34,13 +34,13 @@ public:
     ld_instruction(cpu& cpu, const std::string& name)
         : instruction(cpu, name)
     {
-        add_imm_to_reg(0x3E, &cpu.A, "A");
-        add_imm_to_reg(0x06, &cpu.B, "B");
-        add_imm_to_reg(0x0E, &cpu.C, "C");
-        add_imm_to_reg(0x16, &cpu.D, "D");
-        add_imm_to_reg(0x1E, &cpu.E, "E");
-        add_imm_to_reg(0x26, &cpu.H, "H");
-        add_imm_to_reg(0x2E, &cpu.L, "L");     
+        add_imm_to_reg(0x3E, cpu.regs.A);
+        add_imm_to_reg(0x06, cpu.regs.B);
+        add_imm_to_reg(0x0E, cpu.regs.C);
+        add_imm_to_reg(0x16, cpu.regs.D);
+        add_imm_to_reg(0x1E, cpu.regs.E);
+        add_imm_to_reg(0x26, cpu.regs.H);
+        add_imm_to_reg(0x2E, cpu.regs.L);
         
         add_reg_opcodes(0x78, cpu.regs.A);
         add_reg_opcodes(0x40, cpu.regs.B);
@@ -56,15 +56,14 @@ public:
         *reg_address = _cpu.mem.load_byte(_cpu.PC + 1);
     }
 
-    void add_imm_to_reg(byte op_value, byte* reg_address, std::string reg_name)
+    void add_imm_to_reg(byte op_value, const reg& reg)
     {
         _imm_to_reg.push_back(register_opcode(
             _cpu,
             "ld",
             op_value,
             [this](byte* b) {reg_to_imm(b); },
-            reg_name,
-            reg_address,
+            reg,
             false,
             8
         ));

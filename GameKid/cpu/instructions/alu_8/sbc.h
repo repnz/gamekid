@@ -11,13 +11,13 @@ public:
 };
 
 inline sbc_instruction::sbc_instruction(cpu& cpu) : register_instruction(cpu, "sbc", false,
-    SBC_A_A,
+    { SBC_A_A,
     SBC_A_B,
     SBC_A_C,
     SBC_A_D,
     SBC_A_E,
     SBC_A_H,
-    SBC_A_L)
+    SBC_A_L })
 {
 }
 

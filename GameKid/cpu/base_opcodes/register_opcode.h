@@ -2,13 +2,23 @@
 #include "GameKid/cpu/opcode.h"
 
 
+struct register_opcode_values
+{
+    byte A;
+    byte B;
+    byte C;
+    byte D;
+    byte E;
+    byte H;
+    byte L;
+};
+
 class register_opcode : public opcode
 {
 private:
     std::function<void(byte* addr)> _operation;
 public:
-    std::string register_name;
-    byte* register_address;
+    reg _register;
 
 
     register_opcode(
@@ -16,25 +26,23 @@ public:
         const std::string& name,
         const byte value,
         const std::function<void(byte* addr)>& operation,
-        const std::string& register_name,
-        byte* register_address,
+        const reg& reg,
         bool cb_prefix,
         byte cycles
     )
         : opcode(cpu, name, value, cb_prefix, cycles),
         _operation(operation),
-        register_name(register_name),
-        register_address(register_address)
+        _register(reg)
     {
     }
 
     void run() override
     {
-        _operation(register_address);
+        _operation(_register.address);
     }
 
     std::string to_str(byte* next) override
     {
-        return name + " " + register_name;
+        return name + " " + _register.name;
     }
 };
