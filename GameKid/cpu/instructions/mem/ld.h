@@ -6,6 +6,7 @@
 #include "opcodes/a_to_c_mem_opcode.h"
 #include "opcodes/a_to_imm_mem_opcode.h"
 #include "opcodes/reg16_mem_to_reg_opcode.h"
+#include "opcodes/imm_to_hl_opcode.h"
 
 class ld_instruction : public instruction
 {
@@ -14,11 +15,12 @@ private:
     std::vector<reg_to_reg_opcode> _reg_to_reg;
     std::vector<reg_to_reg16_mem_opcode> _reg_to_mem;
     std::vector<reg16_mem_to_reg_opcode> _mem_to_reg;
-    a_to_c_mem_opcode _a_to_c_mem_opcode;
-    a_to_imm_mem_opcode _a_to_imm_mem_opcode;
+    a_to_c_mem_opcode _a_to_c_mem;
+    a_to_imm_mem_opcode _a_to_imm_mem;
+    imm_to_hl_opcode _imm_to_hl;
 public:
     explicit ld_instruction(cpu& cpu)
-        : instruction(cpu, "ld"), _a_to_c_mem_opcode(cpu), _a_to_imm_mem_opcode(cpu)
+        : instruction(cpu, "ld"), _a_to_c_mem(cpu), _a_to_imm_mem(cpu), _imm_to_hl(cpu)
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
         add_imm_to_reg(0x06, cpu.regs.B);
@@ -61,8 +63,9 @@ public:
         add_mem_to_reg(0x74, cpu.regs.HL, cpu.regs.H);
         add_mem_to_reg(0x75, cpu.regs.HL, cpu.regs.L);
 
-        opcodes.push_back(&_a_to_c_mem_opcode);
-        opcodes.push_back(&_a_to_imm_mem_opcode);
+        opcodes.push_back(&_a_to_c_mem);
+        opcodes.push_back(&_a_to_imm_mem);
+        opcodes.push_back(&_imm_to_hl);
     }
 
     void reg_to_imm(byte* reg_address)
