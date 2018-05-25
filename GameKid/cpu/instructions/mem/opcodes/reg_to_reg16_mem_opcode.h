@@ -3,13 +3,13 @@
 #include <string>
 #include "GameKid/cpu/opcode.h"
 
-class reg_to_mem_opcode : public opcode
+class reg_to_reg16_mem_opcode : public opcode
 {
 private:
     reg8 _src;
     reg16 _dst_mem;
 public:
-    reg_to_mem_opcode(cpu& cpu, const reg8& src, const reg16& dst_mem, byte value)
+    reg_to_reg16_mem_opcode(cpu& cpu, const reg8& src, const reg16& dst_mem, byte value)
         : opcode(cpu, "ld", value, false, 8), _src(src), _dst_mem(dst_mem)
     {
     }

@@ -2,14 +2,14 @@
 #include "GameKid/cpu/instruction.h"
 #include "opcodes/imm_to_reg_opcode.h"
 #include "opcodes/reg_to_reg_opcode.h"
-#include "opcodes/reg_to_mem_opcode.h"
+#include "opcodes/reg_to_reg16_mem_opcode.h"
 
 class ld_instruction : public instruction
 {
 private:
     std::vector<imm_to_reg_opcode> _imm_to_reg;
     std::vector<reg_to_reg_opcode> _reg_to_reg;
-    std::vector<reg_to_mem_opcode> _reg_to_mem;
+    std::vector<reg_to_reg16_mem_opcode> _reg_to_mem;
 public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld")
@@ -74,7 +74,7 @@ public:
 
     void add_reg_to_mem(byte val, const reg8& src, const reg16& dst)
     {
-        _reg_to_mem.push_back(reg_to_mem_opcode(_cpu, src, dst, val));
+        _reg_to_mem.push_back(reg_to_reg16_mem_opcode(_cpu, src, dst, val));
     }
 
 
