@@ -53,9 +53,11 @@ std::vector<byte> bitmask_instruction::parse(const std::vector<std::string>& ope
 
 void bitmask_instruction::add_register_opcodes(const reg8& r, byte base_value)
 {
+    std::vector<bitmask_opcode>& register_map = _bit_opcodes[r.name];
+
     for (byte bit = 0; bit < 8; ++bit)
     {
-        _bit_opcodes[r.name].push_back(
+        register_map.push_back(
             bitmask_opcode(
                 _cpu,
                 name,
@@ -65,5 +67,7 @@ void bitmask_instruction::add_register_opcodes(const reg8& r, byte base_value)
                 bit
             )
         );
+
+        opcodes.push_back(&register_map.back());
     }
 }

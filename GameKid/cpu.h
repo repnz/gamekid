@@ -11,6 +11,11 @@ struct reg8
 
     reg8(const std::string& name, byte* address) : name(name), address(address) {}
 
+    byte get() const
+    {
+        return *address;
+    }
+
 };
 
 struct reg16
