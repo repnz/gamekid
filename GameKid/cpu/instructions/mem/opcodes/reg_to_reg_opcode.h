@@ -7,8 +7,8 @@ private:
     reg src;
     reg dst;
 public:
-    reg_to_reg_opcode(cpu& cpu, const std::string& name, byte value, const reg& src, const reg& dst, byte cycles)
-        : opcode(cpu, name, value, false, cycles), src(src), dst(dst)
+    reg_to_reg_opcode(cpu& cpu, byte value, const reg& src, const reg& dst)
+        : opcode(cpu, "ld", value, false, 4), src(src), dst(dst)
     {
     }
 

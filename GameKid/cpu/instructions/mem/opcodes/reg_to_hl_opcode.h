@@ -9,7 +9,7 @@ private:
     reg _reg;
 public:
     reg_to_hl_opcode(cpu& cpu, const reg& reg, byte value)
-        : opcode(cpu, name, value, false, 8), _reg(reg)
+        : opcode(cpu, "ld", value, false, 8), _reg(reg)
     {
     }
 

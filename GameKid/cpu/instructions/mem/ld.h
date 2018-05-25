@@ -64,7 +64,7 @@ public:
 
     void add_reg_to_reg(byte val, const reg& src, const reg& dst)
     {
-        _reg_to_reg.push_back(reg_to_reg_opcode(_cpu, name, val, src, dst, 4));
+        _reg_to_reg.push_back(reg_to_reg_opcode(_cpu, val, src, dst));
     }
 
     void add_reg_to_hl(byte val, const reg& src)
