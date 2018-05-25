@@ -218,5 +218,8 @@
     <ClInclude Include="cpu\instructions\mem\opcodes\a_to_c_mem_opcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\instructions\mem\opcodes\reg16_mem_to_reg_opcode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

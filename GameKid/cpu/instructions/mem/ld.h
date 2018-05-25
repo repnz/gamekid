@@ -5,6 +5,7 @@
 #include "opcodes/reg_to_reg16_mem_opcode.h"
 #include "opcodes/a_to_c_mem_opcode.h"
 #include "opcodes/a_to_imm_mem_opcode.h"
+#include "opcodes/reg16_mem_to_reg_opcode.h"
 
 class ld_instruction : public instruction
 {
@@ -12,6 +13,7 @@ private:
     std::vector<imm_to_reg_opcode> _imm_to_reg;
     std::vector<reg_to_reg_opcode> _reg_to_reg;
     std::vector<reg_to_reg16_mem_opcode> _reg_to_mem;
+    std::vector<reg16_mem_to_reg_opcode> _mem_to_reg;
     a_to_c_mem_opcode _a_to_c_mem_opcode;
     a_to_imm_mem_opcode _a_to_imm_mem_opcode;
 public:
@@ -25,7 +27,7 @@ public:
         add_imm_to_reg(0x1E, cpu.regs.E);
         add_imm_to_reg(0x26, cpu.regs.H);
         add_imm_to_reg(0x2E, cpu.regs.L);
-        
+
         add_reg_to_reg_opcodes(0x78, cpu.regs.A);
         add_reg_to_reg_opcodes(0x40, cpu.regs.B);
         add_reg_to_reg_opcodes(0x48, cpu.regs.C);
@@ -49,6 +51,16 @@ public:
         add_reg_to_mem(0x02, cpu.regs.A, cpu.regs.BC);
         add_reg_to_mem(0x12, cpu.regs.A, cpu.regs.DE);
 
+        // Move from Register To Memory
+
+        add_mem_to_reg(0x77, cpu.regs.HL, cpu.regs.A);
+        add_mem_to_reg(0x70, cpu.regs.HL, cpu.regs.B);
+        add_mem_to_reg(0x71, cpu.regs.HL, cpu.regs.C);
+        add_mem_to_reg(0x72, cpu.regs.HL, cpu.regs.D);
+        add_mem_to_reg(0x73, cpu.regs.HL, cpu.regs.E);
+        add_mem_to_reg(0x74, cpu.regs.HL, cpu.regs.H);
+        add_mem_to_reg(0x75, cpu.regs.HL, cpu.regs.L);
+
         opcodes.push_back(&_a_to_c_mem_opcode);
         opcodes.push_back(&_a_to_imm_mem_opcode);
     }
@@ -66,13 +78,13 @@ public:
 
     void add_reg_to_reg_opcodes(byte b_value, const reg8& dst)
     {
-        add_reg_to_reg(b_value-7, _cpu.regs.A, dst);
-        add_reg_to_reg(b_value+0, _cpu.regs.B, dst);
-        add_reg_to_reg(b_value+1, _cpu.regs.C, dst);
-        add_reg_to_reg(b_value+2, _cpu.regs.D, dst);
-        add_reg_to_reg(b_value+3, _cpu.regs.E, dst);
-        add_reg_to_reg(b_value+4, _cpu.regs.H, dst);
-        add_reg_to_reg(b_value+5, _cpu.regs.L, dst);
+        add_reg_to_reg(b_value - 7, _cpu.regs.A, dst);
+        add_reg_to_reg(b_value + 0, _cpu.regs.B, dst);
+        add_reg_to_reg(b_value + 1, _cpu.regs.C, dst);
+        add_reg_to_reg(b_value + 2, _cpu.regs.D, dst);
+        add_reg_to_reg(b_value + 3, _cpu.regs.E, dst);
+        add_reg_to_reg(b_value + 4, _cpu.regs.H, dst);
+        add_reg_to_reg(b_value + 5, _cpu.regs.L, dst);
     }
 
     void add_reg_to_reg(byte val, const reg8& src, const reg8& dst)
@@ -85,6 +97,12 @@ public:
     {
         _reg_to_mem.push_back(reg_to_reg16_mem_opcode(_cpu, src, dst, val));
         opcodes.push_back(&_reg_to_mem.back());
+    }
+
+    void add_mem_to_reg(byte val, const reg16& src, const reg8& dst)
+    {
+        _mem_to_reg.push_back(reg16_mem_to_reg_opcode(_cpu, src, dst, val));
+        opcodes.push_back(&_mem_to_reg.back());
     }
 
 

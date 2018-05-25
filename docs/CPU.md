@@ -59,10 +59,13 @@ The Load instruction comes in 4 variants:
 
 ### Register to Memory
 
-Unless moved to register A, memory access must be done
+Unless moved from register A, memory access must be done
 by putting the address in register HL, and using it as a pointer.
 
-#### Moving from register to HL memory
+#### Immidiate To [HL]
+
+
+#### Register to [HL]
 
 8 cycles.
 
@@ -76,7 +79,7 @@ Examples
 72 : ld [HL], D
 ```
 
-#### Moving A register to BC, DE, HL
+#### A register to BC, DE, HL
 
 
 |Register |BC   |DE  
@@ -90,7 +93,7 @@ Examples
 12 : ld [DE], A
 ```
 
-#### Moving from A register to memory address
+#### A To Immidiate Memory
 
 memory write can be done by specifying the memory address in the code as 
 an opcode parameter.
@@ -106,7 +109,7 @@ EA 0F 00 : ld [0x000f], A
 EA 0E FF : ld [0xff0e], A
 ```
 
-#### Using the C register as a memory pointer
+#### A To (C+0xFF00)
 
 the C register is used to access memory from 0xFF00+C.
 
@@ -120,3 +123,10 @@ Example
 E2    : ld [c], A ; Write A to 0xFF20 
 ```
 
+### Memory To Register
+
+#### [HL] to Register
+
+|Register |A   |B   |C   |D   |E   |H   |L   |
+|-------- |--- |----|----|----|----|----|----|
+|Opcode   |0x7E|0x46|0x4E||0x56|0x5E|0x6E|

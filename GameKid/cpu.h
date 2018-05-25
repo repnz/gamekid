@@ -16,6 +16,11 @@ struct reg8
         return *address;
     }
 
+    void set(byte value)
+    {
+        *address = value;
+    }
+
 };
 
 struct reg16
