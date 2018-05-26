@@ -3,7 +3,6 @@
 #include "opcodes/imm_to_reg_opcode.h"
 #include "opcodes/reg_to_reg_opcode.h"
 #include "opcodes/reg_to_reg16_mem_opcode.h"
-#include "opcodes/reg16_mem_to_reg_opcode.h"
 #include "opcodes/move_opcode.h"
 
 class ld_instruction : public instruction
@@ -12,7 +11,7 @@ private:
     std::vector<imm_to_reg_opcode> _imm_to_reg;
     std::vector<reg_to_reg_opcode> _reg_to_reg;
     std::vector<reg_to_reg16_mem_opcode> _reg_to_mem;
-    std::vector<reg16_mem_to_reg_opcode> _mem_to_reg;
+    std::vector<move_opcode<reg_mem_operand, reg_operand>> _mem_to_reg;
     move_opcode<reg_operand, c_mem_operand> _a_to_c_mem;
     move_opcode<reg_operand, imm_mem_operand> _a_to_imm_mem;
     move_opcode<imm_operand, reg_mem_operand> _imm_to_hl;
@@ -105,7 +104,9 @@ public:
 
     void add_mem_to_reg(byte val, const reg16& src, const reg8& dst)
     {
-        _mem_to_reg.push_back(reg16_mem_to_reg_opcode(_cpu, src, dst, val));
+        reg_mem_operand src_operand(_cpu.mem, src);
+        reg_operand dst_operand(dst);
+        _mem_to_reg.push_back(move_opcode<reg_mem_operand, reg_operand>(_cpu, val, 8, src_operand, dst_operand));
         opcodes.push_back(&_mem_to_reg.back());
     }
 
