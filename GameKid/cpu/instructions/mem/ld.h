@@ -2,7 +2,6 @@
 #include "GameKid/cpu/instruction.h"
 #include "opcodes/imm_to_reg_opcode.h"
 #include "opcodes/reg_to_reg_opcode.h"
-#include "opcodes/reg_to_reg16_mem_opcode.h"
 #include "opcodes/move_opcode.h"
 
 class ld_instruction : public instruction
@@ -10,7 +9,7 @@ class ld_instruction : public instruction
 private:
     std::vector<imm_to_reg_opcode> _imm_to_reg;
     std::vector<reg_to_reg_opcode> _reg_to_reg;
-    std::vector<reg_to_reg16_mem_opcode> _reg_to_mem;
+    std::vector<move_opcode<reg_operand, reg_mem_operand>> _reg_to_mem;
     std::vector<move_opcode<reg_mem_operand, reg_operand>> _mem_to_reg;
     move_opcode<reg_operand, c_mem_operand> _a_to_c_mem;
     move_opcode<reg_operand, imm_mem_operand> _a_to_imm_mem;
@@ -98,7 +97,13 @@ public:
 
     void add_reg_to_mem(byte val, const reg8& src, const reg16& dst)
     {
-        _reg_to_mem.push_back(reg_to_reg16_mem_opcode(_cpu, src, dst, val));
+        reg_operand src_operand(src);
+        reg_mem_operand dst_operand(_cpu.mem, dst);
+
+        _reg_to_mem.push_back(
+            move_opcode<reg_operand, reg_mem_operand>(_cpu, val, 8, src_operand, dst_operand)
+        );
+
         opcodes.push_back(&_reg_to_mem.back());
     }
 
@@ -106,7 +111,11 @@ public:
     {
         reg_mem_operand src_operand(_cpu.mem, src);
         reg_operand dst_operand(dst);
-        _mem_to_reg.push_back(move_opcode<reg_mem_operand, reg_operand>(_cpu, val, 8, src_operand, dst_operand));
+        
+        _mem_to_reg.push_back(
+            move_opcode<reg_mem_operand, reg_operand>(_cpu, val, 8, src_operand, dst_operand)
+        );
+
         opcodes.push_back(&_mem_to_reg.back());
     }
 
