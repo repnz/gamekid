@@ -17,8 +17,7 @@ public:
 
     void run() override
     {
-        byte moved_byte = _src.load();
-        _dst.store(moved_byte);
+        _dst.store(_src.load());
     }
 
     std::string to_str(byte* next) override
@@ -31,11 +30,11 @@ public:
         std::vector<byte> v;
         v.push_back(value);
         
-        for each (byte opcode_byte in _src.bytes(operands[0]))
+        for (byte opcode_byte : _src.bytes(operands[0]))
         {
             v.push_back(opcode_byte);
         }
-        for each (byte opcode_byte in _dst.bytes(operands[1]))
+        for (byte opcode_byte : _dst.bytes(operands[1]))
         {
             v.push_back(opcode_byte);
         }

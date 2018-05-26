@@ -8,7 +8,7 @@ class operand
 public:
     virtual ~operand() = default;
     virtual std::string to_str(byte* next) = 0;
-    virtual std::vector<byte> bytes(std::string operand) { return {}; }
+    virtual std::vector<byte> bytes(std::string operand) = 0;
 };
 
 template <typename T>
@@ -49,6 +49,10 @@ public:
     std::string to_str(byte* next) override
     {
         return "[" + _reg.name + "]";
+    }
+    std::vector<byte> bytes(std::string operand) override
+    {
+        return {};
     }
 };
 
@@ -91,7 +95,7 @@ public:
 
     std::string to_str(byte* next) override
     {
-        T item = (T*)next;
+        T item = *(T*)next;
         return std::to_string(item);
     }
 
@@ -108,10 +112,14 @@ private:
 public:
     explicit imm_mem_operand(cpu& cpu) : _cpu(cpu) {}
 
+    word get_address()
+    {
+        return _cpu.mem.load_word_le(_cpu.PC + 1);
+    }
+
     byte load() override
     {
-        const word address = _cpu.mem.load_word_le(_cpu.PC + 1);
-        return _cpu.mem.load_byte(address);
+        return _cpu.mem.load_byte(get_address());
     }
 
     std::string to_str(byte* next) override
@@ -122,13 +130,53 @@ public:
 
     void store(byte value) override
     {
-        const word address = _cpu.mem.load_word_le(_cpu.PC + 1);
-        _cpu.mem.store(address, value);
+        _cpu.mem.store(get_address(), value);
     }
 
     std::vector<byte> bytes(std::string operand) override
     {
         return immidiate_bytes<word>(operand);
+    }
+};
+
+
+class reg16_offset_operand : public source_operand<byte>
+{
+private:
+    cpu & _cpu;
+    reg16 _reg;
+public:
+    explicit reg16_offset_operand(cpu& cpu, const reg16& reg) : _cpu(cpu), _reg(reg) {}
+
+    byte load() override
+    {
+        const byte offset = _cpu.mem.load_byte(_cpu.PC + 1);
+
+        if (offset <= CHAR_MAX)
+        {
+            return  _reg.get() + offset;
+        }
+
+        return _reg.get() - (offset - CHAR_MAX);
+    }
+
+    std::string to_str(byte* next) override
+    {
+        const char value = *(char*)(next);
+
+        if (value < 0)
+        {
+            return _reg.name + std::to_string(value);
+        }
+        
+        return _reg.name + "+" + std::to_string(value);
+    }
+
+    std::vector<byte> bytes(std::string operand) override
+    {
+        size_t index_of_offset = operand.find("+");
+        std::string offset = operand.substr(index_of_offset + 1);
+        return immidiate_bytes<word>(offset);
     }
 };
 
@@ -153,6 +201,11 @@ public:
     {
         _reg.set(value);
     }
+
+    std::vector<byte> bytes(std::string operand) override
+    {
+        return {};
+    }
 };
 
 class reg16_operand : public source_operand<word>, public dest_operand<word>
@@ -175,6 +228,10 @@ public:
     void store(word value) override
     {
         _reg.set(value);
+    }
+    std::vector<byte> bytes(std::string operand) override
+    {
+        return {};
     }
 };
 
@@ -200,5 +257,9 @@ public:
     {
         const word address = _cpu.regs.C.get() + 0xFF00;
         return _cpu.mem.store(address, value);
+    }
+    std::vector<byte> bytes(std::string operand) override
+    {
+        return {};
     }
 };

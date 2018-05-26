@@ -17,7 +17,7 @@ private:
     move_opcode<imm_mem_operand, reg8_operand> _imm_mem_to_a;
     std::vector<move_opcode<imm_operand<word>, reg16_operand>> _imm16_to_reg16;
     move_opcode<reg16_operand, imm_mem_operand> _sp_to_imm_mem;
-    
+    move_opcode<reg16_operand, reg16_operand> _hl_to_sp;
 public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld"), 
@@ -26,7 +26,8 @@ public:
     _a_to_imm_mem(cpu, 0xEA, 16, reg8_operand(cpu.regs.A), imm_mem_operand(cpu)),
     _imm_to_hl(cpu, 0x36, 12, imm_operand<byte>(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL)),
     _imm_mem_to_a(cpu, 0xFA, 16, imm_mem_operand(cpu), cpu.regs.A),
-    _sp_to_imm_mem(cpu, 0x08, 20, cpu.regs.SP, imm_mem_operand(cpu))
+    _sp_to_imm_mem(cpu, 0x08, 20, cpu.regs.SP, imm_mem_operand(cpu)),
+    _hl_to_sp(cpu, 0xF9, 8, cpu.regs.HL, cpu.regs.SP)
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
         add_imm_to_reg(0x06, cpu.regs.B);
