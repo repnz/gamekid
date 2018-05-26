@@ -22,6 +22,8 @@ The Load instruction comes in 4 variants:
 
 ### Immidiate to Register
 
+#### 8 Bit Registers
+
 8 cycles.
 
 |Register |A   |B   |C   |D   |E   |H   |L   |
@@ -29,12 +31,19 @@ The Load instruction comes in 4 variants:
 |Opcode   |0x3E|0x06|0x0E|0x16|0x1E|0x26|0x2E|
 
 
-#### Examples
+##### Examples
 
 ```assembly
 06 0A : ld B, 10 
 3E 64 : ld A, 100
 ```
+#### 16 Bit Registers
+
+12 Cycles.
+
+|Register |BC   |DE   |HL |SP |
+|-------- |--- |----|----|----|
+|Opcode   |0x01|0x11|0x21|0x31|
 
 ### Register to Register
 
@@ -142,3 +151,4 @@ Cycles=16
 
 Opcode=F2
 Cycles=8
+

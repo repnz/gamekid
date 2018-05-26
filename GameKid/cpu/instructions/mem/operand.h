@@ -9,7 +9,7 @@ class source_operand
 public:
     virtual ~source_operand() = default;
     virtual T load() = 0;
-    virtual std::string to_str(T* next) = 0;
+    virtual std::string to_str(byte* next) = 0;
 };
 
 template <typename T>

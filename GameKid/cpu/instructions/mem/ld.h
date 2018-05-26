@@ -15,6 +15,7 @@ private:
     move_opcode<reg8_operand, imm_mem_operand> _a_to_imm_mem;
     move_opcode<imm_operand<byte>, reg_mem_operand> _imm_to_hl;
     move_opcode<imm_mem_operand, reg8_operand> _imm_mem_to_a;
+    std::vector<move_opcode<imm_operand<word>, reg16_operand>> _imm16_to_reg16;
     
 public:
     explicit ld_instruction(cpu& cpu)
@@ -69,6 +70,11 @@ public:
         add_mem_to_reg(0x66, cpu.regs.HL, cpu.regs.H);
         add_mem_to_reg(0x6E, cpu.regs.HL, cpu.regs.L);
         
+        // 16 Bit Move From Immidiate To Register
+        add_imm16_to_reg16(0x01, cpu.regs.BC);
+        add_imm16_to_reg16(0x11, cpu.regs.DE);
+        add_imm16_to_reg16(0x21, cpu.regs.HL);
+        add_imm16_to_reg16(0x31, cpu.regs.SP);
 
         opcodes.push_back(&_a_to_c_mem);
         opcodes.push_back(&_a_to_imm_mem);
@@ -132,6 +138,14 @@ public:
         opcodes.push_back(&_mem_to_reg.back());
     }
 
+    void add_imm16_to_reg16(byte val, const reg16& reg)
+    {
+        _imm16_to_reg16.push_back(
+            move_opcode<imm_operand<word>, reg16_operand>(_cpu, val, 12, imm_operand<word>(_cpu), reg)
+        );
+
+        opcodes.push_back(&_imm16_to_reg16.back());
+    }
 
     std::vector<byte> parse(const std::vector<std::string>& operands) override
     {

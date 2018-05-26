@@ -55,6 +55,8 @@ struct regs
     reg16 BC;
     reg16 DE;
     reg16 HL;
+    reg16 SP;
+
     explicit regs(cpu& cpu);
 };
 
@@ -132,6 +134,7 @@ inline regs::regs(cpu& cpu) :
         L("L", &cpu._L),
         BC("BC", &cpu._B, &cpu._C),
         DE("DE", &cpu._D, &cpu._D),
-        HL("HL", &cpu._H, &cpu._L)
+        HL("HL", &cpu._H, &cpu._L),
+        SP("SP", (byte*)&cpu.SP, ((byte*)&cpu.SP)+1)
 {
 }
