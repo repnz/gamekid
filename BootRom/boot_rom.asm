@@ -23,17 +23,37 @@ ROM:000C        ld      hl, $FF26      ; Load sound on/off register
 ROM:000F        ld      c, $11         ; Load FF11 to create sound wave
 ROM:0011        ld      a, $80 
 ROM:0013        ldd     [hl], a ; 0xFF26 = 0x80 -> turn bit 7 on -> all sound on
-ROM:0014        ld      [c], a  ; $FF11 =  0x80 -> Set sound duty to 
-ROM:0015        inc     c       ; 0xFF11++
+               
+         ;-> Set sound wave pattern duty to 50%
+		 ;-> Set Sound Length to (64-t1)*1/256, t1=0 -> 64/256 = 1/4 second
+ROM:0014        ld      [c], a  ; $FF11 =  0x80 
 
+				; c = 0x12 -> 0xFF12 -> Sound Mode 1 Register
+ROM:0015        inc     c       
 
-ROM:0016        ld      a, $F3
+ROM:0016        ld      a, $F3 ; 0b11110011
+				; initial volume => 0b1111 => 15
+				; envelope => down
+				; envelope => 3
 ROM:0018        ld      [c], a
+
+				; hl = 0xFF25 = NR 51 => Sound Output Terminal Selection
 ROM:0019        ldd     [hl], a
+
 ROM:001A        ld      a, $77 ; 'w'
+				; hl = 0xFF24 = Channel Control / ON-OFF/ Volume
+				; 0b01110111 => 
+				; SoundOutput1.Status = Off; SoundOutput1.Level = 7;
+				; SoundOutput2.Status = off; SoundOutput2.Level = 7;
 ROM:001C        ld      [hl], a
+
+				; 0xFF47 = BackGround and Window Pallete Data
+				; 0b1111 1100
+				; Set the pixel color selectors
 ROM:001D        ld      a, $FC
 ROM:001F        ld      [$FF47], a
+
+				; Copy bytes to VRAM
 ROM:0021        ld      de, $104
 ROM:0024        ld      hl, $8010
 ROM:0027
@@ -45,6 +65,8 @@ ROM:002E        inc     de
 ROM:002F        ld      a, e
 ROM:0030        cp      $34 ; '4'
 ROM:0032        jr      nz, loc_27
+
+				; Cop More Bytes to VRAM
 ROM:0034        ld      de, $D8
 ROM:0037        ld      b, 8
 ROM:0039
@@ -55,6 +77,8 @@ ROM:003B        ldi     [hl], a
 ROM:003C        inc     hl
 ROM:003D        dec     b
 ROM:003E        jr      nz, loc_39
+
+
 ROM:0040        ld      a, $19
 ROM:0042        ld      [$9910], a
 ROM:0045        ld      hl, $992F
@@ -68,6 +92,7 @@ ROM:004B        jr      z, loc_55
 ROM:004D        ldd     [hl], a
 ROM:004E        dec     c
 ROM:004F        jr      nz, loc_4A
+
 ROM:0051        ld      l, $F
 ROM:0053        jr      loc_48
 ROM:0055 ; ------------------------------------------------------------------
@@ -150,6 +175,7 @@ ROM:009D        rl      c
 ROM:009F        rla
 ROM:00A0        dec     b
 ROM:00A1        jr      nz, loc_98
+
 ROM:00A3        ldi     [hl], a
 ROM:00A4        inc     hl
 ROM:00A5        ldi     [hl], a
