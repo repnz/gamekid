@@ -6,23 +6,23 @@
 class ld_instruction : public instruction
 {
 private:
-    std::vector<move_opcode<imm_operand, reg_operand>> _imm_to_reg;
-    std::vector<move_opcode<reg_operand, reg_operand>> _reg_to_reg;
-    std::vector<move_opcode<reg_operand, reg_mem_operand>> _reg_to_mem;
-    std::vector<move_opcode<reg_mem_operand, reg_operand>> _mem_to_reg;
-    move_opcode<reg_operand, c_mem_operand> _a_to_c_mem;
-    move_opcode<c_mem_operand, reg_operand> _c_mem_to_a;
-    move_opcode<reg_operand, imm_mem_operand> _a_to_imm_mem;
-    move_opcode<imm_operand, reg_mem_operand> _imm_to_hl;
-    move_opcode<imm_mem_operand, reg_operand> _imm_mem_to_a;
+    std::vector<move_opcode<imm_operand<byte>, reg8_operand>> _imm_to_reg;
+    std::vector<move_opcode<reg8_operand, reg8_operand>> _reg_to_reg;
+    std::vector<move_opcode<reg8_operand, reg_mem_operand>> _reg_to_mem;
+    std::vector<move_opcode<reg_mem_operand, reg8_operand>> _mem_to_reg;
+    move_opcode<reg8_operand, c_mem_operand> _a_to_c_mem;
+    move_opcode<c_mem_operand, reg8_operand> _c_mem_to_a;
+    move_opcode<reg8_operand, imm_mem_operand> _a_to_imm_mem;
+    move_opcode<imm_operand<byte>, reg_mem_operand> _imm_to_hl;
+    move_opcode<imm_mem_operand, reg8_operand> _imm_mem_to_a;
     
 public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld"), 
-    _a_to_c_mem(cpu, 0xE2, 8, reg_operand(cpu.regs.A), c_mem_operand(cpu)), 
-    _c_mem_to_a(cpu, 0xF2, 8, c_mem_operand(cpu), reg_operand(cpu.regs.A)),
-    _a_to_imm_mem(cpu, 0xEA, 16, reg_operand(cpu.regs.A), imm_mem_operand(cpu)),
-    _imm_to_hl(cpu, 0x36, 12, imm_operand(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL)),
+    _a_to_c_mem(cpu, 0xE2, 8, reg8_operand(cpu.regs.A), c_mem_operand(cpu)), 
+    _c_mem_to_a(cpu, 0xF2, 8, c_mem_operand(cpu), reg8_operand(cpu.regs.A)),
+    _a_to_imm_mem(cpu, 0xEA, 16, reg8_operand(cpu.regs.A), imm_mem_operand(cpu)),
+    _imm_to_hl(cpu, 0x36, 12, imm_operand<byte>(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL)),
     _imm_mem_to_a(cpu, 0xFA, 16, imm_mem_operand(cpu), cpu.regs.A)
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
@@ -85,7 +85,7 @@ public:
     void add_imm_to_reg(byte op_value, const reg8& reg)
     {
         _imm_to_reg.push_back(
-            move_opcode<imm_operand, reg_operand>(_cpu, op_value, 8, imm_operand(_cpu), reg)
+            move_opcode<imm_operand<byte>, reg8_operand>(_cpu, op_value, 8, imm_operand<byte>(_cpu), reg)
         );
 
         opcodes.push_back(&_imm_to_reg.back());
@@ -104,17 +104,17 @@ public:
 
     void add_reg_to_reg(byte val, const reg8& src, const reg8& dst)
     {
-        _reg_to_reg.push_back(move_opcode<reg_operand, reg_operand>(_cpu, val, 4, src, dst));
+        _reg_to_reg.push_back(move_opcode<reg8_operand, reg8_operand>(_cpu, val, 4, src, dst));
         opcodes.push_back(&_reg_to_reg.back());
     }
 
     void add_reg_to_mem(byte val, const reg8& src, const reg16& dst)
     {
-        reg_operand src_operand(src);
+        reg8_operand src_operand(src);
         reg_mem_operand dst_operand(_cpu.mem, dst);
 
         _reg_to_mem.push_back(
-            move_opcode<reg_operand, reg_mem_operand>(_cpu, val, 8, src_operand, dst_operand)
+            move_opcode<reg8_operand, reg_mem_operand>(_cpu, val, 8, src_operand, dst_operand)
         );
 
         opcodes.push_back(&_reg_to_mem.back());
@@ -123,10 +123,10 @@ public:
     void add_mem_to_reg(byte val, const reg16& src, const reg8& dst)
     {
         reg_mem_operand src_operand(_cpu.mem, src);
-        reg_operand dst_operand(dst);
+        reg8_operand dst_operand(dst);
         
         _mem_to_reg.push_back(
-            move_opcode<reg_mem_operand, reg_operand>(_cpu, val, 8, src_operand, dst_operand)
+            move_opcode<reg_mem_operand, reg8_operand>(_cpu, val, 8, src_operand, dst_operand)
         );
 
         opcodes.push_back(&_mem_to_reg.back());

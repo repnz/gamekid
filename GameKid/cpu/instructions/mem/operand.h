@@ -3,24 +3,25 @@
 #include "GameKid/memory.h"
 #include "GameKid/cpu.h"
 
+template <typename T>
 class source_operand
 {
 public:
     virtual ~source_operand() = default;
-    virtual byte load() = 0;
-    virtual std::string to_str(byte* next) = 0;
+    virtual T load() = 0;
+    virtual std::string to_str(T* next) = 0;
 };
 
+template <typename T>
 class dest_operand
 {
 public:
     virtual ~dest_operand() = default;
-    virtual void store(byte value) = 0;
+    virtual void store(T value) = 0;
     virtual std::string to_str(byte* next) = 0;
 };
 
-
-class reg_mem_operand : public source_operand, public dest_operand
+class reg_mem_operand : public source_operand<byte>, public dest_operand<byte>
 {
 public:
     memory & _mem;
@@ -47,7 +48,8 @@ public:
     }
 };
 
-class imm_operand : public source_operand
+template <typename T>
+class imm_operand : public source_operand<T>
 {
 private:
     cpu & _cpu;
@@ -55,9 +57,9 @@ private:
 public:
     explicit imm_operand(cpu& cpu) : _cpu(cpu) {}
 
-    byte load() override
+    T load() override
     {
-        return _cpu.mem.load_byte(_cpu.PC + 1);
+        return _cpu.mem.load<T>(_cpu.PC + 1);
     }
 
     std::string to_str(byte* next) override
@@ -66,7 +68,7 @@ public:
     }
 };
 
-class imm_mem_operand : public source_operand, public dest_operand
+class imm_mem_operand : public source_operand<byte>, public dest_operand<byte>
 {
 private:
     cpu & _cpu;
@@ -92,12 +94,12 @@ public:
     }
 };
 
-class reg_operand : public source_operand, public dest_operand
+class reg8_operand : public source_operand<byte>, public dest_operand<byte>
 {
 private:
     reg8 _reg;
 public:
-    reg_operand(const reg8& reg) : _reg(reg) {}
+    reg8_operand(const reg8& reg) : _reg(reg) {}
 
     byte load() override
     {
@@ -115,7 +117,30 @@ public:
     }
 };
 
-class c_mem_operand : public source_operand, public dest_operand
+class reg16_operand : public source_operand<word>, public dest_operand<word>
+{
+private:
+    reg16 _reg;
+public:
+    reg16_operand(const reg16& reg) : _reg(reg) {}
+
+    word load() override
+    {
+        return _reg.get();
+    }
+
+    std::string to_str(byte* next) override
+    {
+        return _reg.name;
+    }
+
+    void store(word value) override
+    {
+        _reg.set(value);
+    }
+};
+
+class c_mem_operand : public source_operand<byte>, public dest_operand<byte>
 {
 private:
     cpu & _cpu;
