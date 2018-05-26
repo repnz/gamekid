@@ -11,6 +11,7 @@ private:
     std::vector<move_opcode<reg_operand, reg_mem_operand>> _reg_to_mem;
     std::vector<move_opcode<reg_mem_operand, reg_operand>> _mem_to_reg;
     move_opcode<reg_operand, c_mem_operand> _a_to_c_mem;
+    move_opcode<c_mem_operand, reg_operand> _c_mem_to_a;
     move_opcode<reg_operand, imm_mem_operand> _a_to_imm_mem;
     move_opcode<imm_operand, reg_mem_operand> _imm_to_hl;
     move_opcode<imm_mem_operand, reg_operand> _imm_mem_to_a;
@@ -19,6 +20,7 @@ public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld"), 
     _a_to_c_mem(cpu, 0xE2, 8, reg_operand(cpu.regs.A), c_mem_operand(cpu)), 
+    _c_mem_to_a(cpu, 0xF2, 8, c_mem_operand(cpu), reg_operand(cpu.regs.A)),
     _a_to_imm_mem(cpu, 0xEA, 16, reg_operand(cpu.regs.A), imm_mem_operand(cpu)),
     _imm_to_hl(cpu, 0x36, 12, imm_operand(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL)),
     _imm_mem_to_a(cpu, 0xFA, 16, imm_mem_operand(cpu), cpu.regs.A)
@@ -57,17 +59,22 @@ public:
         // Move from Register To Memory
 
         add_mem_to_reg(0x7E, cpu.regs.HL, cpu.regs.A);
+        add_mem_to_reg(0x0A, cpu.regs.BC, cpu.regs.A);
+        add_mem_to_reg(0x1A, cpu.regs.DE, cpu.regs.A);
+
         add_mem_to_reg(0x46, cpu.regs.HL, cpu.regs.B);
         add_mem_to_reg(0x4E, cpu.regs.HL, cpu.regs.C);
         add_mem_to_reg(0x56, cpu.regs.HL, cpu.regs.D);
         add_mem_to_reg(0x5E, cpu.regs.HL, cpu.regs.E);
         add_mem_to_reg(0x66, cpu.regs.HL, cpu.regs.H);
         add_mem_to_reg(0x6E, cpu.regs.HL, cpu.regs.L);
+        
 
         opcodes.push_back(&_a_to_c_mem);
         opcodes.push_back(&_a_to_imm_mem);
         opcodes.push_back(&_imm_to_hl);
         opcodes.push_back(&_imm_mem_to_a);
+        opcodes.push_back(&_c_mem_to_a);
     }
 
     void reg_to_imm(byte* reg_address)

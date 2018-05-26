@@ -137,3 +137,8 @@ E2    : ld [c], A ; Write A to 0xFF20
 
 Opcode=FA
 Cycles=16
+
+#### (C+0xFF00) Memory to A
+
+Opcode=F2
+Cycles=8
