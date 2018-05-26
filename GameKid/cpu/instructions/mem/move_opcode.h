@@ -25,4 +25,21 @@ public:
     {
         return "ld " + _dst.to_str(next) + ", " + _src.to_str(next);
     }
+
+    std::vector<byte> bytes(const std::vector<std::string>& operands) override
+    {
+        std::vector<byte> v;
+        v.push_back(value);
+        
+        for each (byte opcode_byte in _src.bytes(operands[0]))
+        {
+            v.push_back(opcode_byte);
+        }
+        for each (byte opcode_byte in _dst.bytes(operands[1]))
+        {
+            v.push_back(opcode_byte);
+        }
+
+        return v;
+    }
 };

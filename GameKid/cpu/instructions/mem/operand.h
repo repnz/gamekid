@@ -3,22 +3,26 @@
 #include "GameKid/memory.h"
 #include "GameKid/cpu.h"
 
-template <typename T>
-class source_operand
+class operand
 {
 public:
-    virtual ~source_operand() = default;
-    virtual T load() = 0;
+    virtual ~operand() = default;
     virtual std::string to_str(byte* next) = 0;
+    virtual std::vector<byte> bytes(std::string operand) { return {}; }
 };
 
 template <typename T>
-class dest_operand
+class source_operand : public operand
 {
 public:
-    virtual ~dest_operand() = default;
+    virtual T load() = 0;
+};
+
+template <typename T>
+class dest_operand : public operand
+{
+public:
     virtual void store(T value) = 0;
-    virtual std::string to_str(byte* next) = 0;
 };
 
 class reg_mem_operand : public source_operand<byte>, public dest_operand<byte>
@@ -49,6 +53,29 @@ public:
 };
 
 template <typename T>
+std::vector<byte> immidiate_bytes(std::string operand)
+{
+    int parsed = stoi(operand);
+
+    if (parsed > sizeof(T))
+    {
+        throw std::exception("Operand value exeeds");
+    }
+
+    T real_value = (T)parsed;
+
+    std::vector<byte> v(sizeof(T));
+
+    for (byte i = 0; i<sizeof(T); ++i)
+    {
+        v.push_back(real_value & 0xFF);
+        real_value >>= 8;
+    }
+
+    return v;
+}
+
+template <typename T>
 class imm_operand : public source_operand<T>
 {
 private:
@@ -64,7 +91,13 @@ public:
 
     std::string to_str(byte* next) override
     {
-        return std::to_string(*next);
+        T item = (T*)next;
+        return std::to_string(item);
+    }
+
+    std::vector<byte> bytes(std::string operand) override 
+    {
+        return immidiate_bytes<T>(operand);
     }
 };
 
@@ -91,6 +124,11 @@ public:
     {
         const word address = _cpu.mem.load_word_le(_cpu.PC + 1);
         _cpu.mem.store(address, value);
+    }
+
+    std::vector<byte> bytes(std::string operand) override
+    {
+        return immidiate_bytes<word>(operand);
     }
 };
 
