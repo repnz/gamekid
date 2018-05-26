@@ -94,7 +94,7 @@ class reg_operand : public source_operand, public dest_operand
 private:
     reg8 _reg;
 public:
-    explicit reg_operand(const reg8& reg) : _reg(reg){}
+    reg_operand(const reg8& reg) : _reg(reg){}
 
     byte load() override
     {
