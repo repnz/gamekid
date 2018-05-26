@@ -7,6 +7,7 @@
 #include "opcodes/a_to_imm_mem_opcode.h"
 #include "opcodes/reg16_mem_to_reg_opcode.h"
 #include "opcodes/imm_to_hl_opcode.h"
+#include "opcodes/move_opcode.h"
 
 class ld_instruction : public instruction
 {

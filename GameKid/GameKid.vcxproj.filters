@@ -224,5 +224,8 @@
     <ClInclude Include="cpu\instructions\mem\opcodes\imm_to_hl_opcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\instructions\mem\opcodes\move_opcode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
