@@ -17,13 +17,13 @@ public:
     virtual std::string to_str(byte* next) = 0;
 };
 
-class memory_move_operand : public source_operand, public dest_operand
+class reg_mem_operand : public source_operand, public dest_operand
 {
 public:
     memory& _mem;
     reg16 _reg;
 
-    memory_move_operand(memory& mem, const reg16& reg) : _mem(mem), _reg(reg)
+    reg_mem_operand(memory& mem, const reg16& reg) : _mem(mem), _reg(reg)
     { 
     }
 
@@ -44,13 +44,13 @@ public:
     }
 };
 
-class immidiate_move_operand : public source_operand
+class imm_operand : public source_operand
 {
 private:
     cpu & _cpu;
 
 public:
-    explicit immidiate_move_operand(cpu& cpu) : _cpu(cpu){}
+    explicit imm_operand(cpu& cpu) : _cpu(cpu){}
 
     byte load() override
     {
@@ -63,12 +63,12 @@ public:
     }
 };
 
-class immidiate_mem_operand : public source_operand, public dest_operand
+class imm_mem_operand : public source_operand, public dest_operand
 {
 private:
     cpu & _cpu;
 public:
-    explicit immidiate_mem_operand(cpu& cpu) : _cpu(cpu){}
+    explicit imm_mem_operand(cpu& cpu) : _cpu(cpu){}
 
     byte load() override
     {
@@ -89,16 +89,39 @@ public:
     }
 };
 
-template <typename TSource, typename TDestination>
+class reg_operand : public source_operand, public dest_operand
+{
+private:
+    reg8 & _reg;
+public:
+    explicit reg_operand(reg8& reg) : _reg(reg){}
+
+    byte load() override
+    {
+        return _reg.get();
+    }
+
+    std::string to_str(byte* next) override
+    {
+        return _reg.name;
+    }
+
+    void store(byte value) override
+    {
+        _reg.set(value);
+    }
+};
+
+template <typename source_operand_type, typename dest_operand_type>
 //    requires source_operand && dest_operand
 class move_opcode : public opcode
 {
 
 private:
-    TSource _src;
-    TDestination _dst;
+    source_operand_type _src;
+    dest_operand_type _dst;
 public:
-    move_opcode(cpu& cpu, byte value, byte cycles, const TSource& src, const TDestination& dst) :
+    move_opcode(cpu& cpu, byte value, byte cycles, const source_operand_type& src, const dest_operand_type& dst) :
     opcode(cpu, "ld", value, false, cycles), _src(src), _dst(dst)
     {
     }

@@ -6,7 +6,6 @@
 #include "opcodes/a_to_c_mem_opcode.h"
 #include "opcodes/a_to_imm_mem_opcode.h"
 #include "opcodes/reg16_mem_to_reg_opcode.h"
-#include "opcodes/imm_to_hl_opcode.h"
 #include "opcodes/move_opcode.h"
 
 class ld_instruction : public instruction
@@ -18,10 +17,11 @@ private:
     std::vector<reg16_mem_to_reg_opcode> _mem_to_reg;
     a_to_c_mem_opcode _a_to_c_mem;
     a_to_imm_mem_opcode _a_to_imm_mem;
-    imm_to_hl_opcode _imm_to_hl;
+    move_opcode<imm_operand, reg_mem_operand> _imm_to_hl;
 public:
     explicit ld_instruction(cpu& cpu)
-        : instruction(cpu, "ld"), _a_to_c_mem(cpu), _a_to_imm_mem(cpu), _imm_to_hl(cpu)
+        : instruction(cpu, "ld"), _a_to_c_mem(cpu), _a_to_imm_mem(cpu), 
+    _imm_to_hl(cpu, 0x36, 12, imm_operand(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL))
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
         add_imm_to_reg(0x06, cpu.regs.B);
