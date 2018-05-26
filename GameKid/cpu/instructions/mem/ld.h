@@ -1,6 +1,7 @@
 #pragma once
 #include "GameKid/cpu/instruction.h"
-#include "opcodes/move_opcode.h"
+#include "move_opcode.h"
+#include "operand.h"
 
 class ld_instruction : public instruction
 {
