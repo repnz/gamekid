@@ -112,6 +112,30 @@ public:
     }
 };
 
+class c_mem_operand : public source_operand, public dest_operand
+{
+private:
+    cpu & _cpu;
+public:
+    explicit c_mem_operand(cpu& cpu);
+
+    byte load() override
+    {
+        const word address = _cpu.regs.C.get() + 0xFF00;
+        return _cpu.mem.load_byte(address);
+    }
+
+    std::string to_str(byte* next) override
+    {
+        return "[c]";
+    }
+
+    void store(byte value) override
+    {
+        const word address = _cpu.regs.C.get() + 0xFF00;
+        return _cpu.mem.store(address, value);
+    }
+};
 
 template <typename source_operand_type, typename dest_operand_type>
 //    requires source_operand && dest_operand

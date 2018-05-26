@@ -3,7 +3,6 @@
 #include "opcodes/imm_to_reg_opcode.h"
 #include "opcodes/reg_to_reg_opcode.h"
 #include "opcodes/reg_to_reg16_mem_opcode.h"
-#include "opcodes/a_to_c_mem_opcode.h"
 #include "opcodes/reg16_mem_to_reg_opcode.h"
 #include "opcodes/move_opcode.h"
 
@@ -14,12 +13,13 @@ private:
     std::vector<reg_to_reg_opcode> _reg_to_reg;
     std::vector<reg_to_reg16_mem_opcode> _reg_to_mem;
     std::vector<reg16_mem_to_reg_opcode> _mem_to_reg;
-    a_to_c_mem_opcode _a_to_c_mem;
+    move_opcode<reg_operand, c_mem_operand> _a_to_c_mem;
     move_opcode<reg_operand, imm_mem_operand> _a_to_imm_mem;
     move_opcode<imm_operand, reg_mem_operand> _imm_to_hl;
 public:
     explicit ld_instruction(cpu& cpu)
-        : instruction(cpu, "ld"), _a_to_c_mem(cpu), 
+        : instruction(cpu, "ld"), 
+    _a_to_c_mem(cpu, 0xE2, 8, reg_operand(cpu.regs.A), c_mem_operand(cpu)), 
     _a_to_imm_mem(cpu, 0xEA, 16, reg_operand(cpu.regs.A), imm_mem_operand(cpu)),
     _imm_to_hl(cpu, 0x36, 12, imm_operand(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL))
     {
