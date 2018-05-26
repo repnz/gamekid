@@ -16,6 +16,7 @@ private:
     move_opcode<imm_operand<byte>, reg_mem_operand> _imm_to_hl;
     move_opcode<imm_mem_operand, reg8_operand> _imm_mem_to_a;
     std::vector<move_opcode<imm_operand<word>, reg16_operand>> _imm16_to_reg16;
+    move_opcode<reg16_operand, imm_mem_operand> _sp_to_imm_mem;
     
 public:
     explicit ld_instruction(cpu& cpu)
@@ -24,7 +25,8 @@ public:
     _c_mem_to_a(cpu, 0xF2, 8, c_mem_operand(cpu), reg8_operand(cpu.regs.A)),
     _a_to_imm_mem(cpu, 0xEA, 16, reg8_operand(cpu.regs.A), imm_mem_operand(cpu)),
     _imm_to_hl(cpu, 0x36, 12, imm_operand<byte>(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL)),
-    _imm_mem_to_a(cpu, 0xFA, 16, imm_mem_operand(cpu), cpu.regs.A)
+    _imm_mem_to_a(cpu, 0xFA, 16, imm_mem_operand(cpu), cpu.regs.A),
+    _sp_to_imm_mem(cpu, 0x08, 20, cpu.regs.SP, imm_mem_operand(cpu))
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
         add_imm_to_reg(0x06, cpu.regs.B);
@@ -81,6 +83,7 @@ public:
         opcodes.push_back(&_imm_to_hl);
         opcodes.push_back(&_imm_mem_to_a);
         opcodes.push_back(&_c_mem_to_a);
+        opcodes.push_back(&_sp_to_imm_mem);
     }
 
     void reg_to_imm(byte* reg_address)

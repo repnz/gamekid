@@ -134,6 +134,11 @@ Example
 E2    : ld [c], A ; Write A to 0xFF20 
 ```
 
+#### SP To Immidiate Memory
+
+Opcode=0x08
+Cycles=20
+
 ### Memory To Register
 
 #### [HL] to Register
