@@ -112,6 +112,7 @@ public:
     }
 };
 
+
 template <typename source_operand_type, typename dest_operand_type>
 //    requires source_operand && dest_operand
 class move_opcode : public opcode
