@@ -13,13 +13,15 @@ private:
     move_opcode<reg_operand, c_mem_operand> _a_to_c_mem;
     move_opcode<reg_operand, imm_mem_operand> _a_to_imm_mem;
     move_opcode<imm_operand, reg_mem_operand> _imm_to_hl;
+    move_opcode<imm_mem_operand, reg_operand> _imm_mem_to_a;
     
 public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld"), 
     _a_to_c_mem(cpu, 0xE2, 8, reg_operand(cpu.regs.A), c_mem_operand(cpu)), 
     _a_to_imm_mem(cpu, 0xEA, 16, reg_operand(cpu.regs.A), imm_mem_operand(cpu)),
-    _imm_to_hl(cpu, 0x36, 12, imm_operand(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL))
+    _imm_to_hl(cpu, 0x36, 12, imm_operand(cpu), reg_mem_operand(cpu.mem, cpu.regs.HL)),
+    _imm_mem_to_a(cpu, 0xFA, 16, imm_mem_operand(cpu), cpu.regs.A)
     {
         add_imm_to_reg(0x3E, cpu.regs.A);
         add_imm_to_reg(0x06, cpu.regs.B);
@@ -65,6 +67,7 @@ public:
         opcodes.push_back(&_a_to_c_mem);
         opcodes.push_back(&_a_to_imm_mem);
         opcodes.push_back(&_imm_to_hl);
+        opcodes.push_back(&_imm_mem_to_a);
     }
 
     void reg_to_imm(byte* reg_address)

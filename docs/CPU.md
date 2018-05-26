@@ -132,3 +132,8 @@ E2    : ld [c], A ; Write A to 0xFF20
 |Register |A   |B   |C   |D   |E   |H   |L   |
 |-------- |--- |----|----|----|----|----|----|
 |Opcode   |0x7E|0x46|0x4E||0x56|0x5E|0x66|0x6E|
+
+#### Immidiate Memory to A
+
+Opcode=FA
+Cycles=16
