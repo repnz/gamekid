@@ -64,6 +64,8 @@ by putting the address in register HL, and using it as a pointer.
 
 #### Immidiate To [HL]
 
+12 Cycles.
+Opcode=0x36
 
 #### Register to [HL]
 
@@ -129,4 +131,4 @@ E2    : ld [c], A ; Write A to 0xFF20
 
 |Register |A   |B   |C   |D   |E   |H   |L   |
 |-------- |--- |----|----|----|----|----|----|
-|Opcode   |0x7E|0x46|0x4E||0x56|0x5E|0x6E|
+|Opcode   |0x7E|0x46|0x4E||0x56|0x5E|0x66|0x6E|

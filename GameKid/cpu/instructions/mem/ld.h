@@ -13,6 +13,7 @@ private:
     move_opcode<reg_operand, c_mem_operand> _a_to_c_mem;
     move_opcode<reg_operand, imm_mem_operand> _a_to_imm_mem;
     move_opcode<imm_operand, reg_mem_operand> _imm_to_hl;
+    
 public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld"), 
@@ -53,13 +54,13 @@ public:
 
         // Move from Register To Memory
 
-        add_mem_to_reg(0x77, cpu.regs.HL, cpu.regs.A);
-        add_mem_to_reg(0x70, cpu.regs.HL, cpu.regs.B);
-        add_mem_to_reg(0x71, cpu.regs.HL, cpu.regs.C);
-        add_mem_to_reg(0x72, cpu.regs.HL, cpu.regs.D);
-        add_mem_to_reg(0x73, cpu.regs.HL, cpu.regs.E);
-        add_mem_to_reg(0x74, cpu.regs.HL, cpu.regs.H);
-        add_mem_to_reg(0x75, cpu.regs.HL, cpu.regs.L);
+        add_mem_to_reg(0x7E, cpu.regs.HL, cpu.regs.A);
+        add_mem_to_reg(0x46, cpu.regs.HL, cpu.regs.B);
+        add_mem_to_reg(0x4E, cpu.regs.HL, cpu.regs.C);
+        add_mem_to_reg(0x56, cpu.regs.HL, cpu.regs.D);
+        add_mem_to_reg(0x5E, cpu.regs.HL, cpu.regs.E);
+        add_mem_to_reg(0x66, cpu.regs.HL, cpu.regs.H);
+        add_mem_to_reg(0x6E, cpu.regs.HL, cpu.regs.L);
 
         opcodes.push_back(&_a_to_c_mem);
         opcodes.push_back(&_a_to_imm_mem);
