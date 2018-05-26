@@ -1,12 +1,11 @@
 #pragma once
 #include "GameKid/cpu/instruction.h"
-#include "opcodes/imm_to_reg_opcode.h"
 #include "opcodes/move_opcode.h"
 
 class ld_instruction : public instruction
 {
 private:
-    std::vector<imm_to_reg_opcode> _imm_to_reg;
+    std::vector<move_opcode<imm_operand, reg_operand>> _imm_to_reg;
     std::vector<move_opcode<reg_operand, reg_operand>> _reg_to_reg;
     std::vector<move_opcode<reg_operand, reg_mem_operand>> _reg_to_mem;
     std::vector<move_opcode<reg_mem_operand, reg_operand>> _mem_to_reg;
@@ -73,7 +72,10 @@ public:
 
     void add_imm_to_reg(byte op_value, const reg8& reg)
     {
-        _imm_to_reg.push_back(imm_to_reg_opcode(_cpu, reg, op_value));
+        _imm_to_reg.push_back(
+            move_opcode<imm_operand, reg_operand>(_cpu, op_value, 8, imm_operand(_cpu), reg)
+        );
+
         opcodes.push_back(&_imm_to_reg.back());
     }
 
