@@ -6,7 +6,7 @@
 #include "GameKid/cpu/base_opcodes/register_opcode.h"
 
 bitmask_opcode::bitmask_opcode(cpu& cpu, const std::string& name, 
-    byte base_value, const reg8& reg,
+    byte base_value, reg8& reg,
     std::function<void(byte*, byte)> operation, byte bit) :
     opcode(cpu, name, base_value + (bit * 8), true, 8),
     _bit(bit), _operation(operation), _register(reg)
@@ -15,13 +15,13 @@ bitmask_opcode::bitmask_opcode(cpu& cpu, const std::string& name,
 
 void bitmask_opcode::run()
 {
-    _operation(_register.address, _bit);
+    _operation(_register.address(), _bit);
 }
 
 std::string bitmask_opcode::to_str(byte* next)
 {
     std::ostringstream ss;
-    ss << name << " " << _bit << ", " << _register.name;
+    ss << name << " " << _bit << ", " << _register.name();
     return ss.str();
 }
 
@@ -31,13 +31,13 @@ bitmask_instruction::bitmask_instruction(cpu& cpu,
 {
     _operation = [this](byte* address, byte bit) { this->run(address, bit); };
 
-    add_register_opcodes(cpu.regs.A, values.A);
-    add_register_opcodes(cpu.regs.B, values.B);
-    add_register_opcodes(cpu.regs.C, values.C);
-    add_register_opcodes(cpu.regs.D, values.D);
-    add_register_opcodes(cpu.regs.E, values.E);
-    add_register_opcodes(cpu.regs.H, values.H);
-    add_register_opcodes(cpu.regs.L, values.L);
+    add_register_opcodes(cpu.A, values.A);
+    add_register_opcodes(cpu.B, values.B);
+    add_register_opcodes(cpu.C, values.C);
+    add_register_opcodes(cpu.D, values.D);
+    add_register_opcodes(cpu.E, values.E);
+    add_register_opcodes(cpu.H, values.H);
+    add_register_opcodes(cpu.L, values.L);
 }
 
 std::vector<byte> bitmask_instruction::parse(const std::vector<std::string>& operands)
@@ -51,9 +51,9 @@ std::vector<byte> bitmask_instruction::parse(const std::vector<std::string>& ope
     return _bit_opcodes[reg][bit].bytes();
 }
 
-void bitmask_instruction::add_register_opcodes(const reg8& r, byte base_value)
+void bitmask_instruction::add_register_opcodes(reg8& r, byte base_value)
 {
-    std::vector<bitmask_opcode>& register_map = _bit_opcodes[r.name];
+    std::vector<bitmask_opcode>& register_map = _bit_opcodes[r.name()];
 
     for (byte bit = 0; bit < 8; ++bit)
     {

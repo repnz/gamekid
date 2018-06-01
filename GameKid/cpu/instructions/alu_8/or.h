@@ -23,5 +23,5 @@ or_instruction::or_instruction(cpu& cpu) : register_instruction(cpu, "or", false
 
 void or_instruction::run(byte* val)
 {
-    _cpu.or_n(_cpu.regs.A.address, *val);
+    _cpu.or_n(_cpu.A.address(), *val);
 }

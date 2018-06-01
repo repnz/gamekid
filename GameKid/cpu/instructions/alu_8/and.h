@@ -23,5 +23,5 @@ and_instruction::and_instruction(cpu& cpu) : register_instruction(cpu, "and", fa
 
 void and_instruction::run(byte* val)
 {
-    _cpu.and_n(_cpu.regs.A.address, *val);
+    _cpu.and_n(_cpu.A.address(), *val);
 }

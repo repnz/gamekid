@@ -1,6 +1,6 @@
 #include "memory.h"
 
-void memory::store(word address, byte value)
+void memory::store_byte(word address, byte value)
 {
 	mem[address] = value;
 }

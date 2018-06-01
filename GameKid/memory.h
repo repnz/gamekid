@@ -7,7 +7,7 @@ private:
     byte mem[64 * 1024];
 
 public:
-    void store(word address, byte value);
+    
     
     template <typename T>
     T load(word address)
@@ -15,6 +15,13 @@ public:
         return *(T*)(mem[address]);
     }
 
+    template <typename T>
+    void store(word address, T value)
+    {
+        *(T*)(mem[address]) = value;
+    }
+
+    void store_byte(word address, byte value);
     byte load_byte(word address);
     word load_word_le(word address);
 };

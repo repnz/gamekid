@@ -24,5 +24,5 @@ adc_instruction::adc_instruction(cpu& cpu) : register_instruction(cpu, "adc", fa
 
 void adc_instruction::run(byte* val)
 {
-    _cpu.add(_cpu.regs.A.address, *val, true);
+    _cpu.add(_cpu.A.address(), *val, true);
 }

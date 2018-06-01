@@ -206,7 +206,10 @@
     <ClInclude Include="cpu\instructions\mem\move_opcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cpu\instructions\mem\operand.h">
+    <ClInclude Include="cpu\operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\instructions\mem\mem_operands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

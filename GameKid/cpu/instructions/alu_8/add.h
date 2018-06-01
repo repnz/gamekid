@@ -23,5 +23,5 @@ add_instruction::add_instruction(cpu& cpu) : register_instruction(cpu, "add", fa
 
 void add_instruction::run(byte* val)
 {
-    _cpu.add(_cpu.regs.A.address, *val);
+    _cpu.add(_cpu.A.address(), *val);
 }

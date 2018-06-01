@@ -4,7 +4,7 @@
 #include "bitmask/res.h"
 #include "bitmask/bit.h"
 
-inline void bitmask::add_instructions(instruction_set& set)
+void bitmask::add_instructions(instruction_set& set)
 {
     set.add<bit_instruction>();
     set.add<res_instruction>();

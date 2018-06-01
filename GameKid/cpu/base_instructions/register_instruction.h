@@ -21,7 +21,7 @@ private:
 
     void add_register_opcode(
         const byte value,
-        const reg8& reg,
+        reg8& reg,
         bool cb_prefix,
         byte cycles
     );

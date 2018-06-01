@@ -14,16 +14,16 @@ public:
 
     void run() override
     {
-        const byte left_digit = (*_cpu.regs.A.address & 0xF0) >> 4;
-        const byte right_digit = (*_cpu.regs.A.address & 0x0F);
+        const byte left_digit = (_cpu.A.load() & 0xF0) >> 4;
+        const byte right_digit = (_cpu.A.load() & 0x0F);
 
         if (left_digit > 10 || right_digit > 10)
         {
             // Error, what to do?
         }
 
-        *_cpu.regs.A.address = left_digit * 10 + right_digit;
-        _cpu.set_zero_flag(*_cpu.regs.A.address);
+        _cpu.A.store(left_digit * 10 + right_digit);
+        _cpu.set_zero_flag(_cpu.A.load());
         _cpu.substruct_flag = 0;
         // what should be done with the carry flag?
     }

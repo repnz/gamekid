@@ -2,8 +2,20 @@
 
 
 cpu::cpu() : 
-_A(0), _B(0), _C(0), _D(0), _E(0), _H(0), _L(0), SP(0), PC(0),
-zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0), regs(*this)
+    _sp_value_low(0),
+    _sp_value_high(0),
+    A("A"),
+    B("B"),
+    C("C"),
+    D("D"),
+    E("E"),
+    H("H"),
+    L("L"),
+    BC("BC", C.address(), B.address()),
+    DE("DE", E.address(), D.address()),
+    HL("HL", L.address(), H.address()),
+    SP("SP", &_sp_value_low, &_sp_value_high), PC(0),
+zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0)
 {
 }
 
@@ -177,22 +189,22 @@ void cpu::scf()
 
 void cpu::rla()
 {
-    rl(&_A);
+    rl(A.address());
 }
 
 void cpu::rlca()
 {
-    rlc(&_A);
+    rlc(A.address());
 }
 
 void cpu::rrca()
 {
-    rrc(&_A);
+    rrc(A.address());
 }
 
 void cpu::rra()
 {
-    rr(&_A);
+    rr(A.address());
 }
 
 void cpu::bit(byte val, byte bitPlace)

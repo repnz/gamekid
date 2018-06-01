@@ -23,5 +23,5 @@ xor_instruction::xor_instruction(cpu& cpu) : register_instruction(cpu, "xor", fa
 
 void xor_instruction::run(byte* val)
 {
-    _cpu.xor_n(_cpu.regs.A.address, *val);
+    _cpu.xor_n(_cpu.A.address(), *val);
 }

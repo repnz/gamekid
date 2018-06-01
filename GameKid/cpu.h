@@ -1,50 +1,16 @@
 #pragma once
-#include <string>
+#include "cpu/operand.h"
 class cpu;
 #include <GameKid/cpu_types.h>
 #include <GameKid/memory.h>
 
-struct reg8
+
+class cpu
 {
-    std::string name;
-    byte* address;
-
-    reg8(const std::string& name, byte* address) : name(name), address(address) {}
-
-    byte get() const
-    {
-        return *address;
-    }
-
-    void set(byte value)
-    {
-        *address = value;
-    }
-
-};
-
-struct reg16
-{
-    std::string name;
-    byte* high;
-    byte* low;
-
-    reg16(const std::string& name, byte* high, byte* low) : name(name), high(high), low(low){}
-
-    void set(word w)
-    {
-        *low = w & 0xff;
-        *high = w >> 8;
-    }
-
-    word get()
-    {
-        return (*high << 8) + *low;
-    }
-};
-
-struct regs
-{
+private:
+    byte _sp_value_low;
+    byte _sp_value_high;
+public:
     reg8 A;
     reg8 B;
     reg8 C;
@@ -56,22 +22,6 @@ struct regs
     reg16 DE;
     reg16 HL;
     reg16 SP;
-
-    explicit regs(cpu& cpu);
-};
-
-class cpu
-{
-private:
-    byte _A;
-    byte _B;
-    byte _C;
-    byte _D;
-    byte _E;
-    byte _H;
-    byte _L;
-public:
-    word SP;
     word PC;
     byte zero_flag;
     byte substruct_flag;
@@ -79,7 +29,6 @@ public:
     byte carry_flag;
 
     memory mem;
-    regs regs;
 
     cpu();
 
@@ -122,19 +71,3 @@ public:
 
     friend struct regs;
 };
-
-
-inline regs::regs(cpu& cpu) :
-        A("A", &cpu._A),
-        B("B", &cpu._B),
-        C("C", &cpu._C),
-        D("D", &cpu._D),
-        E("E", &cpu._E),
-        H("H", &cpu._H),
-        L("L", &cpu._L),
-        BC("BC", &cpu._B, &cpu._C),
-        DE("DE", &cpu._D, &cpu._D),
-        HL("HL", &cpu._H, &cpu._L),
-        SP("SP", (byte*)&cpu.SP, ((byte*)&cpu.SP)+1)
-{
-}

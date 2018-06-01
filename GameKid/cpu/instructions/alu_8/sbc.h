@@ -23,5 +23,5 @@ inline sbc_instruction::sbc_instruction(cpu& cpu) : register_instruction(cpu, "s
 
 inline void sbc_instruction::run(byte* val)
 {
-    _cpu.sub(_cpu.regs.A.address, *val, true);
+    _cpu.sub(_cpu.A.address(), *val, true);
 }
