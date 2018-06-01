@@ -78,7 +78,10 @@ ROM:003C        inc     hl
 ROM:003D        dec     b
 ROM:003E        jr      nz, loc_39
 
-
+	; Wierd operation (??)
+	; Copy 0x19 to 0xd to 0x992f to 0x9924
+	; Copy 0xd to 0x1 to 0x990f to 0x9904
+	; Copy 0x1 to 0x990f
 ROM:0040        ld      a, $19
 ROM:0042        ld      [$9910], a
 ROM:0045        ld      hl, $992F
@@ -97,31 +100,48 @@ ROM:0051        ld      l, $F
 ROM:0053        jr      loc_48
 ROM:0055 ; ------------------------------------------------------------------
 ROM:0055
+
+
+
 ROM:0055 loc_55:                        ; CODE XREF: boot_gb+4B↑j
+				; move h, 0
+				; move ff42, 0x64
+				; Scroll Y Register 
+				; Scroll 0x64 (100) to the Y
 ROM:0055        ld      h, a
 ROM:0056        ld      a, $64 ; 'd'
 ROM:0058        ld      d, a
 ROM:0059        ld      [$FF42], a
+
+				; move 0xff40, 0x91
+				; LCD Control Register
+				; Set 
 ROM:005B        ld      a, $91
 ROM:005D        ld      [$FF40], a
+
 ROM:005F        inc     b
 ROM:0060
 ROM:0060 loc_60:                        ; CODE XREF: boot_gb+8C↓j
 ROM:0060                                ; boot_gb+93↓j
 ROM:0060        ld      e, 2
 ROM:0062
+
+
 ROM:0062 loc_62:                        ; CODE XREF: boot_gb+6E↓j
 ROM:0062        ld      c, $C
 ROM:0064
+; Wait for V-Blank
 ROM:0064 loc_64:                        ; CODE XREF: boot_gb+68↓j
 ROM:0064                                ; boot_gb+6B↓j
 ROM:0064        ld      a, [$FF44]
 ROM:0066        cp      $90
 ROM:0068        jr      nz, loc_64
 ROM:006A        dec     c
+
 ROM:006B        jr      nz, loc_64
 ROM:006D        dec     e
 ROM:006E        jr      nz, loc_62
+
 ROM:0070        ld      c, $13
 ROM:0072        inc     h
 ROM:0073        ld      a, h
