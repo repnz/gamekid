@@ -57,6 +57,9 @@
     <ClCompile Include="cpu\builders\opcode_builder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cpu\instructions\jumps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpu.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cpu\builders\opcode_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\instructions\jumps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

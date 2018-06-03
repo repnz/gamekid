@@ -4,8 +4,6 @@
 #include "opcode_builder.h"
 #include "instruction_opcode_adder.h"
 
-class instruction_builder;
-
 class instruction_builder
 {
 private:

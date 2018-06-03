@@ -4,6 +4,7 @@
 #include <GameKid/cpu/instructions/bitmask.h>
 #include <GameKid/cpu/instructions/misc.h>
 #include "instructions/mem.h"
+#include "instructions/jumps.h"
 
 
 instruction_set::instruction_set(cpu& cpu) : _cpu(cpu), 
@@ -14,6 +15,7 @@ _misc(cpu, *this), _alu(*this, cpu), _mem(cpu, *this), _bitmask(cpu, *this)
     _mem.initialize();
     _bitmask.initialize();
     rotation::initialize(*this, cpu);
+    jumps::initialize(cpu, *this);
 }
 
 void instruction_set::add_instruction(std::unique_ptr<instruction> instruction)

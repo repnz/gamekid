@@ -140,6 +140,7 @@
     <ClCompile Include="cpu\builders\opcode_builder.cpp" />
     <ClCompile Include="cpu\instructions\alu_8.cpp" />
     <ClCompile Include="cpu\instructions\bitmask.cpp" />
+    <ClCompile Include="cpu\instructions\jumps.cpp" />
     <ClCompile Include="cpu\instructions\mem.cpp" />
     <ClCompile Include="cpu\instructions\misc.cpp" />
     <ClCompile Include="cpu\instructions\rotation.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="cpu\instructions\alu_8.h" />
     <ClInclude Include="cpu\instructions\bitmask.h" />
     <ClInclude Include="cpu\instruction.h" />
+    <ClInclude Include="cpu\instructions\jumps.h" />
     <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
     <ClInclude Include="cpu\instructions\mem\mem_operands.h" />

@@ -19,6 +19,11 @@ void cpu::pop(word* value)
     *value = mem.load<word>(SP.load());   
 }
 
+void cpu::jump(word address)
+{
+    PC = address;
+}
+
 cpu::cpu() : 
     _sp_value_low(0),
     _sp_value_high(0),
