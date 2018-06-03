@@ -13,6 +13,9 @@ private:
     imm_mem_operand<word> _immidiate_mem_word;
     c_mem_operand _c_mem;
     std::vector<constant_operand> _constants;
+    inc_reg_mem_operand _inc_hl;
+    dec_reg_mem_operand _dec_hl;
+    ff_offset_mem_operand _ff_offset;
 public:
     explicit operands(cpu& cpu);
     operands(const operands&) = delete;
@@ -24,5 +27,8 @@ public:
     imm_mem_operand<byte>& immidiate_mem_byte();
     imm_mem_operand<word>& immidiate_mem_word();
     c_mem_operand& c_memory();
+    inc_reg_mem_operand& increment_hl();
+    dec_reg_mem_operand& decrement_hl();
     constant_operand& constant(byte val);
+    ff_offset_mem_operand& ff_offset();
 };

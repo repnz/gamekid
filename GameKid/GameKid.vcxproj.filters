@@ -140,5 +140,8 @@
     <ClInclude Include="cpu\builders\opcode_builder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cpu\instructions\mem\ldd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

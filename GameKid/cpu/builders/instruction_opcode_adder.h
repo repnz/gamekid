@@ -33,6 +33,20 @@ public:
         return *this;
     }
     
+    instruction_opcode_adder& operation(std::function<void(operand<T>&, operand<T>&)> act)
+    {
+        _opcode_builder.operation(act);
+        return *this;
+    }
+
+    instruction_opcode_adder& operation(std::function<void(operand<T>&)> act)
+    {
+        _opcode_builder.operation(act);
+        return *this;
+    }
+
+
+
     instruction_builder& add()
     {
         return _instruction_builder;

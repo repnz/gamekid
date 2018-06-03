@@ -1,6 +1,5 @@
 #pragma once
 #include "GameKid/cpu/instruction.h"
-#include "move_opcode.h"
 #include "mem_operands.h"
 
 class ldd_instruction : instruction

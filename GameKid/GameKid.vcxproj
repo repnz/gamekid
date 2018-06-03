@@ -161,6 +161,7 @@
     <ClInclude Include="cpu\instruction.h" />
     <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
+    <ClInclude Include="cpu\instructions\mem\ldd.h" />
     <ClInclude Include="cpu\instructions\mem\mem_operands.h" />
     <ClInclude Include="cpu\opcode_builder.h" />
     <ClInclude Include="cpu\operand.h" />

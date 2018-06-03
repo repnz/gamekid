@@ -6,13 +6,26 @@ _immidiate_byte(cpu),
 _immidiate_word(cpu),
 _immidiate_mem_byte(cpu),
 _immidiate_mem_word(cpu),
-_c_mem(cpu)
+_c_mem(cpu),
+_inc_hl(cpu.mem, cpu.HL),
+_dec_hl(cpu.mem, cpu.HL),
+_ff_offset(cpu)
 {
 }
 
 c_mem_operand& operands::c_memory()
 {
     return _c_mem;
+}
+
+inc_reg_mem_operand& operands::increment_hl()
+{
+    return _inc_hl;
+}
+
+dec_reg_mem_operand& operands::decrement_hl()
+{
+    return _dec_hl;
 }
 
 constant_operand& operands::constant(byte val)
@@ -26,6 +39,11 @@ constant_operand& operands::constant(byte val)
     }
     _constants.push_back(constant_operand(val));
     return _constants.back();
+}
+
+ff_offset_mem_operand& operands::ff_offset()
+{
+    return _ff_offset;
 }
 
 reg_mem_operand& operands::reg_mem(reg16& r)

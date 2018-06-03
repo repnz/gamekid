@@ -21,8 +21,8 @@ private:
     operand<operand_type>* _first_operand;
     operand<operand_type>* _second_operand;
     byte _cycles;
-    std::function<void(operand<operand_type>&)> _act1;
-    std::function<void(operand<operand_type>&, operand<operand_type>&)> _act2;
+    std::function<void(operand<operand_type>&)>* _act1;
+    std::function<void(operand<operand_type>&, operand<operand_type>&)>* _act2;
 public:
     explicit opcode_builder(cpu& cpu)
         : _cpu(cpu),
@@ -83,16 +83,20 @@ public:
 
     opcode_builder& operation(std::function<void(operand<operand_type>&)> act)
     {
-        _act1 = act;
+        *_act1 = act;
         return *this;
     }
 
     opcode_builder& operation(std::function<void(operand<operand_type>&, operand<operand_type>&)> act)
     {
-        _act2 = act;
+        *_act2 = act;
         return *this;
     }
 
+    bool has_operation()
+    {
+        return (_act1 != nullptr) || (_act2 != nullptr);
+    }
 
     std::unique_ptr<::opcode> build()
     {
@@ -102,12 +106,12 @@ public:
         {
             return std::unique_ptr<::opcode>(
                 new two_operand_opcode<operand_type>(_cpu,
-                    _name, v, _cycles, *_first_operand, *_second_operand, _act2)
+                    _name, v, _cycles, *_first_operand, *_second_operand, *_act2)
                 );
         }
 
         return std::unique_ptr<::opcode>(new single_operand_opcode<operand_type >(_cpu,
-            _name, v, _cycles, *_first_operand, _act1));
+            _name, v, _cycles, *_first_operand, *_act1));
     }
 
 private:

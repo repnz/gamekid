@@ -61,9 +61,12 @@ public:
     template <typename T>
     instruction_builder& operation(std::function<void(operand<T>&)> act)
     {
-        for (auto& b : opcode_builders<T>(T()))
+        for (opcode_builder<T>& b : opcode_builders<T>(T()))
         {
-            b.operation(act);
+            if (!b.has_operation())
+            {
+                b.operation(act);
+            }
         }
 
         return *this;
@@ -74,7 +77,10 @@ public:
     {
         for (auto& b : opcode_builders<T>(T()))
         {
-            b.operation(act);
+            if (!b.has_operation())
+            {
+                b.operation(act);
+            }
         }
 
         return *this;

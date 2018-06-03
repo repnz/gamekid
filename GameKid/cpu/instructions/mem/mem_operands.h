@@ -3,6 +3,7 @@
 #include "GameKid/cpu_types.h"
 #include <vector>
 #include "GameKid/cpu.h"
+#include <sstream>
 
 class reg_mem_operand : public operand<byte>
 {
@@ -172,6 +173,36 @@ public:
     }
 };
 
+class ff_offset_mem_operand : public operand<byte>
+{
+private:
+    cpu & _cpu;
+public:
+    explicit ff_offset_mem_operand(cpu& cpu) : _cpu(cpu) {}
+
+    word load_address() const
+    {
+        return _cpu.mem.load_byte(_cpu.PC+1) + 0xFF00;
+    }
+
+    byte load() const override
+    {
+        return _cpu.mem.load_byte(load_address());
+    }
+
+    std::string to_str(byte* next) const override
+    {
+        std::stringstream ss;
+        ss << "[$FF" << std::uppercase << std::hex <<  *next << "]";
+        return ss.str();
+    }
+
+    void store(byte value) override
+    {
+        return _cpu.mem.store(load_address(), value);
+    }
+};
+
 class c_mem_operand : public operand<byte>
 {
 private:
@@ -179,10 +210,14 @@ private:
 public:
     explicit c_mem_operand(cpu& cpu) : _cpu(cpu) {}
 
+    word load_address() const
+    {
+        return _cpu.C.load() + 0xFF00;
+    }
+
     byte load() const override
     {
-        const word address = _cpu.C.load() + 0xFF00;
-        return _cpu.mem.load_byte(address);
+        return _cpu.mem.load_byte(load_address());
     }
 
     std::string to_str(byte* next) const override
@@ -192,7 +227,63 @@ public:
 
     void store(byte value) override
     {
-        const word address = _cpu.C.load() + 0xFF00;
-        return _cpu.mem.store(address, value);
+        return _cpu.mem.store(load_address(), value);
     }
+};
+
+class op_reg_mem_operand : public operand<byte>
+{
+private:
+    memory & _mem;
+    reg16& _reg;
+public:
+
+    reg16 & reg() { return _reg; }
+
+    op_reg_mem_operand(memory& mem, reg16& reg) : _mem(mem), _reg(reg)
+    {
+    }
+
+    virtual word change(word original) = 0;
+
+    byte load() const override
+    {
+        word address = _reg.load();
+        _reg.store(address - 1);
+        return _mem.load_byte(address);
+    }
+
+    void store(byte s) override
+    {
+        word address = _reg.load();
+        _reg.store(address - 1);
+        _mem.store<byte>(address, s);
+    }
+
+    std::string to_str(byte* next) const override
+    {
+        return "[" + _reg.name() + "]";
+    }
+};
+
+class inc_reg_mem_operand : public op_reg_mem_operand
+{
+public:
+    inc_reg_mem_operand(memory& mem, reg16& reg)
+        : op_reg_mem_operand(mem, reg)
+    {
+    }
+
+    word change(word original) override { return original + 1; }
+};
+
+class dec_reg_mem_operand : public op_reg_mem_operand
+{
+public:
+    dec_reg_mem_operand(memory& mem, reg16& reg)
+        : op_reg_mem_operand(mem, reg)
+    {
+    }
+
+    word change(word original) override { return original - 1; }
 };
