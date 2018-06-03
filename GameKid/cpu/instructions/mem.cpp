@@ -40,4 +40,18 @@ void mem::initialize()
         .operands(_cpu.HL).opcode(0xE5).cycles(16).add()
         .operation<word>([this](operand<word>& op) { _cpu.push(op.load()); })
         .build());
+
+    _set.add_instruction(
+        instruction_builder(_cpu).name("pop")
+        .operands(_cpu.AF).opcode(0xF1).cycles(12).add()
+        .operands(_cpu.BC).opcode(0xC1).cycles(12).add()
+        .operands(_cpu.DE).opcode(0xD1).cycles(12).add()
+        .operands(_cpu.HL).opcode(0xE1).cycles(12).add()
+        .operation<word>([this](operand<word>& op)
+        {
+            word value = op.load();
+            _cpu.pop(&value);
+            op.store(value);
+        })
+        .build());
 }

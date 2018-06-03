@@ -13,6 +13,12 @@ void cpu::push(word value)
     SP.store(SP.load()-2);
 }
 
+void cpu::pop(word* value)
+{
+    SP.store(SP.load() + 2);
+    *value = mem.load<word>(SP.load());   
+}
+
 cpu::cpu() : 
     _sp_value_low(0),
     _sp_value_high(0),
