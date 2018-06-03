@@ -33,8 +33,8 @@ void misc::initialize()
         [this]()
         {
             _cpu.A.store(~_cpu.A.load());
-            _cpu.half_carry_flag = 1;
-            _cpu.substruct_flag = 1;
+            _cpu.F.half_carry(true);
+            _cpu.F.substract(true);
         }
     ));
 
@@ -78,8 +78,8 @@ void misc::initialize()
                 }
 
                 _cpu.A.store(left_digit * 10 + right_digit);
-                _cpu.set_zero_flag(_cpu.A.load());
-                _cpu.substruct_flag = 0;
+                _cpu.F.zero(_cpu.A.load() == 0);
+                _cpu.F.substract(false);
                 // what should be done with the carry flag?
             }
         ));

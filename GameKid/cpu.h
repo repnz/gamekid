@@ -19,17 +19,16 @@ public:
     reg8 C;
     reg8 D;
     reg8 E;
+    flags_reg8 F;
     reg8 H;
     reg8 L;
+    reg16 AF;
     reg16 BC;
     reg16 DE;
     reg16 HL;
     reg16 SP;
     word PC;
-    byte zero_flag;
-    byte substruct_flag;
-    byte half_carry_flag;
-    byte carry_flag;
+    
     operands& operands();
 
     memory mem;
@@ -66,11 +65,8 @@ public:
     void or_n(byte* val, byte n);
     void xor_n(byte* a, byte byte);
     void cp(byte val, byte byte);
-    void set_zero_flag(byte val);
     void inc(byte* val);
     void dec(byte* val);
     void swap(byte* val);
-    void ld(byte* val);
-    void ld(byte* r1, byte r2);
     ~cpu();
 };

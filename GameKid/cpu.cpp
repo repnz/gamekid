@@ -16,13 +16,14 @@ cpu::cpu() :
     C("C"),
     D("D"),
     E("E"),
+    F(),
     H("H"),
     L("L"),
+    AF("AF", F.address(), A.address()),
     BC("BC", C.address(), B.address()),
     DE("DE", E.address(), D.address()),
     HL("HL", L.address(), H.address()),
-    SP("SP", &_sp_value_low, &_sp_value_high), PC(0),
-zero_flag(0), substruct_flag(0), half_carry_flag(0), carry_flag(0)
+    SP("SP", &_sp_value_low, &_sp_value_high), PC(0)
 {
 }
 
@@ -51,13 +52,13 @@ void cpu::add(byte* val, byte n, bool carry)
 
     if (carry)
     {
-        new_value += carry_flag;
+        new_value += F.carry() ? 1 : 0;
     }
 
-    zero_flag = *val == 0;
-    substruct_flag = 0;
-    carry_flag = (new_value < *val) ? 1 : 0;
-    half_carry_flag = ((new_value & 0xF) < (*val & 0xF)) ? 1 : 0;
+    F.zero(*val == 0);
+    F.substract(false);
+    F.carry(new_value < *val);
+    F.half_carry((new_value & 0xF) < (*val & 0xF));
     *val = new_value;
 }
 
@@ -74,28 +75,28 @@ void cpu::sbc(byte* val, byte n)
 void cpu::and_n(byte* val, byte n)
 {
     *val &= n;
-    zero_flag = (*val == 0) ? 1 : 0;
-    substruct_flag = 0;
-    half_carry_flag = 1;
-    carry_flag = 0;
+    F.zero(*val == 0);
+    F.substract(false);
+    F.half_carry(true);
+    F.carry(false);
 }
 
 void cpu::or_n(byte* val, byte n)
 {
     *val |= n;
-    zero_flag = (*val == 0) ? 1 : 0;
-    half_carry_flag = 0;
-    carry_flag = 0;
-    substruct_flag = 0;
+    F.zero(*val == 0);
+    F.substract(false);
+    F.half_carry(false);
+    F.carry(false);
 }
 
 void cpu::xor_n(byte* a, byte byte)
 {
     *a ^= byte;
-    zero_flag = (*a == 0) ? 1 : 0;
-    half_carry_flag = 0;
-    carry_flag = 0;
-    substruct_flag = 0;
+    F.zero(*a == 0);
+    F.substract(false);
+    F.half_carry(false);
+    F.carry(false);
 }
 
 void cpu::cp(byte val, byte byte)
@@ -103,44 +104,29 @@ void cpu::cp(byte val, byte byte)
     sub(&val, byte, false, false);
 }
 
-void cpu::set_zero_flag(byte val)
-{
-    zero_flag = (val == 0) ? 1 : 0;
-}
-
 void cpu::inc(byte* val)
 {
-    half_carry_flag = ((*val & 0xF) == 0b1111) ? 1 : 0;
+    F.half_carry((*val & 0xF) == 0b1111);
     (*val)++;
-    set_zero_flag(*val);
-    substruct_flag = 0;
+    F.zero(*val == 0);
+    F.substract(false);
 }
 
 void cpu::dec(byte* val)
 {
-    half_carry_flag = ((*val >> 4) == 0b0001) ? 1 : 0;
+    F.half_carry((*val >> 4) == 0b0001);
     (*val)--;
-    set_zero_flag(*val);
-    substruct_flag = 1;
+    F.zero(*val == 0);
+    F.substract(true);
 }
 
 void cpu::swap(byte* val)
 {
     *val = *val >> 4 | *val << 4;
-    set_zero_flag(*val);
-    half_carry_flag = 0;
-    substruct_flag = 0;
-    carry_flag = 0;
-}
-
-void cpu::ld(byte* val)
-{
-    *val = mem.load_byte(PC + 1);
-}
-
-void cpu::ld(byte* r1, byte r2)
-{
-    *r1 = r2;
+    F.zero(*val == 0);
+    F.substract(false);
+    F.half_carry(false);
+    F.carry(false);
 }
 
 cpu::~cpu() = default;
@@ -151,13 +137,13 @@ void cpu::sub(byte* val, byte n, bool carry, bool save_result)
 
     if (carry)
     {
-        new_value -= carry_flag;
+        new_value -= F.carry_bit();
     }
 
-    zero_flag = new_value == 0 ? 1 : 0;
-    substruct_flag = 1;
-    carry_flag = (new_value > *val) ? 1 : 0;
-    half_carry_flag = ((new_value & 0xF) > (*val & 0xF)) ? 1 : 0;
+    F.zero(new_value == 0);
+    F.substract(false);
+    F.carry(new_value > *val);
+    F.half_carry((new_value & 0xF) > (*val & 0xF));
 
     if (save_result)
     {
@@ -184,16 +170,16 @@ void cpu::error()
 
 void cpu::ccf()
 {
-    this->carry_flag ^= 1;
-    this->half_carry_flag = 0;
-    this->substruct_flag = 0;
+    F.carry(!F.carry());
+    F.half_carry(false);
+    F.substract(false);
 }
 
 void cpu::scf()
 {
-    this->half_carry_flag = 0;
-    this->substruct_flag = 0;
-    this->carry_flag = 1;
+    F.half_carry(false);
+    F.substract(false);
+    F.carry(true);
 }
 
 void cpu::rla()
@@ -218,79 +204,79 @@ void cpu::rra()
 
 void cpu::bit(byte val, byte bitPlace)
 {
-    zero_flag = (val & (1 << bitPlace)) ? 0 : 1;
-    substruct_flag = 0;
-    half_carry_flag = 1;
+    F.zero(!(val & (1 << bitPlace)));
+    F.substract(false);
+    F.half_carry(true);
 }
 
 void cpu::rl(byte* val)
 {
-    carry_flag = (*val & 128) ? 1 : 0;
-    *val = (*val << 1) | carry_flag;
-    zero_flag = (*val == 0);
-    substruct_flag = 0;
-    half_carry_flag = 0;
+    F.carry((*val & (1 << 7)));
+    *val = (*val << 1) | F.carry_bit();
+    F.zero(*val == 0);
+    F.substract(false);
+    F.half_carry(false);
 }
 
 void cpu::rlc(byte* val)
 {
-    byte old_carry = carry_flag;
-    carry_flag = (*val & 128) ? 1 : 0;
+    byte old_carry = F.carry_bit();
+    F.carry(*val & (1 << 7) ? 1 : 0);
     *val = (*val << 1) | old_carry;
 
-    zero_flag = (*val == 0);
-    substruct_flag = 0;
-    half_carry_flag = 0;
+    F.zero(*val == 0);
+    F.substract(false);
+    F.half_carry(false);
 }
 
 void cpu::rrc(byte* val)
 {
-    byte old_carry = carry_flag;
-    carry_flag = (*val & 1) ? 1 : 0;
+    byte old_carry = F.carry_bit();
+    F.carry(*val & 1);
     *val = (*val >> 1) | (old_carry << 7);
 
-    zero_flag = (*val == 0);
-    substruct_flag = 0;
-    half_carry_flag = 0;
+    F.zero(*val == 0);
+    F.substract(false);
+    F.half_carry(false);
 }
 
 void cpu::rr(byte* val)
 {
-    carry_flag = (*val & 1) ? 1 : 0;
-    *val = (*val >> 1) | (carry_flag << 7);
+    F.carry(*val & 1);
+    *val = (*val >> 1) | (F.carry_bit() << 7);
 
     // update flags
-    this->half_carry_flag = 0;
-    this->substruct_flag = 0;
-    this->zero_flag = (*val == 0);
+    F.half_carry(false);
+    F.substract(false);
+    F.zero(*val == 0);
 }
 
 void cpu::sla(byte* val)
 {
-    carry_flag = (*val & 128) ? 1 : 0;
+    F.carry(*val & 128);
     *val <<= 1;
-    zero_flag = (*val == 0);
-    half_carry_flag = 0;
-    substruct_flag = 0;
+    F.zero(*val == 0);
+    F.half_carry(false);
+    F.substract(false);
 
 }
 
 void cpu::sra(byte* val)
 {
-    carry_flag = *val & 1;
+    F.carry(*val & 1);
     *val = ((char)*val) >> 1;
 
-    zero_flag = (*val == 0);
-    half_carry_flag = 0;
-    substruct_flag = 0;
+    F.zero(*val == 0);
+    F.half_carry(false);
+    F.substract(false);
 }
 
 void cpu::srl(byte* val)
 {
-    carry_flag = *val & 1;
+    F.carry(*val & 1);
     *val >>= 1;
 
-    zero_flag = (*val == 0);
-    half_carry_flag = 0;
-    substruct_flag = 0;
+    F.zero(*val == 0);
+    F.half_carry(false);
+    F.substract(false);
 }

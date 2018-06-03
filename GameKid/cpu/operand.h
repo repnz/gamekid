@@ -22,7 +22,7 @@ public:
 
 class reg8 : public operand<byte>
 {
-private:
+protected:
     std::string _name;
     byte _value;
 public:
@@ -58,6 +58,55 @@ public:
     {
         return &_value;
     }
+};
+
+class flags_reg8 : public reg8
+{
+public:
+    explicit flags_reg8()
+        : reg8("F")
+    {
+    }
+    
+    bool check_bit(byte place)
+    {
+        return _value & (1 << place);
+    }
+
+    void set_bit_on(byte place)
+    {
+        _value |= (1 << place);
+    }
+
+    void set_bit_off(byte place)
+    {
+        _value &= ~(1 << place);
+    }
+
+    void set_bit(byte place, bool is_on)
+    {
+        if (is_on) { set_bit_on(place); }
+        else { set_bit_off(place); }
+    }
+
+    bool zero() { return check_bit(7); }
+    bool substract() { return check_bit(6);}
+    bool half_carry() { return check_bit(5); }
+    bool carry() { return check_bit(4); }
+
+    byte zero_bit() { return zero() ? 1 : 0; }
+    byte substract_bit() { return substract() ? 1 : 0; }
+    byte half_carry_bit() { return half_carry() ? 1 : 0; }
+    byte carry_bit() { return carry() ? 1 : 0; }
+
+    void zero(bool value) { set_bit(7, value); }
+    void substract(bool value) { set_bit(6, value); }
+    void half_carry(bool value) { set_bit(5, value); }
+    void carry(bool value) { set_bit(4, value); }
+
+
+    flags_reg8(const flags_reg8&) = delete;
+    flags_reg8& operator=(const flags_reg8&) = delete;
 };
 
 class reg16 : public operand<word>
