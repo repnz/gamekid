@@ -31,4 +31,13 @@ void mem::initialize()
         .operands(_cpu.A, _cpu.operands().ff_offset()).opcode(0xF0).cycles(12).add()
         .operation<byte>(move_operation<byte>)
         .build());
+
+    _set.add_instruction(
+        instruction_builder(_cpu).name("push")
+        .operands(_cpu.AF).opcode(0xF5).cycles(16).add()
+        .operands(_cpu.BC).opcode(0xC5).cycles(16).add()
+        .operands(_cpu.DE).opcode(0xD5).cycles(16).add()
+        .operands(_cpu.HL).opcode(0xE5).cycles(16).add()
+        .operation<word>([this](operand<word>& op) { _cpu.push(op.load()); })
+        .build());
 }

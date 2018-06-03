@@ -7,6 +7,12 @@ operands& cpu::operands()
     return *_operands.get();
 }
 
+void cpu::push(word value)
+{
+    mem.store<word>(SP.load(), value);
+    SP.store(SP.load()-2);
+}
+
 cpu::cpu() : 
     _sp_value_low(0),
     _sp_value_high(0),

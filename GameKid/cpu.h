@@ -30,6 +30,7 @@ public:
     word PC;
     
     operands& operands();
+    void push(word value);
 
     memory mem;
 
