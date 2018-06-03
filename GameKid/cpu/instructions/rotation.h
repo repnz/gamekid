@@ -4,5 +4,5 @@
 class rotation
 {
 public:
-    static void add_instructions(instruction_set& set);
+    static void initialize(instruction_set& set, cpu& cpu);
 };

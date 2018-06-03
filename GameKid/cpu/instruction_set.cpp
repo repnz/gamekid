@@ -6,13 +6,20 @@
 #include "instructions/mem.h"
 
 
-instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
+instruction_set::instruction_set(cpu& cpu) : _cpu(cpu), 
+_misc(cpu, *this), _alu(*this, cpu), _mem(cpu, *this), _bitmask(cpu, *this)
 {
-    alu_8::add_instructions(*this);
-    rotation::add_instructions(*this);
-    bitmask::add_instructions(*this);
-    misc::add_instructions(*this);
-    mem::add_instructions(*this);
+    _misc.initialize();
+    _alu.initialize();
+    _mem.initialize();
+    _bitmask.initialize();
+    rotation::initialize(*this, cpu);
+}
+
+void instruction_set::add_instruction(std::unique_ptr<instruction> instruction)
+{
+    _ptr_instructions.push_back(instruction.get());
+    _instructions.push_back(std::move(instruction));
 }
 
 const std::vector<instruction*>& instruction_set::instructions()

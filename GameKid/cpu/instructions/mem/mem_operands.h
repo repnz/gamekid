@@ -4,16 +4,18 @@
 #include <vector>
 #include "GameKid/cpu.h"
 
-class reg_mem_operand : public source_operand<byte>, public dest_operand<byte>
+class reg_mem_operand : public operand<byte>
 {
-public:
+private:
     memory & _mem;
     reg16& _reg;
+public:
+    
+    reg16 & reg() { return _reg; }
 
     reg_mem_operand(memory& mem, reg16& reg) : _mem(mem), _reg(reg)
     {
     }
-
 
     byte load() const override
     {
@@ -28,10 +30,6 @@ public:
     std::string to_str(byte* next) const override
     {
         return "[" + _reg.name() + "]";
-    }
-    std::vector<byte> bytes(std::string operand) const override
-    {
-        return {};
     }
 };
 
@@ -59,7 +57,7 @@ std::vector<byte> immidiate_bytes(std::string operand)
 }
 
 template <typename T>
-class imm_operand : public source_operand<T>
+class imm_operand : public operand<T>
 {
 private:
     cpu & _cpu;
@@ -70,6 +68,11 @@ public:
     T load() const override
     {
         return _cpu.mem.load<T>(_cpu.PC + 1);
+    }
+
+    void store(T value) override
+    {
+        throw "Cannot store";
     }
 
     std::string to_str(byte* next) const override
@@ -85,7 +88,7 @@ public:
 };
 
 template <typename move_type>
-class imm_mem_operand : public source_operand<move_type>, public dest_operand<move_type>
+class imm_mem_operand : public operand<move_type>
 {
 private:
     cpu & _cpu;
@@ -119,13 +122,18 @@ public:
     }
 };
 
-class reg16_with_offset : public source_operand<word>
+class reg16_with_offset : public operand<word>
 {
 private:
     cpu & _cpu;
     reg16& _reg16;
 public:
     explicit reg16_with_offset(cpu& cpu, reg16& reg) : _cpu(cpu), _reg16(reg) {}
+
+    reg16& reg() 
+    {
+        return _reg16;
+    }
 
     word load() const override
     {
@@ -137,6 +145,11 @@ public:
         }
 
         return _reg16.load() - (offset - CHAR_MAX);
+    }
+
+    void store(word value) override
+    {
+        throw "Cannot store";
     }
 
     std::string to_str(byte* next) const override
@@ -159,7 +172,7 @@ public:
     }
 };
 
-class c_mem_operand : public source_operand<byte>, public dest_operand<byte>
+class c_mem_operand : public operand<byte>
 {
 private:
     cpu & _cpu;
@@ -181,9 +194,5 @@ public:
     {
         const word address = _cpu.C.load() + 0xFF00;
         return _cpu.mem.store(address, value);
-    }
-    std::vector<byte> bytes(std::string operand) const override
-    {
-        return {};
     }
 };

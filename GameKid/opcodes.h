@@ -85,34 +85,34 @@
 
 
 // BIT b, r
-#define CB_BIT_b_A 0x47
-#define CB_BIT_b_B 0x40
-#define CB_BIT_b_C 0x41
-#define CB_BIT_b_D 0x42
-#define CB_BIT_b_E 0x43
-#define CB_BIT_b_H 0x44
-#define CB_BIT_b_L 0x45
-#define CB_BIT_b_HL  0x46
+#define BIT_A 0x47
+#define BIT_B 0x40
+#define BIT_C 0x41
+#define BIT_D 0x42
+#define BIT_E 0x43
+#define BIT_H 0x44
+#define BIT_L 0x45
+#define BIT_HL  0x46
 
 // SET b, r
-#define CB_SET_b_A 0xc7
-#define CB_SET_b_B 0xc0
-#define CB_SET_b_C 0xc1
-#define CB_SET_b_D 0xc2
-#define CB_SET_b_E 0xc3
-#define CB_SET_b_H 0xc4
-#define CB_SET_b_L 0xc5
-#define CB_SET_b_HL  0xc6
+#define SET_A 0xc7
+#define SET_B 0xc0
+#define SET_C 0xc1
+#define SET_D 0xc2
+#define SET_E 0xc3
+#define SET_H 0xc4
+#define SET_L 0xc5
+#define SET_HL  0xc6
 
 // RES b, r
-#define CB_RES_b_A 0x87
-#define CB_RES_b_B 0x80
-#define CB_RES_b_C 0x81
-#define CB_RES_b_D 0x82
-#define CB_RES_b_E 0x83
-#define CB_RES_b_H 0x84
-#define CB_RES_b_L 0x85
-#define CB_RES_b_HL  0x86
+#define RES_A 0x87
+#define RES_B 0x80
+#define RES_C 0x81
+#define RES_D 0x82
+#define RES_E 0x83
+#define RES_H 0x84
+#define RES_L 0x85
+#define RES_HL  0x86
 
 // ADD A, n
 #define ADD_A_A 0x87
@@ -170,38 +170,38 @@
 #define AND_A_HL 0xa6
 #define AND_A_IMM 0xe6
 
-// OR A, n
-#define OR_A_A 0xb7
-#define OR_A_B 0xb0
-#define OR_A_C 0xb1
-#define OR_A_D 0xb2
-#define OR_A_E 0xb3
-#define OR_A_H 0xb4
-#define OR_A_L 0xb5
-#define OR_A_HL 0xb6
-#define OR_A_IMM 0xf6
+// OR n
+#define OR_A 0xb7
+#define OR_B 0xb0
+#define OR_C 0xb1
+#define OR_D 0xb2
+#define OR_E 0xb3
+#define OR_H 0xb4
+#define OR_L 0xb5
+#define OR_HL 0xb6
+#define OR_IMM 0xf6
 
 // XOR A, n
-#define XOR_A_A 0xaf
-#define XOR_A_B 0xa8
-#define XOR_A_C 0xa9
-#define XOR_A_D 0xaa
-#define XOR_A_E 0xab
-#define XOR_A_H 0xac
-#define XOR_A_L 0xad
-#define XOR_A_HL 0xae
-#define XOR_A_IMM 0xee
+#define XOR_A 0xaf
+#define XOR_B 0xa8
+#define XOR_C 0xa9
+#define XOR_D 0xaa
+#define XOR_E 0xab
+#define XOR_H 0xac
+#define XOR_L 0xad
+#define XOR_HL 0xae
+#define XOR_IMM 0xee
 
 // CP A, n
-#define CP_A_A 0xbf
-#define CP_A_B 0xb8
-#define CP_A_C 0xb9
-#define CP_A_D 0xba
-#define CP_A_E 0xbb
-#define CP_A_H 0xbc
-#define CP_A_L 0xbd
-#define CP_A_HL 0xbe
-#define CP_A_IMM 0xfe
+#define CP_A 0xbf
+#define CP_B 0xb8
+#define CP_C 0xb9
+#define CP_D 0xba
+#define CP_E 0xbb
+#define CP_H 0xbc
+#define CP_L 0xbd
+#define CP_HL 0xbe
+#define CP_IMM 0xfe
 
 
 // INC n
@@ -225,14 +225,14 @@
 #define DEC_HL 0x35
 
 // SWAP n
-#define CB_SWAP_A 0x37
-#define CB_SWAP_B 0x30
-#define CB_SWAP_C 0x31
-#define CB_SWAP_D 0x32
-#define CB_SWAP_E 0x33
-#define CB_SWAP_H 0x34
-#define CB_SWAP_L 0x35
-#define CB_SWAP_HL 0x36
+#define SWAP_A 0x37
+#define SWAP_B 0x30
+#define SWAP_C 0x31
+#define SWAP_D 0x32
+#define SWAP_E 0x33
+#define SWAP_H 0x34
+#define SWAP_L 0x35
+#define SWAP_HL 0x36
 
 // LD nn, n
 #define LD_B_n 0x6

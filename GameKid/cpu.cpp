@@ -1,9 +1,16 @@
 #include <GameKid/cpu.h>
+#include "cpu/operands.h"
 
+
+operands& cpu::operands()
+{
+    return *_operands.get();
+}
 
 cpu::cpu() : 
     _sp_value_low(0),
     _sp_value_high(0),
+    _operands(std::make_unique<::operands>(*this)),
     A("A"),
     B("B"),
     C("C"),
@@ -135,6 +142,8 @@ void cpu::ld(byte* r1, byte r2)
 {
     *r1 = r2;
 }
+
+cpu::~cpu() = default;
 
 void cpu::sub(byte* val, byte n, bool carry, bool save_result)
 {

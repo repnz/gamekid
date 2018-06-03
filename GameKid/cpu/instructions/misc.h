@@ -1,8 +1,14 @@
 #pragma once
-#include "GameKid/cpu/instruction_set.h"
+class instruction_set;
+class cpu;
 
 class misc
 {
+private:
+    cpu & _cpu;
+    instruction_set& _set;
 public:
-    static void add_instructions(instruction_set& set);
+    misc(cpu& cpu, instruction_set& set) : _cpu(cpu), _set(set){}
+
+    void initialize();
 };

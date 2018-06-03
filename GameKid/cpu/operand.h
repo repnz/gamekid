@@ -3,29 +3,24 @@
 #include "GameKid/memory.h"
 #include <vector>
 
+template <typename T>
 class operand
 {
 public:
     virtual ~operand() = default;
     virtual std::string to_str(byte* next) const = 0;
-    virtual std::vector<byte> bytes(std::string operand) const = 0;
-};
+    
+    virtual std::vector<byte> bytes(std::string operand) const
+    {
+        return {};
+    }
 
-template <typename T>
-class source_operand : public operand
-{
-public:
     virtual T load() const = 0;
-};
-
-template <typename T>
-class dest_operand : public operand
-{
-public:
     virtual void store(T value) = 0;
 };
 
-class reg8 : public source_operand<byte>, public dest_operand<byte>
+
+class reg8 : public operand<byte>
 {
 private:
     std::string _name;
@@ -59,18 +54,13 @@ public:
         _value = new_value;
     }
 
-    std::vector<byte> bytes(std::string operand) const override
-    {
-        return {};
-    }
-
     byte* address()
     {
         return &_value;
     }
 };
 
-class reg16 : public source_operand<word>, public dest_operand<word>
+class reg16 : public operand<word>
 {
 private:
     std::string _name;
@@ -100,8 +90,26 @@ public:
         *_low = (byte)(value & 0xFF);
         *_high = (byte)(value >> 8);
     }
-    std::vector<byte> bytes(std::string operand) const override
+};
+
+class constant_operand : public operand<byte>
+{
+public:
+    byte value;
+    explicit constant_operand(byte value) : value(value){}
+    
+    std::string to_str(byte* next) const override
     {
-        return {};
+        return std::to_string(value);
+    }
+
+    byte load() const override
+    {
+        return value;
+    }
+
+    void store(byte value) override
+    {
+        throw "Cannot store";
     }
 };

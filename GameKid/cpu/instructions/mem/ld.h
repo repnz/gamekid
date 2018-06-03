@@ -1,48 +1,86 @@
 #pragma once
 #include "GameKid/cpu/instruction.h"
-#include "move_opcode.h"
 #include "mem_operands.h"
+#include "GameKid/cpu/operands.h"
+#include <GameKid/cpu/builders/opcode_builder.h>
+
+template <typename T>
+void move_operation(operand<T>& dst, operand<T>& src)
+{
+    dst.store(src.load());
+}
 
 class ld_instruction : public instruction
 {
-private:
-    // Operands
-    c_mem_operand _c_mem;
-    imm_mem_operand<byte> _imm_mem_byte;
-    imm_mem_operand<word> _imm_mem_word;
-    reg_mem_operand _hl_mem;
-
-    // Opcodes
-    std::vector<move_opcode<byte>> _imm_to_reg;
-    std::vector<move_opcode<byte>>  _reg_to_reg;
-    std::vector<move_opcode<byte>> _reg_to_mem;
-    std::vector<move_opcode<byte>> _mem_to_reg;
-    move_opcode<byte> _a_to_c_mem;
-    move_opcode<byte> _c_mem_to_a;
-    move_opcode<byte> _a_to_imm_mem;
-    move_opcode<byte> _imm_to_hl;
-    move_opcode<byte> _imm_mem_to_a;
-    std::vector<move_opcode<word>> _imm16_to_reg16;
-    move_opcode<word> _sp_to_imm_mem;
-    move_opcode<word> _hl_to_sp;
-    move_opcode<word> _sp_offset_to_hl;
-  
 public:
     explicit ld_instruction(cpu& cpu)
-        : instruction(cpu, "ld"), 
-    _c_mem(cpu),
-    _imm_mem_byte(cpu),
-    _imm_mem_word(cpu),
-    _hl_mem(cpu.mem, cpu.HL),
-    _a_to_c_mem("ld", cpu, 0xE2, 8, cpu.A, _c_mem), 
-    _c_mem_to_a("ld", cpu, 0xF2, 8, c_mem_operand(cpu), cpu.A),
-    _a_to_imm_mem("ld", cpu, 0xEA, 16, cpu.A, _imm_mem_byte),
-    _imm_to_hl("ld", cpu, 0x36, 12, imm_operand<byte>(cpu), _hl_mem),
-    _imm_mem_to_a("ld", cpu, 0xFA, 16, imm_mem_operand<byte>(cpu), cpu.A),
-    _sp_to_imm_mem("ld", cpu, 0x08, 20, cpu.SP, _imm_mem_word),
-    _hl_to_sp("ld", cpu, 0xF9, 8, cpu.HL, cpu.SP),
-    _sp_offset_to_hl("ld", cpu, 0xf8, 12, reg16_with_offset(cpu, cpu.SP), cpu.HL)
+        : instruction(cpu, "ld")
     {
+        add_opcode(opcode_builder<word>(_cpu)
+            .name("ld")
+            .opcode(0xf8)
+            .operands(cpu.HL, cpu.operands().reg16_with_offset(cpu.SP))
+            .cycles(12)
+            .operation(move_operation<word>)
+            .build());
+
+        add_opcode(opcode_builder<word>(_cpu)
+            .name("ld")
+            .opcode(0xF9)
+            .operands(cpu.SP, cpu.HL)
+            .cycles(8)
+            .operation(move_operation<word>)
+            .build());
+
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(0xE2)
+            .operands(cpu.operands().c_memory(), cpu.A)
+            .cycles(8)
+            .operation(move_operation<byte>)
+            .build());
+
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(0xF2)
+            .operands(cpu.A, cpu.operands().c_memory())
+            .cycles(8)
+            .operation(move_operation<byte>)
+            .build());
+
+
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(0xEA)
+            .operands(_cpu.operands().immidiate_mem_byte(), cpu.A)
+            .cycles(16)
+            .operation(move_operation<byte>)
+            .build());
+
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(0x36)
+            .operands(cpu.A, _cpu.operands().immidiate_byte())
+            .cycles(12)
+            .operation(move_operation<byte>)
+            .build());
+
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(0xFA)
+            .operands(cpu.A, _cpu.operands().immidiate_mem_byte())
+            .cycles(16)
+            .operation(move_operation<byte>)
+            .build());
+
+        add_opcode(opcode_builder<word>(_cpu)
+            .name("ld")
+            .opcode(0x08)
+            .operands(_cpu.operands().immidiate_mem_word(), _cpu.SP)
+            .cycles(20)
+            .operation(move_operation<word>)
+            .build());
+
         add_imm_to_reg(0x3E, cpu.A);
         add_imm_to_reg(0x06, cpu.B);
         add_imm_to_reg(0x0E, cpu.C);
@@ -92,14 +130,6 @@ public:
         add_imm16_to_reg16(0x11, cpu.DE);
         add_imm16_to_reg16(0x21, cpu.HL);
         add_imm16_to_reg16(0x31, cpu.SP);
-
-        opcodes.push_back(&_a_to_c_mem);
-        opcodes.push_back(&_a_to_imm_mem);
-        opcodes.push_back(&_imm_to_hl);
-        opcodes.push_back(&_imm_mem_to_a);
-        opcodes.push_back(&_c_mem_to_a);
-        opcodes.push_back(&_sp_to_imm_mem);
-        opcodes.push_back(&_sp_offset_to_hl);
     }
 
     void reg_to_imm(byte* reg_address)
@@ -109,11 +139,13 @@ public:
 
     void add_imm_to_reg(byte op_value, reg8& reg)
     {
-        _imm_to_reg.push_back(
-            move_opcode<byte>("ld", _cpu, op_value, 8, imm_operand<byte>(_cpu), reg)
-        );
-
-        opcodes.push_back(&_imm_to_reg.back());
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(op_value)
+            .operands(reg, _cpu.operands().immidiate_byte())
+            .cycles(8)
+            .operation(move_operation<byte>)
+            .build());
     }
 
     void add_reg_to_reg_opcodes(byte b_value, reg8& dst)
@@ -127,41 +159,48 @@ public:
         add_reg_to_reg(b_value + 5, _cpu.L, dst);
     }
 
-    void add_reg_to_reg(byte val, const reg8& src, reg8& dst)
+    void add_reg_to_reg(byte val, reg8& src, reg8& dst)
     {
-        _reg_to_reg.push_back(move_opcode<byte>("ld", _cpu, val, 4, src, dst));
-        opcodes.push_back(&_reg_to_reg.back());
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(val)
+            .operands(dst, src)
+            .cycles(4)
+            .operation(move_operation<byte>)
+            .build());
     }
 
-    void add_reg_to_mem(byte val, const reg8& src, reg16& dst)
+    void add_reg_to_mem(byte val, reg8& src, reg16& dst)
     {
-        reg_mem_operand dst_operand(_cpu.mem, dst);
-
-        _reg_to_mem.push_back(
-            move_opcode<byte>("ld", _cpu, val, 8, src, dst_operand)
-        );
-
-        opcodes.push_back(&_reg_to_mem.back());
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(val)
+            .operands(_cpu.operands().reg_mem(dst), src)
+            .cycles(8)
+            .operation(move_operation<byte>)
+            .build());
     }
 
     void add_mem_to_reg(byte val, reg16& src, reg8& dst)
     {
-        reg_mem_operand src_operand(_cpu.mem, src);
-        
-        _mem_to_reg.push_back(
-            move_opcode<byte>("ld", _cpu, val, 8, src_operand, dst)
-        );
-
-        opcodes.push_back(&_mem_to_reg.back());
+        add_opcode(opcode_builder<byte>(_cpu)
+            .name("ld")
+            .opcode(val)
+            .operands(dst, _cpu.operands().reg_mem(src))
+            .cycles(8)
+            .operation(move_operation<byte>)
+            .build());
     }
 
     void add_imm16_to_reg16(byte val, reg16& reg)
     {
-        _imm16_to_reg16.push_back(
-            move_opcode<word>("ld", _cpu, val, 12, imm_operand<word>(_cpu), reg)
-        );
-
-        opcodes.push_back(&_imm16_to_reg16.back());
+        add_opcode(opcode_builder<word>(_cpu)
+            .name("ld")
+            .opcode(val)
+            .operands(reg, _cpu.operands().immidiate_word())
+            .cycles(12)
+            .operation(move_operation<word>)
+            .build());
     }
 
     std::vector<byte> parse(const std::vector<std::string>& operands) override

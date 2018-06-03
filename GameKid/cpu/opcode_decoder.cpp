@@ -12,15 +12,15 @@ void opcode_decoder::initialize_tables()
 {
     for (instruction* instruction : _set.instructions())
     {
-        for (opcode* op : instruction->opcodes)
+        for (opcode* op : instruction->opcodes())
         {
-            if (op->cb_prefix)
+            if (op->value[0] == 0xCB)
             {
-                _cb_prefix_table[op->value] = op;
+                _cb_prefix_table[op->value[1]] = op;
             }
             else
             {
-                _main_table[op->value] = op;
+                _main_table[op->value[0]] = op;
             }
         }
     }

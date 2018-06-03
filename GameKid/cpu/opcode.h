@@ -11,12 +11,11 @@ protected:
     cpu & _cpu;
 public:
     std::string name;
-    byte value;
-    bool cb_prefix;
+    std::vector<byte> value;
     byte cycles;
 
-    opcode(cpu& cpu, const std::string& name, byte value, bool cb_prefix, byte cycles)
-        : _cpu(cpu), name(name), value(value), cb_prefix(cb_prefix), cycles(cycles)
+    opcode(cpu& cpu, const std::string& name, std::vector<byte> value, byte cycles)
+        : _cpu(cpu), name(name), value(value), cycles(cycles)
     {
     }
 
@@ -27,12 +26,7 @@ public:
 
     virtual std::vector<byte> bytes()
     {
-        if (cb_prefix)
-        {
-            return { 0xCB, value };
-        }
-
-        return { value };
+        return value;
     }
 
     virtual std::string to_str(byte* next)
