@@ -25,13 +25,14 @@ private:
         instruction_builder& builder,
         byte base_value,
         operand<byte>& op,
+        cpu_operation<byte, byte>& operation,
         byte cycles = 8
     );
 
     void add_bitmask_instruction(
         const std::string& name,
         const opcodes& opcodes,
-        std::function<void(operand<byte>&, operand<byte>&)> operation
+        cpu_operation<byte, byte> operation
     );
 public:
     bitmask(cpu& cpu, instruction_set& set) : _cpu(cpu), _set(set){}

@@ -5,7 +5,7 @@
 #include <GameKid/cpu/builders/opcode_builder.h>
 
 template <typename T>
-void move_operation(operand<T>& dst, operand<T>& src)
+void move_operation(cpu& cpu, operand<T>& dst, operand<T>& src)
 {
     dst.store(src.load());
 }
@@ -16,7 +16,7 @@ public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld")
     {
-        add_opcode(opcode_builder<word>(_cpu)
+        add_opcode(opcode_builder<word, word>(_cpu)
             .name("ld")
             .opcode(0xf8)
             .operands(cpu.HL, cpu.operands().reg16_with_offset(cpu.SP))
@@ -24,7 +24,7 @@ public:
             .operation(move_operation<word>)
             .build());
 
-        add_opcode(opcode_builder<word>(_cpu)
+        add_opcode(opcode_builder<word, word>(_cpu)
             .name("ld")
             .opcode(0xF9)
             .operands(cpu.SP, cpu.HL)
@@ -32,7 +32,7 @@ public:
             .operation(move_operation<word>)
             .build());
 
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(0xE2)
             .operands(cpu.operands().c_memory(), cpu.A)
@@ -40,7 +40,7 @@ public:
             .operation(move_operation<byte>)
             .build());
 
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(0xF2)
             .operands(cpu.A, cpu.operands().c_memory())
@@ -49,7 +49,7 @@ public:
             .build());
 
 
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(0xEA)
             .operands(_cpu.operands().immidiate_mem_byte(), cpu.A)
@@ -57,7 +57,7 @@ public:
             .operation(move_operation<byte>)
             .build());
 
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(0x36)
             .operands(cpu.A, _cpu.operands().immidiate_byte())
@@ -65,7 +65,7 @@ public:
             .operation(move_operation<byte>)
             .build());
 
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(0xFA)
             .operands(cpu.A, _cpu.operands().immidiate_mem_byte())
@@ -73,7 +73,7 @@ public:
             .operation(move_operation<byte>)
             .build());
 
-        add_opcode(opcode_builder<word>(_cpu)
+        add_opcode(opcode_builder<word, word>(_cpu)
             .name("ld")
             .opcode(0x08)
             .operands(_cpu.operands().immidiate_mem_word(), _cpu.SP)
@@ -139,7 +139,7 @@ public:
 
     void add_imm_to_reg(byte op_value, reg8& reg)
     {
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(op_value)
             .operands(reg, _cpu.operands().immidiate_byte())
@@ -161,7 +161,7 @@ public:
 
     void add_reg_to_reg(byte val, reg8& src, reg8& dst)
     {
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(val)
             .operands(dst, src)
@@ -172,7 +172,7 @@ public:
 
     void add_reg_to_mem(byte val, reg8& src, reg16& dst)
     {
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(val)
             .operands(_cpu.operands().reg_mem(dst), src)
@@ -183,7 +183,7 @@ public:
 
     void add_mem_to_reg(byte val, reg16& src, reg8& dst)
     {
-        add_opcode(opcode_builder<byte>(_cpu)
+        add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(val)
             .operands(dst, _cpu.operands().reg_mem(src))
@@ -194,18 +194,12 @@ public:
 
     void add_imm16_to_reg16(byte val, reg16& reg)
     {
-        add_opcode(opcode_builder<word>(_cpu)
+        add_opcode(opcode_builder<word, word>(_cpu)
             .name("ld")
             .opcode(val)
             .operands(reg, _cpu.operands().immidiate_word())
             .cycles(12)
             .operation(move_operation<word>)
             .build());
-    }
-
-    std::vector<byte> parse(const std::vector<std::string>& operands) override
-    {
-        // leave parsing for later
-        return {};
     }
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "instructions/mem/mem_operands.h"
+#include "instructions/jumps.h"
 
 class operands
 {
@@ -16,6 +17,10 @@ private:
     inc_reg_mem_operand _inc_hl;
     dec_reg_mem_operand _dec_hl;
     ff_offset_mem_operand _ff_offset;
+    cc_operand _nz;
+    cc_operand _z;
+    cc_operand _nc;
+    cc_operand _c;
 public:
     explicit operands(cpu& cpu);
     operands(const operands&) = delete;
@@ -31,4 +36,8 @@ public:
     dec_reg_mem_operand& decrement_hl();
     constant_operand& constant(byte val);
     ff_offset_mem_operand& ff_offset();
+    cc_operand& nz();
+    cc_operand& z();
+    cc_operand& nc();
+    cc_operand& c();
 };

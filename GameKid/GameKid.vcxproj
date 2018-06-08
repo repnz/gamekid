@@ -95,6 +95,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -103,6 +104,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,6 +115,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -127,6 +130,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -136,8 +140,6 @@
   <ItemGroup>
     <ClCompile Include="cpu.cpp" />
     <ClCompile Include="cpu\builders\instruction_builder.cpp" />
-    <ClCompile Include="cpu\builders\instruction_opcode_adder.cpp" />
-    <ClCompile Include="cpu\builders\opcode_builder.cpp" />
     <ClCompile Include="cpu\instructions\alu_8.cpp" />
     <ClCompile Include="cpu\instructions\bitmask.cpp" />
     <ClCompile Include="cpu\instructions\jumps.cpp" />
@@ -151,9 +153,8 @@
     <ClCompile Include="memory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cpu\base_instructions\single_opcode_instruction.h" />
-    <ClInclude Include="cpu\base_opcodes\function_opcode.h" />
     <ClInclude Include="cpu\base_opcodes\register_opcode.h" />
+    <ClInclude Include="cpu\builders\cpu_operation.h" />
     <ClInclude Include="cpu\builders\instruction_builder.h" />
     <ClInclude Include="cpu\builders\instruction_opcode_adder.h" />
     <ClInclude Include="cpu\builders\opcode_builder.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
     <ClInclude Include="cpu\instructions\mem\mem_operands.h" />
+    <ClInclude Include="utils\function_tools.h" />
     <ClInclude Include="cpu\opcode_builder.h" />
     <ClInclude Include="cpu\operand.h" />
     <ClInclude Include="cpu\instructions\misc.h" />
@@ -174,11 +176,11 @@
     <ClInclude Include="cpu\opcode_decoder.h" />
     <ClInclude Include="cpu\opcode_encoder.h" />
     <ClInclude Include="cpu\operands.h" />
-    <ClInclude Include="cpu\single_operand_opcode.h" />
-    <ClInclude Include="cpu\two_operand_opcode.h" />
+    <ClInclude Include="cpu\operands_opcode.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />
     <ClInclude Include="cpu_types.h" />
+    <ClInclude Include="utils\str.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

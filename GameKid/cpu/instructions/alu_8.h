@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include "GameKid/cpu/builders/cpu_operation.h"
 class instruction_set;
 
 class alu_8
@@ -21,7 +22,7 @@ private:
     void add_alu_instruction(
         const std::string& name,
         const opcodes& opcodes,
-        std::function<void(operand<byte>&)> operation
+        cpu_operation<byte> operation
     );
 
     instruction_set& _set;

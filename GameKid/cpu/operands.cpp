@@ -9,7 +9,11 @@ _immidiate_mem_word(cpu),
 _c_mem(cpu),
 _inc_hl(cpu.mem, cpu.HL),
 _dec_hl(cpu.mem, cpu.HL),
-_ff_offset(cpu)
+_ff_offset(cpu),
+_nz(cpu.F, flags_reg8::ZERO, "nz", false),
+_z(cpu.F, flags_reg8::ZERO, "z", true),
+_nc(cpu.F, flags_reg8::CARRY, "nc", false),
+_c(cpu.F, flags_reg8::CARRY, "c", true)
 {
 }
 
@@ -44,6 +48,26 @@ constant_operand& operands::constant(byte val)
 ff_offset_mem_operand& operands::ff_offset()
 {
     return _ff_offset;
+}
+
+cc_operand& operands::nz()
+{
+    return _nz;
+}
+
+cc_operand& operands::z()
+{
+    return _z;
+}
+
+cc_operand& operands::nc()
+{
+    return _nc;
+}
+
+cc_operand& operands::c()
+{
+    return _c;
 }
 
 reg_mem_operand& operands::reg_mem(reg16& r)

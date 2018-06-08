@@ -13,10 +13,10 @@ void cpu::push(word value)
     SP.store(SP.load()-2);
 }
 
-void cpu::pop(word* value)
+word cpu::pop()
 {
     SP.store(SP.load() + 2);
-    *value = mem.load<word>(SP.load());   
+    return mem.load<word>(SP.load());   
 }
 
 void cpu::jump(word address)

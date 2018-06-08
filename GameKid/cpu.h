@@ -31,7 +31,7 @@ public:
     
     operands& operands();
     void push(word value);
-    void pop(word* value);
+    word pop();
     void jump(word address);
 
     memory mem;
