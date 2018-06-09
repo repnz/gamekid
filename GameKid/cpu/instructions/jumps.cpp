@@ -52,6 +52,19 @@ void rst_operation(cpu& cpu, operand<byte>& address)
 }
 
 
+void ret_operation(cpu& cpu)
+{
+    cpu.jump(cpu.pop());
+}
+
+void ret_with_condition_operation(cpu& cpu, operand<bool>& condition)
+{
+    if (condition.load())
+    {
+        ret_operation(cpu);
+    }
+}
+
 void jumps::initialize(cpu & cpu, instruction_set & set)
 {
     set.add_instruction(instruction_builder(cpu, "jp")
@@ -157,4 +170,32 @@ void jumps::initialize(cpu & cpu, instruction_set & set)
     }
 
     set.add_instruction(rst_builder.build());
+
+    set.add_instruction(instruction_builder(cpu, "ret")
+        .operands()
+            .opcode(0xC9)
+            .cycles(0x8)
+            .operation(ret_operation)
+            .add()
+        .operands(cpu.operands().nz())
+            .opcode(0xC0)
+            .cycles(0x8)
+            .operation(ret_with_condition_operation)
+            .add()
+        .operands(cpu.operands().z())
+            .opcode(0xC8)
+            .cycles(0x8)
+            .operation(ret_with_condition_operation)
+            .add()
+        .operands(cpu.operands().nc())
+            .opcode(0xD0)
+            .cycles(0x8)
+            .operation(ret_with_condition_operation)
+            .add()
+        .operands(cpu.operands().c())
+            .opcode(0xD8)
+            .cycles(0x8)
+            .operation(ret_with_condition_operation)
+            .add()
+        .build());
 }
