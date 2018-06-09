@@ -51,6 +51,15 @@ void daa_operation(cpu& cpu)
 }
 
 
+void ccf_operation(cpu& cpu)
+{
+    cpu.F.substract(false);
+    cpu.F.half_carry(false);
+    cpu.F.carry(!cpu.F.carry());
+}
+
+void halt_operation(cpu& cpu) { cpu.halt(); }
+
 void misc::initialize()
 {
     _set.add_instruction(instruction_builder(_cpu, "swap")
@@ -102,6 +111,22 @@ void misc::initialize()
         .opcode(0x27)
         .cycles(4)
         .operation(daa_operation) 
+        .add().build()
+    );
+
+    _set.add_instruction(instruction_builder(_cpu, "ccf")
+        .operands()
+        .opcode(CCF)
+        .cycles(4)
+        .operation(ccf_operation)
+        .add().build()
+    );
+
+    _set.add_instruction(instruction_builder(_cpu, "halt")
+        .operands()
+        .opcode(HALT)
+        .cycles(4)
+        .operation(halt_operation)
         .add().build()
     );
 }
