@@ -16,22 +16,6 @@ public:
     explicit ld_instruction(cpu& cpu)
         : instruction(cpu, "ld")
     {
-        add_opcode(opcode_builder<word, word>(_cpu)
-            .name("ld")
-            .opcode(0xf8)
-            .operands(cpu.HL, cpu.operands().reg16_with_offset(cpu.SP))
-            .cycles(12)
-            .operation(move_operation<word>)
-            .build());
-
-        add_opcode(opcode_builder<word, word>(_cpu)
-            .name("ld")
-            .opcode(0xF9)
-            .operands(cpu.SP, cpu.HL)
-            .cycles(8)
-            .operation(move_operation<word>)
-            .build());
-
         add_opcode(opcode_builder<byte, byte>(_cpu)
             .name("ld")
             .opcode(0xE2)
@@ -71,14 +55,6 @@ public:
             .operands(cpu.A, _cpu.operands().immidiate_mem_byte())
             .cycles(16)
             .operation(move_operation<byte>)
-            .build());
-
-        add_opcode(opcode_builder<word, word>(_cpu)
-            .name("ld")
-            .opcode(0x08)
-            .operands(_cpu.operands().immidiate_mem_word(), _cpu.SP)
-            .cycles(20)
-            .operation(move_operation<word>)
             .build());
 
         add_imm_to_reg(0x3E, cpu.A);
@@ -130,6 +106,30 @@ public:
         add_imm16_to_reg16(0x11, cpu.DE);
         add_imm16_to_reg16(0x21, cpu.HL);
         add_imm16_to_reg16(0x31, cpu.SP);
+
+        add_opcode(opcode_builder<word, word>(_cpu)
+            .name("ld")
+            .opcode(0xF9)
+            .operands(cpu.SP, cpu.HL)
+            .cycles(8)
+            .operation(move_operation<word>)
+            .build());
+
+        add_opcode(opcode_builder<word, word>(_cpu)
+            .name("ld")
+            .opcode(0xf8)
+            .operands(cpu.HL, cpu.operands().reg16_with_offset(cpu.SP))
+            .cycles(12)
+            .operation(move_operation<word>)
+            .build());
+
+        add_opcode(opcode_builder<word, word>(_cpu)
+            .name("ld")
+            .opcode(0x08)
+            .operands(_cpu.operands().immidiate_mem_word(), _cpu.SP)
+            .cycles(20)
+            .operation(move_operation<word>)
+            .build());
     }
 
     void reg_to_imm(byte* reg_address)

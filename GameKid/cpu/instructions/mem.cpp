@@ -24,20 +24,44 @@ void mem::initialize()
 
     _set.add_instruction(
         instruction_builder(_cpu, "ldd")
-        .operands(_cpu.A, _cpu.operands().decrement_hl()).opcode(0x3A).operation(move_operation<byte>).cycles(8).add()
-        .operands(_cpu.operands().decrement_hl(), _cpu.A).opcode(0x32).operation(move_operation<byte>).cycles(8).add()
+        .operands(_cpu.A, _cpu.operands().decrement_hl())
+            .opcode(0x3A)
+            .operation(move_operation<byte>)
+            .cycles(8)
+            .add()
+        .operands(_cpu.operands().decrement_hl(), _cpu.A)
+            .opcode(0x32)
+            .operation(move_operation<byte>)
+            .cycles(8)
+            .add()
         .build());
 
     _set.add_instruction(
         instruction_builder(_cpu, "ldi")
-        .operands(_cpu.A, _cpu.operands().increment_hl()).operation(move_operation<byte>).opcode(0x2A).cycles(8).add()
-        .operands(_cpu.operands().increment_hl(), _cpu.A).operation(move_operation<byte>).opcode(0x22).cycles(8).add()
+        .operands(_cpu.A, _cpu.operands().increment_hl())
+            .operation(move_operation<byte>)
+            .opcode(0x2A)
+            .cycles(8)
+            .add()
+        .operands(_cpu.operands().increment_hl(), _cpu.A)
+            .operation(move_operation<byte>)
+            .opcode(0x22)
+            .cycles(8)
+            .add()
         .build());
 
     _set.add_instruction(
         instruction_builder(_cpu, "ldh")
-        .operands(_cpu.operands().ff_offset(), _cpu.A).operation(move_operation<byte>).opcode(0xE0).cycles(12).add()
-        .operands(_cpu.A, _cpu.operands().ff_offset()).operation(move_operation<byte>).opcode(0xF0).cycles(12).add()
+        .operands(_cpu.operands().ff_offset(), _cpu.A)
+            .operation(move_operation<byte>)
+            .opcode(0xE0)
+            .cycles(12)
+            .add()
+        .operands(_cpu.A, _cpu.operands().ff_offset())
+            .operation(move_operation<byte>)
+            .opcode(0xF0)
+            .cycles(12)
+            .add()
         .build());
 
     _set.add_instruction(
