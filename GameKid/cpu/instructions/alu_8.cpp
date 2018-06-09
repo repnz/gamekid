@@ -198,8 +198,8 @@ void alu_8::add_alu_instruction(const std::string& name, const opcodes& opcodes,
         .operands(_cpu.E).opcode(opcodes.E).cycles(4).operation(operation).add()
         .operands(_cpu.H).opcode(opcodes.H).cycles(4).operation(operation).add()
         .operands(_cpu.L).opcode(opcodes.L).cycles(4).operation(operation).add()
-        .operands(_cpu.operands().immidiate_byte()).opcode(opcodes.IMM).operation(operation).cycles(8).add()
         .operands(_cpu.operands().reg_mem(_cpu.HL)).opcode(opcodes.HL).operation(operation).cycles(8).add()
+        .operands(_cpu.operands().immidiate_byte()).opcode(opcodes.IMM).operation(operation).cycles(8).add()
         .build()
         );
 }

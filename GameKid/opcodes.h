@@ -122,19 +122,19 @@
 #define ADD_A_E 0x83
 #define ADD_A_H 0x84
 #define ADD_A_L 0x85
-#define ADD_A_HL 0x85
+#define ADD_A_HL 0x86
 #define ADD_A_IMM 0xC6
 
 // ADC A, n
-#define ADC_A_A 0x87
-#define ADC_A_B 0x80
-#define ADC_A_C 0x81
-#define ADC_A_D 0x82
-#define ADC_A_E 0x83
-#define ADC_A_H 0x84
-#define ADC_A_L 0x85
-#define ADC_A_HL 0x85
-#define ADC_A_IMM 0xC6
+#define ADC_A_A 0x8F
+#define ADC_A_B 0x88
+#define ADC_A_C 0x89
+#define ADC_A_D 0x8A
+#define ADC_A_E 0x8B
+#define ADC_A_H 0x8C
+#define ADC_A_L 0x8D
+#define ADC_A_HL 0x8E
+#define ADC_A_IMM 0xCE
 
 
 // SUB A, n
