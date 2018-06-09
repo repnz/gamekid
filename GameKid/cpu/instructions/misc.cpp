@@ -84,7 +84,7 @@ void misc::initialize()
         .operands()
         .opcode(SCF)
         .cycles(4)
-        .operation(scf_operation) // do nothing
+        .operation(scf_operation) 
         .add().build()
     );
 
@@ -92,7 +92,7 @@ void misc::initialize()
         .operands()
         .opcode(0x10, 0)
         .cycles(4)
-        .operation(stop_operation) // do nothing
+        .operation(stop_operation) 
         .add().build()
     );
 
@@ -101,7 +101,7 @@ void misc::initialize()
         .operands()
         .opcode(0x27)
         .cycles(4)
-        .operation(daa_operation) // do nothing
+        .operation(daa_operation) 
         .add().build()
     );
 }
