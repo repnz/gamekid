@@ -100,7 +100,7 @@ reg16_with_offset& operands::reg16_with_offset(reg16& r)
         }
     }
 
-    _reg16_with_offset_operands.push_back(reg16_with_offset(r));
+    _reg16_with_offset_operands.push_back(::reg16_with_offset(_cpu, r));
     return _reg16_with_offset_operands.back();
 }
 
