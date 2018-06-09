@@ -2,6 +2,11 @@
 #include "cpu/operands.h"
 
 
+void cpu::schedule_operation(cpu_operation<> operation, int instruction_count)
+{
+    _scheduled_operations.emplace_back(operation, instruction_count);
+}
+
 operands& cpu::operands()
 {
     return *_operands.get();
@@ -29,7 +34,12 @@ void cpu::enable_interrupts()
     _interrupts_enabled = true;
 }
 
-cpu::cpu() : 
+void cpu::disable_interrupts()
+{
+    _interrupts_enabled = false;
+}
+
+cpu::cpu() :
     _sp_value_low(0),
     _sp_value_high(0),
     _operands(std::make_unique<::operands>(*this)),
@@ -45,7 +55,7 @@ cpu::cpu() :
     BC("BC", C.address(), B.address()),
     DE("DE", E.address(), D.address()),
     HL("HL", L.address(), H.address()),
-    SP("SP", &_sp_value_low, &_sp_value_high), PC(0)
+    SP("SP", &_sp_value_low, &_sp_value_high), PC(0), _interrupts_enabled(false)
 {
 }
 

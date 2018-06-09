@@ -60,6 +60,22 @@ void ccf_operation(cpu& cpu)
 
 void halt_operation(cpu& cpu) { cpu.halt(); }
 
+void ei_operation(cpu& cpu)
+{
+    cpu.schedule_operation([](class cpu& cpu)
+    {
+        cpu.enable_interrupts();
+    }, 1);
+}
+
+void di_operation(cpu& cpu)
+{
+    cpu.schedule_operation([](class cpu& cpu)
+    {
+        cpu.disable_interrupts();
+    }, 1);
+}
+
 void misc::initialize()
 {
     _set.add_instruction(instruction_builder(_cpu, "swap")
@@ -129,4 +145,18 @@ void misc::initialize()
         .operation(halt_operation)
         .add().build()
     );
+
+    _set.add_instruction(instruction_builder(_cpu, "ei")
+        .operands()
+        .opcode(0xFB)
+        .cycles(4)
+        .operation(ei_operation)
+        .add().build());
+
+    _set.add_instruction(instruction_builder(_cpu, "di")
+        .operands()
+        .opcode(0xF3)
+        .cycles(4)
+        .operation(di_operation)
+        .add().build());
 }
