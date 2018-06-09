@@ -24,6 +24,11 @@ void cpu::jump(word address)
     PC = address;
 }
 
+void cpu::enable_interrupts()
+{
+    _interrupts_enabled = true;
+}
+
 cpu::cpu() : 
     _sp_value_low(0),
     _sp_value_high(0),

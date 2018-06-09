@@ -28,11 +28,13 @@ public:
     reg16 HL;
     reg16 SP;
     word PC;
-    
+    bool _interrupts_enabled;
+
     operands& operands();
     void push(word value);
     word pop();
     void jump(word address);
+    void enable_interrupts();
 
     memory mem;
 

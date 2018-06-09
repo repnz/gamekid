@@ -65,6 +65,12 @@ void ret_with_condition_operation(cpu& cpu, operand<bool>& condition)
     }
 }
 
+void reti_operation(cpu& cpu)
+{
+    ret_operation(cpu);
+    cpu.enable_interrupts();
+}
+
 void jumps::initialize(cpu & cpu, instruction_set & set)
 {
     set.add_instruction(instruction_builder(cpu, "jp")
@@ -196,6 +202,14 @@ void jumps::initialize(cpu & cpu, instruction_set & set)
             .opcode(0xD8)
             .cycles(0x8)
             .operation(ret_with_condition_operation)
+            .add()
+        .build());
+
+    set.add_instruction(instruction_builder(cpu, "reti")
+        .operands()
+            .opcode(0xD9)
+            .cycles(8)
+            .operation(reti_operation)
             .add()
         .build());
 }
