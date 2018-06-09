@@ -31,6 +31,12 @@ void jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byt
     }
 }
 
+void call_operation(cpu& cpu, operand<word>& address)
+{
+    cpu.push(cpu.PC+1);
+    cpu.PC = address.load();
+}
+
 void jumps::initialize(cpu & cpu, instruction_set & set)
 {
     set.add_instruction(instruction_builder(cpu, "jp")
@@ -91,6 +97,15 @@ void jumps::initialize(cpu & cpu, instruction_set & set)
             .opcode(0x38)
             .cycles(8)
             .operation(jr_with_condition_operation)
+            .add()
+        .build());
+
+
+    set.add_instruction(instruction_builder(cpu, "call")
+        .operands(cpu.operands().immidiate_word())
+            .opcode(0xCD)
+            .cycles(12)
+            .operation(call_operation)
             .add()
         .build());
 }
