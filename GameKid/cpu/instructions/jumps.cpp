@@ -165,7 +165,7 @@ void jumps::initialize(cpu & cpu, instruction_set & set)
 
     instruction_builder rst_builder(cpu, "rst");
 
-    for (int i=0x00; i<=0x38; ++i)
+    for (int i=0x00; i<=0x38; i += 8)
     {
         rst_builder
             .operands(cpu.operands().constant(i))
