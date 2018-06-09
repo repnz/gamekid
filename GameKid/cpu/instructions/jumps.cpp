@@ -45,6 +45,13 @@ void call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<w
     }
 }
 
+void rst_operation(cpu& cpu, operand<byte>& address)
+{
+    cpu.push(cpu.PC);
+    cpu.jump(address.load());
+}
+
+
 void jumps::initialize(cpu & cpu, instruction_set & set)
 {
     set.add_instruction(instruction_builder(cpu, "jp")
@@ -136,4 +143,18 @@ void jumps::initialize(cpu & cpu, instruction_set & set)
             .operation(call_with_condition_operation)
             .add()
         .build());
+
+    instruction_builder rst_builder(cpu, "rst");
+
+    for (int i=0x00; i<=0x38; ++i)
+    {
+        rst_builder
+            .operands(cpu.operands().constant(i))
+            .opcode(0xC7 + i)
+            .cycles(32)
+            .operation(rst_operation)
+            .add();
+    }
+
+    set.add_instruction(rst_builder.build());
 }
