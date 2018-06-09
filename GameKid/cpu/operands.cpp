@@ -13,7 +13,8 @@ _ff_offset(cpu),
 _nz(cpu.F, flags_reg8::ZERO, "nz", false),
 _z(cpu.F, flags_reg8::ZERO, "z", true),
 _nc(cpu.F, flags_reg8::CARRY, "nc", false),
-_c(cpu.F, flags_reg8::CARRY, "c", true)
+_c(cpu.F, flags_reg8::CARRY, "c", true),
+_hl_addressing(cpu.HL)
 {
 }
 
@@ -68,6 +69,11 @@ cc_operand& operands::nc()
 cc_operand& operands::c()
 {
     return _c;
+}
+
+reg16_addressing& operands::hl_addressing()
+{
+    return _hl_addressing;
 }
 
 reg_mem_operand& operands::reg_mem(reg16& r)

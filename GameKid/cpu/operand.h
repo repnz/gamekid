@@ -169,3 +169,26 @@ public:
         throw "Cannot store";
     }
 };
+
+class reg16_addressing : public operand<word>
+{
+public:
+    reg16 & reg;
+
+    explicit reg16_addressing(reg16& reg) : reg(reg){}
+
+    std::string to_str(byte* next) const override
+    {
+        return "[" + reg.name() + "]";
+    }
+
+    word load() const override
+    {
+        return reg.load();
+    }
+
+    void store(word value) override
+    {
+        reg.store(value);
+    }
+};

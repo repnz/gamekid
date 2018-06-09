@@ -44,5 +44,10 @@ void jumps::initialize(cpu & cpu, instruction_set & set)
             .cycles(12)
             .operation(jump_absolute_with_condition_operation)
             .add()
+        .operands(cpu.operands().hl_addressing())
+            .opcode(0xE9)
+            .cycles(4)
+            .operation(jump_absolute_operation)
+            .add()
         .build());
 }

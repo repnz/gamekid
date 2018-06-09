@@ -21,6 +21,7 @@ private:
     cc_operand _z;
     cc_operand _nc;
     cc_operand _c;
+    reg16_addressing _hl_addressing;
 public:
     explicit operands(cpu& cpu);
     operands(const operands&) = delete;
@@ -40,4 +41,5 @@ public:
     cc_operand& z();
     cc_operand& nc();
     cc_operand& c();
+    reg16_addressing& hl_addressing();
 };
