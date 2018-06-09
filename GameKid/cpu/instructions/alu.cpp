@@ -1,5 +1,5 @@
 #include "GameKid/cpu/instruction_set.h"
-#include "alu_8.h"
+#include "alu.h"
 #include "GameKid/cpu/builders/instruction_builder.h"
 #include "GameKid/opcodes.h"
 #include "GameKid/cpu/operands.h"
@@ -69,7 +69,7 @@ void dec_word_operation(cpu& cpu, operand<word>& op)
     op.store(op.load() - 1);
 }
 
-void alu_8::initialize()
+void alu::initialize()
 {
     add_alu_instruction("add", opcodes {
                             ADD_A_A,
@@ -206,7 +206,7 @@ void alu_8::initialize()
     
 }
 
-void alu_8::add_alu_instruction(const std::string& name, const opcodes& opcodes, cpu_operation<byte> operation)
+void alu::add_alu_instruction(const std::string& name, const opcodes& opcodes, cpu_operation<byte> operation)
 {
     _set.add_instruction(instruction_builder(_cpu, name)
         .operands(_cpu.A).opcode(opcodes.A).cycles(4).operation(operation).add()

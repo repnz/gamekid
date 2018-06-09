@@ -3,7 +3,7 @@
 #include "GameKid/cpu/builders/cpu_operation.h"
 class instruction_set;
 
-class alu_8
+class alu
 {
 private:
     struct opcodes
@@ -28,6 +28,6 @@ private:
     instruction_set& _set;
     cpu & _cpu;
 public:
-    explicit alu_8(instruction_set& set, cpu& cpu) : _set(set), _cpu(cpu){}
+    explicit alu(instruction_set& set, cpu& cpu) : _set(set), _cpu(cpu){}
     void initialize();
 };

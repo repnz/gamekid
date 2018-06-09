@@ -140,7 +140,7 @@
   <ItemGroup>
     <ClCompile Include="cpu.cpp" />
     <ClCompile Include="cpu\builders\instruction_builder.cpp" />
-    <ClCompile Include="cpu\instructions\alu_8.cpp" />
+    <ClCompile Include="cpu\instructions\alu.cpp" />
     <ClCompile Include="cpu\instructions\bitmask.cpp" />
     <ClCompile Include="cpu\instructions\jumps.cpp" />
     <ClCompile Include="cpu\instructions\mem.cpp" />
@@ -158,7 +158,7 @@
     <ClInclude Include="cpu\builders\instruction_builder.h" />
     <ClInclude Include="cpu\builders\instruction_opcode_adder.h" />
     <ClInclude Include="cpu\builders\opcode_builder.h" />
-    <ClInclude Include="cpu\instructions\alu_8.h" />
+    <ClInclude Include="cpu\instructions\alu.h" />
     <ClInclude Include="cpu\instructions\bitmask.h" />
     <ClInclude Include="cpu\instruction.h" />
     <ClInclude Include="cpu\instructions\jumps.h" />

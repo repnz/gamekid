@@ -1,5 +1,5 @@
 #include <GameKid/cpu/instruction_set.h>
-#include <GameKid/cpu/instructions/alu_8.h>
+#include <GameKid/cpu/instructions/alu.h>
 #include <GameKid/cpu/instructions/rotation.h>
 #include <GameKid/cpu/instructions/bitmask.h>
 #include <GameKid/cpu/instructions/misc.h>
