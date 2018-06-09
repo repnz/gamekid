@@ -122,8 +122,16 @@
 #define ADD_A_E 0x83
 #define ADD_A_H 0x84
 #define ADD_A_L 0x85
-#define ADD_A_HL 0x86
+#define ADD_A_HL_mem 0x86
 #define ADD_A_IMM 0xC6
+
+// ADD 16 bits
+#define ADD_HL_BC 0x09
+#define ADD_HL_DE 0x19
+#define ADD_HL_HL 0x29
+#define ADD_HL_SP 0x39
+#define ADD_SP_IMM 0xE8
+
 
 // ADC A, n
 #define ADC_A_A 0x8F

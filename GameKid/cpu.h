@@ -73,5 +73,7 @@ public:
     void inc(byte* val);
     void dec(byte* val);
     void swap(byte* val);
+    static bool check_carry_up(word before, word after, byte bit_place);
+    static bool check_carry_down(word before, word after, byte bit_place);
     ~cpu();
 };

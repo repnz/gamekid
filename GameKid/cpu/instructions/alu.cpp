@@ -69,19 +69,47 @@ void dec_word_operation(cpu& cpu, operand<word>& op)
     op.store(op.load() - 1);
 }
 
+void add_word_operation(cpu& cpu, operand<word>& op, word value)
+{
+    const word original = op.load();
+    const word result = original + value;
+    op.store(result);
+
+    cpu.F.half_carry(cpu::check_carry_up(original, result, 11));
+    cpu.F.carry(cpu::check_carry_up(original, result, 15));
+    cpu.F.substract(false);
+}
+
+void add_to_hl_operation(cpu& cpu, operand<word>& hl, operand<word>& reg)
+{
+    add_word_operation(cpu, hl, reg.load());
+}
+
+void add_to_sp_operation(cpu& cpu, operand<word>& sp, operand<byte>& reg)
+{
+    add_word_operation(cpu, sp, reg.load());
+    cpu.F.zero(false);
+}
+
+
 void alu::initialize()
 {
-    add_alu_instruction("add", opcodes {
-                            ADD_A_A,
-                            ADD_A_B,
-                            ADD_A_C,
-                            ADD_A_D,
-                            ADD_A_E,
-                            ADD_A_H,
-                            ADD_A_L,
-                            ADD_A_HL,
-                            ADD_A_IMM,
-                        }, add_operation
+    _set.add_instruction(instruction_builder(_cpu, "add")
+        .operands(_cpu.A).opcode(ADD_A_A).cycles(4).operation(add_operation).add()
+        .operands(_cpu.B).opcode(ADD_A_B).cycles(4).operation(add_operation).add()
+        .operands(_cpu.C).opcode(ADD_A_C).cycles(4).operation(add_operation).add()
+        .operands(_cpu.D).opcode(ADD_A_D).cycles(4).operation(add_operation).add()
+        .operands(_cpu.E).opcode(ADD_A_E).cycles(4).operation(add_operation).add()
+        .operands(_cpu.H).opcode(ADD_A_H).cycles(4).operation(add_operation).add()
+        .operands(_cpu.L).opcode(ADD_A_L).cycles(4).operation(add_operation).add()
+        .operands(_cpu.operands().reg_mem(_cpu.HL)).opcode(ADD_A_HL_mem).operation(add_operation).cycles(8).add()
+        .operands(_cpu.operands().immidiate_byte()).opcode(ADD_A_IMM).operation(add_operation).cycles(8).add()
+        .operands(_cpu.HL, _cpu.BC).opcode(ADD_HL_BC).cycles(8).operation(add_to_hl_operation).add()
+        .operands(_cpu.HL, _cpu.DE).opcode(ADD_HL_DE).cycles(8).operation(add_to_hl_operation).add()
+        .operands(_cpu.HL, _cpu.HL).opcode(ADD_HL_HL).cycles(8).operation(add_to_hl_operation).add()
+        .operands(_cpu.HL, _cpu.SP).opcode(ADD_HL_SP).cycles(8).operation(add_to_hl_operation).add()
+        .operands(_cpu.SP, _cpu.operands().immidiate_byte()).opcode(ADD_SP_IMM).cycles(16).operation(add_to_sp_operation).add()
+        .build()
     );
 
     add_alu_instruction("adc", opcodes{
@@ -94,9 +122,9 @@ void alu::initialize()
                             ADC_A_L,
                             ADC_A_HL,
                             ADC_A_IMM,
-                        }, adc_operation);
+        }, adc_operation);
 
-    add_alu_instruction("sub", opcodes {
+    add_alu_instruction("sub", opcodes{
                             SUB_A_A,
                             SUB_A_B,
                             SUB_A_C,
@@ -106,9 +134,9 @@ void alu::initialize()
                             SUB_A_L,
                             SUB_A_HL,
                             SUB_A_IMM,
-                        }, sub_operation);
+        }, sub_operation);
 
-    add_alu_instruction("sbc", opcodes {
+    add_alu_instruction("sbc", opcodes{
                             SBC_A_A,
                             SBC_A_B,
                             SBC_A_C,
@@ -118,9 +146,9 @@ void alu::initialize()
                             SBC_A_L,
                             SBC_A_HL,
                             SBC_A_IMM,
-                        }, sbc_operation);
+        }, sbc_operation);
 
-    
+
 
     add_alu_instruction("and", opcodes{
                             AND_A_A,
@@ -132,7 +160,7 @@ void alu::initialize()
                             AND_A_L,
                             AND_A_HL,
                             AND_A_IMM,
-                        }, and_operation);
+        }, and_operation);
 
     add_alu_instruction("or", opcodes{
                             OR_A,
@@ -144,7 +172,7 @@ void alu::initialize()
                             OR_L,
                             OR_HL,
                             OR_IMM,
-                        }, or_operation);
+        }, or_operation);
 
     add_alu_instruction("xor", opcodes{
                             XOR_A,
@@ -156,7 +184,7 @@ void alu::initialize()
                             XOR_L,
                             XOR_HL,
                             XOR_IMM,
-                        }, xor_operation);
+        }, xor_operation);
 
     add_alu_instruction("cp", opcodes{
                             CP_A,
@@ -168,9 +196,9 @@ void alu::initialize()
                             CP_L,
                             CP_HL,
                             CP_IMM,
-                        }, cp_operation);
+        }, cp_operation);
 
-    
+
     _set.add_instruction(instruction_builder(_cpu, "inc")
         .operands(_cpu.A).opcode(INC_A).operation(inc_operation).cycles(4).add()
         .operands(_cpu.B).opcode(INC_B).operation(inc_operation).cycles(4).add()
@@ -185,7 +213,7 @@ void alu::initialize()
         .operands(_cpu.SP).opcode(INC_SP).operation(inc_word_operation).cycles(8).add()
         .operands(_cpu.operands().reg_mem(_cpu.HL)).operation(inc_operation).opcode(INC_HL_mem).cycles(12).add()
         .build()
-        );
+    );
 
     _set.add_instruction(instruction_builder(_cpu, "dec")
         .operands(_cpu.A).opcode(DEC_A).cycles(4).operation(dec_operation).add()
@@ -203,7 +231,7 @@ void alu::initialize()
         .build()
     );
 
-    
+
 }
 
 void alu::add_alu_instruction(const std::string& name, const opcodes& opcodes, cpu_operation<byte> operation)
@@ -219,5 +247,5 @@ void alu::add_alu_instruction(const std::string& name, const opcodes& opcodes, c
         .operands(_cpu.operands().reg_mem(_cpu.HL)).opcode(opcodes.HL).operation(operation).cycles(8).add()
         .operands(_cpu.operands().immidiate_byte()).opcode(opcodes.IMM).operation(operation).cycles(8).add()
         .build()
-        );
+    );
 }

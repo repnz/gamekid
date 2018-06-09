@@ -151,6 +151,18 @@ void cpu::swap(byte* val)
     F.carry(false);
 }
 
+bool cpu::check_carry_up(word before, word after, byte bit_place)
+{
+    const word bits = (1 << bit_place);
+    return (before & bits) < (after & bits);
+}
+
+bool cpu::check_carry_down(word before, word after, byte bit_place)
+{
+    const word bits = (1 << bit_place);
+    return (before & bits) > (after & bits);
+}
+
 cpu::~cpu() = default;
 
 void cpu::sub(byte* val, byte n, bool carry, bool save_result)
