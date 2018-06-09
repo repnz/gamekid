@@ -33,6 +33,7 @@ opcode* opcode_decoder::decode(byte* bytes)
     if (bytes[0] == 0xCB)
     {
         correct_table = &_cb_prefix_table;
+        bytes++;
     }
     else
     {

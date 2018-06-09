@@ -21,6 +21,8 @@ public:
     std::vector<byte> bytes(const std::vector<std::string>& operands) override;
 
     std::string to_str(byte* next) override;
+
+    int size() override;
 };
 
 template <typename ... operand_types>
@@ -75,4 +77,17 @@ std::string operands_opcode<operand_types...>::to_str(byte* next)
     });
 
     return name + " " + string_tools::join(operands_str);
+}
+
+template <typename ... operand_types>
+int operands_opcode<operand_types...>::size()
+{
+    int size = value.size();
+
+    function_tools::for_each(_operands, [&](auto& op)
+    {
+        size += op.immidiate_size();
+    });
+    
+    return size;
 }

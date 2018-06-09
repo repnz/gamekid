@@ -16,6 +16,9 @@ _nc(cpu.F, flags_reg8::CARRY, "nc", false),
 _c(cpu.F, flags_reg8::CARRY, "c", true),
 _hl_addressing(cpu.HL)
 {
+    _constants.reserve(20);
+    _reg16_with_offset_operands.reserve(20);
+    _reg_mem_operands.reserve(20);
 }
 
 c_mem_operand& operands::c_memory()
@@ -42,8 +45,9 @@ constant_operand& operands::constant(byte val)
             return op;
         }
     }
-    _constants.push_back(constant_operand(val));
-    return _constants.back();
+    _constants.emplace_back(val);
+    constant_operand& op =  _constants.back();
+    return op;
 }
 
 ff_offset_mem_operand& operands::ff_offset()
@@ -86,8 +90,7 @@ reg_mem_operand& operands::reg_mem(reg16& r)
         }
     }
 
-    _reg_mem_operands.push_back(reg_mem_operand(_cpu.mem, r));
-    return _reg_mem_operands.back();
+    return _reg_mem_operands.emplace_back(_cpu.mem, r);
 }
 
 reg16_with_offset& operands::reg16_with_offset(reg16& r)
@@ -100,7 +103,7 @@ reg16_with_offset& operands::reg16_with_offset(reg16& r)
         }
     }
 
-    _reg16_with_offset_operands.push_back(::reg16_with_offset(_cpu, r));
+    _reg16_with_offset_operands.emplace_back(_cpu, r);
     return _reg16_with_offset_operands.back();
 }
 

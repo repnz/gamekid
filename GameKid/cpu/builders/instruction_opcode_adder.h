@@ -30,6 +30,7 @@ instruction_opcode_adder<operand_types...>::instruction_opcode_adder(cpu& cpu,
     _instruction_builder(builder),
     _opcode_builder(cpu)
 {
+    _opcode_builder.name(builder.builded_instruction->name);
     _opcode_builder.operands(operands...);
 }
 

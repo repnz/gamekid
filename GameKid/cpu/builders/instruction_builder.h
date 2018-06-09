@@ -10,12 +10,11 @@ class instruction_builder
 {
 private:
     cpu& _cpu;
-    std::unique_ptr<instruction> _instruction;
     void add_opcode(std::unique_ptr<opcode> opcode);
-    
     template <typename... T>
     friend class instruction_opcode_adder;
 public:
+    std::unique_ptr<instruction> builded_instruction;
     instruction_builder(cpu& cpu, const std::string& name);
 
     template <typename... T>

@@ -11,7 +11,13 @@ private:
     std::vector<opcode*> _opcodes_ptr;
 public:
     cpu & _cpu;
-    instruction(cpu& cpu, const std::string& name) : _cpu(cpu), name(name) {}
+    instruction(cpu& cpu, const std::string& name) : _cpu(cpu), name(name)
+    {
+        if (name.size() == 0)
+        {
+            throw "Instruction Name Is Empty";
+        }
+    }
 
     void add_opcode(std::unique_ptr<opcode> opcode)
     {

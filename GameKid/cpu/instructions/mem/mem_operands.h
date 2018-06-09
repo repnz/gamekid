@@ -13,7 +13,7 @@ private:
 public:
     
     reg16 & reg() { return _reg; }
-
+    
     reg_mem_operand(memory& mem, reg16& reg) : _mem(mem), _reg(reg)
     {
     }
@@ -86,6 +86,11 @@ public:
     {
         return immidiate_bytes<T>(operand);
     }
+
+    int immidiate_size() const override
+    {
+        return sizeof(T);
+    }
 };
 
 template <typename move_type>
@@ -121,6 +126,11 @@ public:
     {
         return immidiate_bytes<word>(operand);
     }
+
+    int immidiate_size() const override
+    {
+        return sizeof(move_type);
+    }
 };
 
 class reg16_with_offset : public operand<word>
@@ -130,7 +140,7 @@ private:
     reg16& _reg16;
 public:
     explicit reg16_with_offset(cpu& cpu, reg16& reg) : _cpu(cpu), _reg16(reg) {}
-
+    
     reg16& reg() 
     {
         return _reg16;
@@ -171,6 +181,11 @@ public:
         std::string offset = operand.substr(index_of_offset + 1);
         return immidiate_bytes<word>(offset);
     }
+
+    int immidiate_size() const override
+    {
+        return 1;
+    }
 };
 
 class ff_offset_mem_operand : public operand<byte>
@@ -200,6 +215,23 @@ public:
     void store(byte value) override
     {
         return _cpu.mem.store(load_address(), value);
+    }
+
+    std::vector<byte> bytes(std::string operand) const override
+    {
+        int value = std::stoi(operand);
+
+        if (value < -128 || value >= 128)
+        {
+            throw "Error";
+        }
+
+        return { static_cast<byte>(value) };
+    }
+    
+    int immidiate_size() const override
+    {
+        return 1;
     }
 };
 

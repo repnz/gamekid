@@ -21,7 +21,7 @@ int main(int argc, const char** argv)
     byte* opcodes = new byte[1024 * 1024];
     f.read((char*)opcodes, 1024 * 1024);
     byte* opcode_ptr = &opcodes[0];
-
+    
     while (f.eof())
     {
         opcode* op = d.decode(opcode_ptr);
@@ -34,7 +34,7 @@ int main(int argc, const char** argv)
         }
         else
         {
-            int opcode_size = op->bytes().size();
+            int opcode_size = op->size();
             std::cout << op->to_str(opcode_ptr + opcode_size) << std::endl;
             opcode_ptr += opcode_size;
         }

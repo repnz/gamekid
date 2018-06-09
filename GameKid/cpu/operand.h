@@ -17,6 +17,10 @@ public:
 
     virtual T load() const = 0;
     virtual void store(T value) = 0;
+    virtual int immidiate_size() const
+    {
+        return 0;
+    }
 };
 
 
@@ -28,7 +32,7 @@ protected:
 public:
     
     explicit reg8(const std::string& name) : _name(name), _value(0) {}
-    
+
     const std::string& name() const
     {
         return _name;
@@ -110,10 +114,6 @@ public:
     void substract(bool value) { set_bit(SUBSTRACT, value); }
     void half_carry(bool value) { set_bit(HALF_CARRY, value); }
     void carry(bool value) { set_bit(CARRY, value); }
-
-
-    flags_reg8(const flags_reg8&) = delete;
-    flags_reg8& operator=(const flags_reg8&) = delete;
 };
 
 class reg16 : public operand<word>
@@ -126,6 +126,7 @@ public:
     reg16(const std::string& name, byte* low, byte* high) :
         _name(name), _low(low), _high(high) {}
 
+    // non copyable
     reg16(const reg16&) = delete;
     reg16& operator=(reg16&) = delete;
 
@@ -153,7 +154,7 @@ class constant_operand : public operand<byte>
 public:
     byte value;
     explicit constant_operand(byte value) : value(value){}
-    
+
     std::string to_str(byte* next) const override
     {
         return std::to_string(value);
