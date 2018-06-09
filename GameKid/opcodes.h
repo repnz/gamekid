@@ -212,7 +212,13 @@
 #define INC_E 0x1c
 #define INC_H 0x24
 #define INC_L 0x2c
-#define INC_HL 0x34
+#define INC_HL_mem 0x34
+
+// INC nn
+#define INC_BC 0x03
+#define INC_DE 0x13
+#define INC_HL 0x23
+#define INC_SP 0x33
 
 // DEC n
 #define DEC_A 0x3d
@@ -222,7 +228,13 @@
 #define DEC_E 0x1d
 #define DEC_H 0x25
 #define DEC_L 0x2d
-#define DEC_HL 0x35
+#define DEC_HL_mem 0x35
+
+// DEC nn
+#define DEC_BC 0x0b
+#define DEC_DE 0x1b
+#define DEC_HL 0x2b
+#define DEC_SP 0x3b
 
 // SWAP n
 #define SWAP_A 0x37

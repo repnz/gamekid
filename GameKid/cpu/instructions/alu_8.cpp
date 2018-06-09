@@ -59,6 +59,16 @@ void dec_operation(cpu& cpu, operand<byte>& op)
     op.store(val);
 }
 
+void inc_word_operation(cpu& cpu, operand<word>& op)
+{
+    op.store(op.load() + 1);
+}
+
+void dec_word_operation(cpu& cpu, operand<word>& op)
+{
+    op.store(op.load() - 1);
+}
+
 void alu_8::initialize()
 {
     add_alu_instruction("add", opcodes {
@@ -169,7 +179,11 @@ void alu_8::initialize()
         .operands(_cpu.E).opcode(INC_E).operation(inc_operation).cycles(4).add()
         .operands(_cpu.H).opcode(INC_H).operation(inc_operation).cycles(4).add()
         .operands(_cpu.L).opcode(INC_L).operation(inc_operation).cycles(4).add()
-        .operands(_cpu.operands().reg_mem(_cpu.HL)).operation(inc_operation).opcode(INC_HL).cycles(12).add()
+        .operands(_cpu.BC).opcode(INC_BC).operation(inc_word_operation).cycles(8).add()
+        .operands(_cpu.DE).opcode(INC_DE).operation(inc_word_operation).cycles(8).add()
+        .operands(_cpu.HL).opcode(INC_HL).operation(inc_word_operation).cycles(8).add()
+        .operands(_cpu.SP).opcode(INC_SP).operation(inc_word_operation).cycles(8).add()
+        .operands(_cpu.operands().reg_mem(_cpu.HL)).operation(inc_operation).opcode(INC_HL_mem).cycles(12).add()
         .build()
         );
 
@@ -181,7 +195,11 @@ void alu_8::initialize()
         .operands(_cpu.E).opcode(DEC_E).cycles(4).operation(dec_operation).add()
         .operands(_cpu.H).opcode(DEC_H).cycles(4).operation(dec_operation).add()
         .operands(_cpu.L).opcode(DEC_L).cycles(4).operation(dec_operation).add()
-        .operands(_cpu.operands().reg_mem(_cpu.HL)).opcode(DEC_HL).cycles(12).operation(dec_operation).add()
+        .operands(_cpu.BC).opcode(DEC_BC).cycles(4).operation(dec_word_operation).add()
+        .operands(_cpu.DE).opcode(DEC_DE).cycles(4).operation(dec_word_operation).add()
+        .operands(_cpu.HL).opcode(DEC_HL).cycles(4).operation(dec_word_operation).add()
+        .operands(_cpu.SP).opcode(DEC_SP).cycles(4).operation(dec_word_operation).add()
+        .operands(_cpu.operands().reg_mem(_cpu.HL)).opcode(DEC_HL_mem).cycles(12).operation(dec_operation).add()
         .build()
     );
 
