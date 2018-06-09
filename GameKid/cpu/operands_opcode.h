@@ -74,5 +74,5 @@ std::string operands_opcode<operand_types...>::to_str(byte* next)
         operands_str.push_back(op.to_str(next));
     });
 
-    return name + string_tools::join(operands_str);
+    return name + " " + string_tools::join(operands_str);
 }
