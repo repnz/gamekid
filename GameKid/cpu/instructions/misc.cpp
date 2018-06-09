@@ -61,7 +61,7 @@ void misc::initialize()
         .operands(_cpu.E).opcode(CB_PREFIX, SWAP_E).operation(swap_operation).cycles(8).add()
         .operands(_cpu.H).opcode(CB_PREFIX, SWAP_H).operation(swap_operation).cycles(8).add()
         .operands(_cpu.L).opcode(CB_PREFIX, SWAP_L).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.operands().reg_mem(_cpu.HL)).operation(swap_operation).opcode(CB_PREFIX, SWAP_A).cycles(8).add()
+        .operands(_cpu.operands().reg_mem(_cpu.HL)).operation(swap_operation).opcode(CB_PREFIX, SWAP_HL).cycles(8).add()
         .build());
 
     _set.add_instruction(instruction_builder(_cpu, "cpl")
