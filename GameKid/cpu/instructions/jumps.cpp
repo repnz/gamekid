@@ -16,6 +16,13 @@ void jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<wor
     }
 }
 
+void jr_operation(cpu& cpu, operand<byte>& offset)
+{
+    char value = static_cast<char>(offset.load());
+    cpu.PC += value;
+    cpu.jump(cpu.PC);
+}
+
 void jumps::initialize(cpu & cpu, instruction_set & set)
 {
     set.add_instruction(instruction_builder(cpu, "jp")
@@ -55,4 +62,15 @@ void jumps::initialize(cpu & cpu, instruction_set & set)
             .operation(jp_operation)
             .add()
         .build());
+
+    set.add_instruction(instruction_builder(cpu, "jr")
+        .operands(cpu.operands().immidiate_byte())
+            .opcode(0x18)
+            .cycles(8)
+            .operation(jr_operation)
+            .add()
+        .build());
+
+
+
 }
