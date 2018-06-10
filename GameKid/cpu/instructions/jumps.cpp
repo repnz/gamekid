@@ -5,7 +5,7 @@
 
 void jp_operation(cpu& cpu, operand<word>& address)
 {
-    cpu.jump(address.load());
+    cpu.PC = address.load();
 }
 
 void jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address)
@@ -18,9 +18,8 @@ void jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<wor
 
 void jr_operation(cpu& cpu, operand<byte>& offset)
 {
-    char value = static_cast<char>(offset.load());
+    const char value = static_cast<char>(offset.load());
     cpu.PC += value;
-    cpu.jump(cpu.PC);
 }
 
 void jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byte>& offset)
@@ -48,13 +47,13 @@ void call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<w
 void rst_operation(cpu& cpu, operand<byte>& address)
 {
     cpu.push(cpu.PC);
-    cpu.jump(address.load());
+    cpu.PC = address.load();
 }
 
 
 void ret_operation(cpu& cpu)
 {
-    cpu.jump(cpu.pop());
+    cpu.PC = cpu.pop();
 }
 
 void ret_with_condition_operation(cpu& cpu, operand<bool>& condition)
