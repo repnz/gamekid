@@ -7,9 +7,14 @@
 
 void swap_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.swap(&val);
-    op.store(val);
+    const byte original_value = op.load();
+    const byte swapped_value = original_value >> 4 | original_value << 4;
+    op.store(swapped_value);
+
+    cpu.F.zero(swapped_value == 0);
+    cpu.F.substract(false);
+    cpu.F.half_carry(false);
+    cpu.F.carry(false);
 }
 
 void cpl_operation(cpu& cpu)
@@ -26,7 +31,9 @@ void nop_operation(cpu& cpu)
 
 void scf_operation(cpu& cpu)
 {
-    cpu.scf();
+    cpu.F.half_carry(false);
+    cpu.F.substract(false);
+    cpu.F.carry(true);
 }
 
 void stop_operation(cpu& cpu)
