@@ -4,52 +4,97 @@
 
 void rl_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.rl(&val);
-    op.store(val);
+    const byte value = op.load();
+    const byte new_value = (value << 1) | cpu.F.carry_bit();
+    
+    cpu.F.carry(bits::check_bit(value, 7));
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(false);
+    cpu.F.half_carry(false);
+    
+    op.store(new_value);
 }
 
 void rr_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.rr(&val);
-    op.store(val);
+    const byte value = op.load();
+    const byte new_value = (value >> 1) | (value << 7);
+
+    // update flags
+    cpu.F.carry(bits::check_bit(value, 0));
+    cpu.F.half_carry(false);
+    cpu.F.substract(false);
+    cpu.F.zero(new_value == 0);
+    
+    op.store(new_value);
 }
 
 void rlc_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.rr(&val);
-    op.store(val);
+    const byte value = op.load();
+    const byte new_value = (value << 1) | cpu.F.carry_bit();
+
+    // update flags
+    cpu.F.carry(bits::check_bit(value, 7)); 
+    cpu.F.half_carry(false);
+    cpu.F.substract(false);
+    cpu.F.zero(new_value == 0);
+
+    op.store(new_value);
 }
 
 void rrc_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.rrc(&val);
-    op.store(val);
+    const byte value = op.load();
+    const byte new_value = (value >> 1) | (cpu.F.carry_bit() << 7);
+
+    // update flags
+    cpu.F.carry(bits::check_bit(value, 0));
+    cpu.F.half_carry(false);
+    cpu.F.substract(false);
+    cpu.F.zero(new_value == 0);
+
+    op.store(new_value);
 }
 
 
 void sla_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.sla(&val);
-    op.store(val);
+    const byte value = op.load();
+    const byte new_value = value << 1;
+    
+    cpu.F.zero(new_value == 0);
+    cpu.F.carry(bits::check_bit(value, 7));
+    cpu.F.half_carry(false);
+    cpu.F.substract(false);
+    
+    op.store(new_value);
 }
 
 void srl_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.srl(&val);
-    op.store(val);
+    const byte value = op.load();
+    const byte new_value = value >> 1;
+
+    cpu.F.zero(new_value == 0);
+    cpu.F.carry(bits::check_bit(value, 0));
+    cpu.F.half_carry(false);
+    cpu.F.substract(false);
+
+    op.store(new_value);
 }
 
 void sra_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.sra(&val);
-    op.store(val);
+    const byte value = op.load();
+    const byte new_value = ((char)value) >> 1;
+    
+    cpu.F.zero(new_value == 0);
+    cpu.F.carry(bits::check_bit(value, 0));
+    cpu.F.half_carry(false);
+    cpu.F.substract(false);
+
+    op.store(new_value);
 }
 
 
