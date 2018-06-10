@@ -6,21 +6,24 @@
 
 void bit_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_check)
 {
-    cpu.bit(byte_to_check.load(), bit.load());
+    const bool is_on = bits::check_bit(byte_to_check.load(), bit.load());
+    cpu.F.zero(is_on);
+    cpu.F.substract(false);
+    cpu.F.half_carry(true);
 }
 
 void res_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change)
 {
-    byte value = byte_to_change.load();
-    cpu.res(&value, bit.load());
-    byte_to_change.store(value);
+    // Flags are not affected.
+    const byte new_value = bits::set_bit_off(byte_to_change.load(), bit.load());
+    byte_to_change.store(new_value);
 }
 
 void set_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change)
 {
-    byte value = byte_to_change.load();
-    cpu.set(&value, bit.load());
-    byte_to_change.store(value);
+    // Flags are not affected.
+    const byte new_value = bits::set_bit_on(byte_to_change.load(), bit.load());
+    byte_to_change.store(new_value);
 }
 
 

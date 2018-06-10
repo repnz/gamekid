@@ -140,5 +140,8 @@
     <ClInclude Include="cpu\instructions\alu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utils\bits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 #include <string>
 #include "GameKid/memory.h"
 #include <vector>
+#include "GameKid/utils/bits.h"
 
 template <typename T>
 class operand
@@ -81,25 +82,24 @@ public:
     
     bool check_bit(byte place) const
     {
-        return _value & (1 << place);
+        return bits::check_bit(_value, place);
     }
 
     void set_bit_on(byte place)
     {
-        _value |= (1 << place);
+        _value = bits::set_bit_on(_value, place);
     }
 
     void set_bit_off(byte place)
     {
-        _value &= ~(1 << place);
+        _value = bits::set_bit_off(_value, place);
     }
 
     void set_bit(byte place, bool is_on) 
     {
-        if (is_on) { set_bit_on(place); }
-        else { set_bit_off(place); }
+        _value = bits::set_bit(_value, place, is_on);
     }
-
+    
     bool zero() const { return check_bit(ZERO); }
     bool substract() const { return check_bit(SUBSTRACT);}
     bool half_carry() const { return check_bit(HALF_CARRY); }

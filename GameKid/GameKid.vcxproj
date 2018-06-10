@@ -165,6 +165,7 @@
     <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
     <ClInclude Include="cpu\instructions\mem\mem_operands.h" />
+    <ClInclude Include="utils\bits.h" />
     <ClInclude Include="utils\function_tools.h" />
     <ClInclude Include="cpu\opcode_builder.h" />
     <ClInclude Include="cpu\operand.h" />
