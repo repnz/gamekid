@@ -4,72 +4,135 @@
 #include "GameKid/opcodes.h"
 #include "GameKid/cpu/operands.h"
 
+void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry)
+{
+    byte original_value = cpu.A.load();
+    byte new_value = original_value + op.load();
+
+    if (add_carry)
+    {
+        new_value += cpu.F.carry_bit();
+    }
+
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(false);
+    cpu.F.carry(new_value < original_value);
+    cpu.F.half_carry(cpu::check_carry_up(original_value, new_value, 4));
+    op.store(new_value);
+}
+
 void add_operation(cpu& cpu, operand<byte>& op)
 {
-    cpu.add(cpu.A.address(), op.load());
+    base_add_operation(cpu, op, false);
 }
 
 void adc_operation(cpu& cpu, operand<byte>& op)
 {
-    op.store(op.load() + 1);
+    base_add_operation(cpu, op, true);
 }
+
+void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_result)
+{
+    byte original_value = cpu.A.load();
+    byte new_value = original_value - op.load();
+
+    if (sub_carry)
+    {
+        new_value -= cpu.F.carry_bit();
+    }
+
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(false);
+    cpu.F.carry(new_value > original_value);
+    cpu.F.half_carry(cpu::check_carry_down(original_value, new_value, 4));
+
+    if (save_result)
+    {
+        cpu.A.store(new_value);
+    }
+}
+
 
 void sub_operation(cpu& cpu, operand<byte>& op)
 {
-    cpu.sub(cpu.A.address(), op.load());
+    base_sub_operation(cpu, op, false, true);
 }
 
 void sbc_operation(cpu& cpu, operand<byte>& op)
 {
-    cpu.sbc(cpu.A.address(), op.load());
+    base_sub_operation(cpu, op, true, true);
 }
 
 void and_operation(cpu& cpu, operand<byte>& op)
 {
-    cpu.and_n(cpu.A.address(), op.load());
+    const byte new_value = cpu.A.load() & op.load();
+    cpu.A.store(new_value);
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(false);
+    cpu.F.half_carry(true);
+    cpu.F.carry(false);
 }
 
 void or_operation(cpu& cpu, operand<byte>& op)
 {
-    cpu.cp(cpu.A.load(), op.load());
+    const byte new_value = cpu.A.load() | op.load();
+    cpu.A.store(new_value);
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(false);
+    cpu.F.half_carry(false);
+    cpu.F.carry(false);
 }
 
 void xor_operation(cpu& cpu, operand<byte>& op)
 {
-    cpu.xor_n(cpu.A.address(), op.load());
+    const byte new_value = cpu.A.load() ^ op.load();
+    cpu.A.store(new_value);
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(false);
+    cpu.F.half_carry(false);
+    cpu.F.carry(false);
 }
 
 void cp_operation(cpu& cpu, operand<byte>& op)
 {
-    cpu.cp(cpu.A.load(), op.load());
+    base_sub_operation(cpu, op, false, false);
 }
 
 
 void inc_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.inc(&val);
-    op.store(val);
+    const byte new_value = op.load() + 1;
+    
+    cpu.F.half_carry((new_value & 0xF) == 0);
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(false);
+    // carry flag is not affected.
+
+    op.store(new_value);
 }
 
 void dec_operation(cpu& cpu, operand<byte>& op)
 {
-    byte val = op.load();
-    cpu.dec(&val);
-    op.store(val);
+    const byte new_value = op.load() - 1;
+    cpu.F.half_carry(new_value == 0xF);
+    cpu.F.zero(new_value == 0);
+    cpu.F.substract(true);
+    op.store(new_value);
 }
 
 void inc_word_operation(cpu& cpu, operand<word>& op)
 {
+    // none of the flags are affected
     op.store(op.load() + 1);
 }
 
 void dec_word_operation(cpu& cpu, operand<word>& op)
 {
+    // none of the flags are affected
     op.store(op.load() - 1);
 }
 
-void add_word_operation(cpu& cpu, operand<word>& op, word value)
+void base_add_word_operation(cpu& cpu, operand<word>& op, word value)
 {
     const word original = op.load();
     const word result = original + value;
@@ -82,12 +145,12 @@ void add_word_operation(cpu& cpu, operand<word>& op, word value)
 
 void add_to_hl_operation(cpu& cpu, operand<word>& hl, operand<word>& reg)
 {
-    add_word_operation(cpu, hl, reg.load());
+    base_add_word_operation(cpu, hl, reg.load());
 }
 
 void add_to_sp_operation(cpu& cpu, operand<word>& sp, operand<byte>& reg)
 {
-    add_word_operation(cpu, sp, reg.load());
+    base_add_word_operation(cpu, sp, reg.load());
     cpu.F.zero(false);
 }
 
