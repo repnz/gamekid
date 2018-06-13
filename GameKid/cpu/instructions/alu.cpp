@@ -21,12 +21,12 @@ void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry)
     op.store(new_value);
 }
 
-void add_operation(cpu& cpu, operand<byte>& op)
+void alu::add_operation(cpu& cpu, operand<byte>& op)
 {
     base_add_operation(cpu, op, false);
 }
 
-void adc_operation(cpu& cpu, operand<byte>& op)
+void alu::adc_operation(cpu& cpu, operand<byte>& op)
 {
     base_add_operation(cpu, op, true);
 }
@@ -53,17 +53,17 @@ void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_r
 }
 
 
-void sub_operation(cpu& cpu, operand<byte>& op)
+void alu::sub_operation(cpu& cpu, operand<byte>& op)
 {
     base_sub_operation(cpu, op, false, true);
 }
 
-void sbc_operation(cpu& cpu, operand<byte>& op)
+void alu::sbc_operation(cpu& cpu, operand<byte>& op)
 {
     base_sub_operation(cpu, op, true, true);
 }
 
-void and_operation(cpu& cpu, operand<byte>& op)
+void alu::and_operation(cpu& cpu, operand<byte>& op)
 {
     const byte new_value = cpu.A.load() & op.load();
     cpu.A.store(new_value);
@@ -73,7 +73,7 @@ void and_operation(cpu& cpu, operand<byte>& op)
     cpu.F.carry(false);
 }
 
-void or_operation(cpu& cpu, operand<byte>& op)
+void alu::or_operation(cpu& cpu, operand<byte>& op)
 {
     const byte new_value = cpu.A.load() | op.load();
     cpu.A.store(new_value);
@@ -83,7 +83,7 @@ void or_operation(cpu& cpu, operand<byte>& op)
     cpu.F.carry(false);
 }
 
-void xor_operation(cpu& cpu, operand<byte>& op)
+void alu::xor_operation(cpu& cpu, operand<byte>& op)
 {
     const byte new_value = cpu.A.load() ^ op.load();
     cpu.A.store(new_value);
@@ -93,13 +93,13 @@ void xor_operation(cpu& cpu, operand<byte>& op)
     cpu.F.carry(false);
 }
 
-void cp_operation(cpu& cpu, operand<byte>& op)
+void alu::cp_operation(cpu& cpu, operand<byte>& op)
 {
     base_sub_operation(cpu, op, false, false);
 }
 
 
-void inc_operation(cpu& cpu, operand<byte>& op)
+void alu::inc_operation(cpu& cpu, operand<byte>& op)
 {
     const byte new_value = op.load() + 1;
     
@@ -111,7 +111,7 @@ void inc_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void dec_operation(cpu& cpu, operand<byte>& op)
+void alu::dec_operation(cpu& cpu, operand<byte>& op)
 {
     const byte new_value = op.load() - 1;
     cpu.F.half_carry(new_value == 0xF);
@@ -120,13 +120,13 @@ void dec_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void inc_word_operation(cpu& cpu, operand<word>& op)
+void alu::inc_word_operation(cpu& cpu, operand<word>& op)
 {
     // none of the flags are affected
     op.store(op.load() + 1);
 }
 
-void dec_word_operation(cpu& cpu, operand<word>& op)
+void alu::dec_word_operation(cpu& cpu, operand<word>& op)
 {
     // none of the flags are affected
     op.store(op.load() - 1);
@@ -143,12 +143,12 @@ void base_add_word_operation(cpu& cpu, operand<word>& op, word value)
     cpu.F.substract(false);
 }
 
-void add_to_hl_operation(cpu& cpu, operand<word>& hl, operand<word>& reg)
+void alu::add_to_hl_operation(cpu& cpu, operand<word>& hl, operand<word>& reg)
 {
     base_add_word_operation(cpu, hl, reg.load());
 }
 
-void add_to_sp_operation(cpu& cpu, operand<word>& sp, operand<byte>& reg)
+void alu::add_to_sp_operation(cpu& cpu, operand<word>& sp, operand<byte>& reg)
 {
     base_add_word_operation(cpu, sp, reg.load());
     cpu.F.zero(false);

@@ -30,4 +30,22 @@ private:
 public:
     explicit alu(instruction_set& set, cpu& cpu) : _set(set), _cpu(cpu){}
     void initialize();
+
+    // 8 bit operations
+    static void add_operation(cpu& cpu, operand<byte>& op);
+    static void adc_operation(cpu& cpu, operand<byte>& op);
+    static void sub_operation(cpu& cpu, operand<byte>& op);
+    static void sbc_operation(cpu& cpu, operand<byte>& op);
+    static void and_operation(cpu& cpu, operand<byte>& op);
+    static void or_operation(cpu& cpu, operand<byte>& op);
+    static void xor_operation(cpu& cpu, operand<byte>& op);
+    static void cp_operation(cpu& cpu, operand<byte>& op);
+    static void inc_operation(cpu& cpu, operand<byte>& op);
+    static void dec_operation(cpu& cpu, operand<byte>& op);
+
+    // 16 bit operations
+    static void inc_word_operation(cpu& cpu, operand<word>& op);
+    static void dec_word_operation(cpu& cpu, operand<word>& op);
+    static void add_to_hl_operation(cpu& cpu, operand<word>& hl, operand<word>& reg);
+    static void add_to_sp_operation(cpu& cpu, operand<word>& sp, operand<byte>& reg);
 };

@@ -78,80 +78,6 @@ void cpu::res(byte* val, byte bit_place)
     *val &= ~(1 << bit_place);
 }
 
-void cpu::add(byte* val, byte n, bool carry)
-{
-    byte new_value = *val + n;
-
-    if (carry)
-    {
-        new_value += F.carry() ? 1 : 0;
-    }
-
-    F.zero(*val == 0);
-    F.substract(false);
-    F.carry(new_value < *val);
-    F.half_carry((new_value & 0xF) < (*val & 0xF));
-    *val = new_value;
-}
-
-void cpu::adc(byte* val, byte n)
-{
-    add(val, n, true);
-}
-
-void cpu::sbc(byte* val, byte n)
-{
-    sub(val, n, true);
-}
-
-void cpu::and_n(byte* val, byte n)
-{
-    *val &= n;
-    F.zero(*val == 0);
-    F.substract(false);
-    F.half_carry(true);
-    F.carry(false);
-}
-
-void cpu::or_n(byte* val, byte n)
-{
-    *val |= n;
-    F.zero(*val == 0);
-    F.substract(false);
-    F.half_carry(false);
-    F.carry(false);
-}
-
-void cpu::xor_n(byte* a, byte byte)
-{
-    *a ^= byte;
-    F.zero(*a == 0);
-    F.substract(false);
-    F.half_carry(false);
-    F.carry(false);
-}
-
-void cpu::cp(byte val, byte byte)
-{
-    sub(&val, byte, false, false);
-}
-
-void cpu::inc(byte* val)
-{
-    F.half_carry((*val & 0xF) == 0b1111);
-    (*val)++;
-    F.zero(*val == 0);
-    F.substract(false);
-}
-
-void cpu::dec(byte* val)
-{
-    F.half_carry((*val >> 4) == 0b0001);
-    (*val)--;
-    F.zero(*val == 0);
-    F.substract(true);
-}
-
 void cpu::swap(byte* val)
 {
     *val = *val >> 4 | *val << 4;
@@ -174,26 +100,6 @@ bool cpu::check_carry_down(word before, word after, byte bit_place)
 }
 
 cpu::~cpu() = default;
-
-void cpu::sub(byte* val, byte n, bool carry, bool save_result)
-{
-    byte new_value = *val - n;
-
-    if (carry)
-    {
-        new_value -= F.carry_bit();
-    }
-
-    F.zero(new_value == 0);
-    F.substract(false);
-    F.carry(new_value > *val);
-    F.half_carry((new_value & 0xF) > (*val & 0xF));
-
-    if (save_result)
-    {
-        *val = new_value;
-    }
-}
 
 void cpu::next()
 {
