@@ -210,8 +210,9 @@ TEST(ALU, DEC_NORMAL)
 
     alu::dec_operation(c, test_operand);
 
-    ASSERT_EQ(test_operand.value, false);
+    ASSERT_EQ(test_operand.value, 9);
     ASSERT_EQ(c.F.zero(), false);
+    ASSERT_EQ(c.F.half_carry(), false);
 }
 
 TEST(ALU, DEC_HALF_CARRY)
