@@ -201,7 +201,6 @@ TEST(ALU, INC_ZERO)
     alu::inc_operation(c, test_operand);
 
     ASSERT_EQ(c.F.zero(), true);
-    ASSERT_EQ(c.F.carry(), true);
 }
 
 TEST(ALU, DEC_NORMAL)
