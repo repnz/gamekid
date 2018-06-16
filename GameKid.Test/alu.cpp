@@ -14,6 +14,7 @@ TEST(ALU, ADD_NORMAL)
 TEST (ALU, ADD_CARRY_ON)
 {
     cpu c;
+    c.A.store(1);
     test_operand<byte> test_operand(255);
     alu::add_operation(c, test_operand);
     ASSERT_EQ(c.A.load(), 0);
