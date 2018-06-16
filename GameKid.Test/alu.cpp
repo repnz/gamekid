@@ -34,22 +34,24 @@ TEST(ALU, ADD_HALF_CARRY_ON)
 TEST(ALU, ADC_CARRY_TRUE)
 {
     cpu c;
+    c.A.store(1);
     c.F.carry(true);
     test_operand<byte> test_operand(10);
     alu::adc_operation(c, test_operand);
 
-    // 10 + carry_flag + 1 = 12
+    // A[=1] + 10 + carry_flag[=1] = 12
     ASSERT_EQ(c.A.load(), 12);
 }
 
 TEST(ALU, ADC_CARRY_FALSE)
 {
     cpu c;
+    c.A.store(1);
     c.F.carry(false);
     test_operand<byte> test_operand(10);
     alu::adc_operation(c, test_operand);
 
-    // 10 + 1 = 12
+    // A[=1] + 10 + carry[=1] = 12
     ASSERT_EQ(c.A.load(), 11);
 }
 
@@ -67,7 +69,7 @@ TEST(ALU, SUB_NORMAL)
 TEST(ALU, SUB_CARRY)
 {
     cpu c;
-    test_operand<byte> test_operand(10);
+    test_operand<byte> test_operand(1);
     c.A.store(0);
     
     alu::sub_operation(c, test_operand);
