@@ -2,17 +2,36 @@
 #include "GameKid/cpu/operands.h"
 #include "GameKid/opcodes.h"
 
-void rotation::rl_operation(cpu& cpu, operand<byte>& op)
+void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry)
 {
     const byte value = op.load();
-    const byte new_value = (value << 1) | cpu.F.carry_bit();
-    
+    byte new_value = (value << 1);
+
+    if (move_carry) 
+    {
+        new_value |= cpu.F.carry_bit();
+    }
+    else 
+    {
+        new_value |= (value >> 7);
+    }
+
     cpu.F.carry(bits::check_bit(value, 7));
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.half_carry(false);
-    
+
     op.store(new_value);
+}
+
+void rotation::rl_operation(cpu& cpu, operand<byte>& op)
+{
+    base_rl_operation(cpu, op, false);
+}
+
+void rotation::rlc_operation(cpu& cpu, operand<byte>& op)
+{
+    base_rl_operation(cpu, op, true);
 }
 
 void rotation::rla_operation(cpu& cpu) 
@@ -20,57 +39,50 @@ void rotation::rla_operation(cpu& cpu)
     rl_operation(cpu, cpu.A);
 }
 
-void rotation::rr_operation(cpu& cpu, operand<byte>& op)
+void rotation::rlca_operation(cpu& cpu)
+{
+    rlc_operation(cpu, cpu.A);
+}
+
+void base_rr_operation(cpu& cpu, operand<byte>& op, bool move_carry)
 {
     const byte value = op.load();
-    const byte new_value = (value >> 1) | (value << 7);
+    byte new_value = value >> 1;
+
+    if (move_carry)
+    {
+        new_value |= (cpu.F.carry_bit() << 7);
+    }
+    else 
+    {
+        new_value |= value << 7;
+    }
 
     // update flags
     cpu.F.carry(bits::check_bit(value, 0));
     cpu.F.half_carry(false);
     cpu.F.substract(false);
     cpu.F.zero(new_value == 0);
-    
+
     op.store(new_value);
 }
+
+void rotation::rr_operation(cpu& cpu, operand<byte>& op)
+{
+    base_rr_operation(cpu, op, false);
+}
+
+void rotation::rrc_operation(cpu& cpu, operand<byte>& op)
+{
+    base_rr_operation(cpu, op, true);
+}
+
 
 void rotation::rra_operation(cpu& cpu) 
 {
     rr_operation(cpu, cpu.A);
 }
 
-void rotation::rlc_operation(cpu& cpu, operand<byte>& op)
-{
-    const byte value = op.load();
-    const byte new_value = (value << 1) | cpu.F.carry_bit();
-
-    // update flags
-    cpu.F.carry(bits::check_bit(value, 7)); 
-    cpu.F.half_carry(false);
-    cpu.F.substract(false);
-    cpu.F.zero(new_value == 0);
-
-    op.store(new_value);
-}
-
-void rotation::rlca_operation(cpu& cpu) 
-{
-    rlc_operation(cpu, cpu.A);
-}
-
-void rotation::rrc_operation(cpu& cpu, operand<byte>& op)
-{
-    const byte value = op.load();
-    const byte new_value = (value >> 1) | (cpu.F.carry_bit() << 7);
-
-    // update flags
-    cpu.F.carry(bits::check_bit(value, 0));
-    cpu.F.half_carry(false);
-    cpu.F.substract(false);
-    cpu.F.zero(new_value == 0);
-
-    op.store(new_value);
-}
 
 void rotation::rrca_operation(cpu& cpu) 
 {
