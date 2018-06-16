@@ -3,7 +3,7 @@
 #include "GameKid/cpu/instruction_set.h"
 #include "test_operand.h"
 
-TEST(ALU, ADD_NORMAL)
+TEST(ALU_OPCODES, ADD_NORMAL)
 {
     cpu c;
     test_operand<byte> test_operand(10);
@@ -11,7 +11,7 @@ TEST(ALU, ADD_NORMAL)
     ASSERT_EQ(c.A.load(), 10);
 }
 
-TEST (ALU, ADD_CARRY_ON)
+TEST (ALU_OPCODES, ADD_CARRY_ON)
 {
     cpu c;
     c.A.store(1);
@@ -21,7 +21,7 @@ TEST (ALU, ADD_CARRY_ON)
     ASSERT_EQ(c.F.carry(), true);
 }
 
-TEST(ALU, ADD_HALF_CARRY_ON)
+TEST(ALU_OPCODES, ADD_HALF_CARRY_ON)
 {
     cpu c;
     c.A.store(1);
@@ -31,7 +31,7 @@ TEST(ALU, ADD_HALF_CARRY_ON)
     ASSERT_EQ(c.F.half_carry(), true);
 }
 
-TEST(ALU, ADC_CARRY_TRUE)
+TEST(ALU_OPCODES, ADC_CARRY_TRUE)
 {
     cpu c;
     c.A.store(1);
@@ -43,7 +43,7 @@ TEST(ALU, ADC_CARRY_TRUE)
     ASSERT_EQ(c.A.load(), 12);
 }
 
-TEST(ALU, ADC_CARRY_FALSE)
+TEST(ALU_OPCODES, ADC_CARRY_FALSE)
 {
     cpu c;
     c.A.store(1);
@@ -55,7 +55,7 @@ TEST(ALU, ADC_CARRY_FALSE)
     ASSERT_EQ(c.A.load(), 11);
 }
 
-TEST(ALU, SUB_NORMAL)
+TEST(ALU_OPCODES, SUB_NORMAL)
 {
     cpu c;
     test_operand<byte> test_operand(10);
@@ -66,7 +66,7 @@ TEST(ALU, SUB_NORMAL)
     ASSERT_EQ(c.A.load(), 8);
 }
 
-TEST(ALU, SUB_CARRY)
+TEST(ALU_OPCODES, SUB_CARRY)
 {
     cpu c;
     test_operand<byte> test_operand(1);
@@ -78,7 +78,7 @@ TEST(ALU, SUB_CARRY)
     ASSERT_EQ(c.F.carry(), true);
 }
 
-TEST(ALU, SUB_HALFCARRY)
+TEST(ALU_OPCODES, SUB_HALFCARRY)
 {
     cpu c;
     c.A.store(0b00010000);
@@ -89,7 +89,7 @@ TEST(ALU, SUB_HALFCARRY)
     ASSERT_EQ(c.F.half_carry(), true);
 }
 
-TEST(ALU, SBC_CARRY_TRUE)
+TEST(ALU_OPCODES, SBC_CARRY_TRUE)
 {
     cpu c;
     c.F.carry(true);
@@ -99,7 +99,7 @@ TEST(ALU, SBC_CARRY_TRUE)
     ASSERT_EQ(c.A.load(), 7);
 }
 
-TEST(ALU, AND)
+TEST(ALU_OPCODES, AND)
 {
     cpu c;
     c.A.store(0b1010);
@@ -111,7 +111,7 @@ TEST(ALU, AND)
     ASSERT_EQ(c.F.zero(), true);
 }
 
-TEST(ALU, OR)
+TEST(ALU_OPCODES, OR)
 {
     cpu c;
     c.A.store(0b1010);
@@ -123,7 +123,7 @@ TEST(ALU, OR)
     ASSERT_EQ(c.F.zero(), false);
 }
 
-TEST(ALU, XOR)
+TEST(ALU_OPCODES, XOR)
 {
     cpu c;
     c.A.store(0b1110);
@@ -135,7 +135,7 @@ TEST(ALU, XOR)
     ASSERT_EQ(c.F.zero(), false);
 }
 
-TEST(ALU, CP_EQUALS)
+TEST(ALU_OPCODES, CP_EQUALS)
 {
     cpu c;
     c.A.store(10);
@@ -147,7 +147,7 @@ TEST(ALU, CP_EQUALS)
     ASSERT_EQ(c.F.carry(), false);
 }
 
-TEST(ALU, CP_GREATER)
+TEST(ALU_OPCODES, CP_GREATER)
 {
     cpu c;
     c.A.store(0);
@@ -159,7 +159,7 @@ TEST(ALU, CP_GREATER)
     ASSERT_EQ(c.F.carry(), true);
 }
 
-TEST(ALU, CP_LOWER)
+TEST(ALU_OPCODES, CP_LOWER)
 {
     cpu c;
     c.A.store(100);

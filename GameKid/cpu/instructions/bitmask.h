@@ -38,6 +38,9 @@ public:
     bitmask(cpu& cpu, instruction_set& set) : _cpu(cpu), _set(set){}
 
     void initialize();
+    static void bit_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_check);
+    static void res_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change);
+    static void set_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change);
 };
 
 

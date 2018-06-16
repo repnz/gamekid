@@ -68,15 +68,6 @@ void cpu::run()
     }
 }
 
-void cpu::set(byte* val, byte bit_place)
-{
-    *val |= 1 << bit_place;
-}
-
-void cpu::res(byte* val, byte bit_place)
-{
-    *val &= ~(1 << bit_place);
-}
 
 void cpu::swap(byte* val)
 {
@@ -130,11 +121,4 @@ void cpu::scf()
     F.half_carry(false);
     F.substract(false);
     F.carry(true);
-}
-
-void cpu::bit(byte val, byte bitPlace)
-{
-    F.zero(!(val & (1 << bitPlace)));
-    F.substract(false);
-    F.half_carry(true);
 }

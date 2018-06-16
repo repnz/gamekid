@@ -4,22 +4,22 @@
 #include "GameKid/opcodes.h"
 #include "GameKid/cpu/instruction_set.h"
 
-void bit_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_check)
+void bitmask::bit_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_check)
 {
     const bool is_on = bits::check_bit(byte_to_check.load(), bit.load());
-    cpu.F.zero(is_on);
+    cpu.F.zero(!is_on);
     cpu.F.substract(false);
     cpu.F.half_carry(true);
 }
 
-void res_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change)
+void bitmask::res_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change)
 {
     // Flags are not affected.
     const byte new_value = bits::set_bit_off(byte_to_change.load(), bit.load());
     byte_to_change.store(new_value);
 }
 
-void set_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change)
+void bitmask::set_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change)
 {
     // Flags are not affected.
     const byte new_value = bits::set_bit_on(byte_to_change.load(), bit.load());
