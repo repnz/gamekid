@@ -1,7 +1,7 @@
 #include "pch.h"
 #include <GameKid/cpu.h>
 
-TEST(Commands, SWAP)
+TEST(MISC, SWAP)
 {
     cpu c;
 

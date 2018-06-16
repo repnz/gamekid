@@ -28,14 +28,14 @@ public:
         _mem.store<byte>(_reg.load(), s);
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return "[" + _reg.name() + "]";
     }
 };
 
 template <typename T>
-std::vector<byte> immidiate_bytes(std::string operand)
+std::vector<byte> immidiate_bytes(const std::string& operand)
 {
     int parsed = stoi(operand);
 
@@ -76,13 +76,13 @@ public:
         throw "Cannot store";
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         T item = *(T*)next;
         return std::to_string(item);
     }
 
-    std::vector<byte> bytes(std::string operand) const override
+    std::vector<byte> bytes(const std::string& operand) const override
     {
         return immidiate_bytes<T>(operand);
     }
@@ -111,7 +111,7 @@ public:
         return _cpu.mem.load<move_type>(get_address());
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         const word address = *(word*)next;
         return std::to_string(address);
@@ -122,7 +122,7 @@ public:
         _cpu.mem.store<move_type>(get_address(), value);
     }
 
-    std::vector<byte> bytes(std::string operand) const override
+    std::vector<byte> bytes(const std::string& operand) const override
     {
         return immidiate_bytes<word>(operand);
     }
@@ -163,7 +163,7 @@ public:
         throw "Cannot store";
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         const char value = *(char*)(next);
 
@@ -175,7 +175,7 @@ public:
         return _reg16.name() + "+" + std::to_string(value);
     }
 
-    std::vector<byte> bytes(std::string operand) const override
+    std::vector<byte> bytes(const std::string& operand) const override
     {
         size_t index_of_offset = operand.find("+");
         std::string offset = operand.substr(index_of_offset + 1);
@@ -205,7 +205,7 @@ public:
         return _cpu.mem.load_byte(load_address());
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         std::stringstream ss;
         ss << "[$FF" << std::uppercase << std::hex <<  *next << "]";
@@ -217,7 +217,7 @@ public:
         return _cpu.mem.store(load_address(), value);
     }
 
-    std::vector<byte> bytes(std::string operand) const override
+    std::vector<byte> bytes(const std::string& operand) const override
     {
         int value = std::stoi(operand);
 
@@ -252,7 +252,7 @@ public:
         return _cpu.mem.load_byte(load_address());
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return "[c]";
     }
@@ -276,23 +276,23 @@ public:
     {
     }
 
-    virtual word change(word original) = 0;
+    virtual word change(word original) const = 0;
 
     byte load() const override
     {
-        word address = _reg.load();
-        _reg.store(address - 1);
-        return _mem.load_byte(address);
+        const word original_address = _reg.load();
+        _reg.store(change(original_address));
+        return _mem.load_byte(original_address);
     }
 
     void store(byte s) override
     {
-        word address = _reg.load();
-        _reg.store(address - 1);
-        _mem.store<byte>(address, s);
+        const word new_address = _reg.load();
+        _reg.store(change(new_address));
+        _mem.store<byte>(new_address, s);
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return "[" + _reg.name() + "]";
     }
@@ -306,7 +306,7 @@ public:
     {
     }
 
-    word change(word original) override { return original + 1; }
+    word change(word original) const override { return original + 1; }
 };
 
 class dec_reg_mem_operand : public op_reg_mem_operand
@@ -317,5 +317,5 @@ public:
     {
     }
 
-    word change(word original) override { return original - 1; }
+    word change(word original) const override { return original - 1; }
 };

@@ -10,11 +10,11 @@ class opcode
 protected:
     cpu & _cpu;
 public:
-    std::string name;
-    std::vector<byte> value;
-    byte cycles;
+    const std::string name;
+    const std::vector<byte> value;
+    const byte cycles;
 
-    opcode(cpu& cpu, const std::string& name, std::vector<byte> value, byte cycles)
+    opcode(cpu& cpu, const std::string& name, const std::vector<byte>& value, byte cycles)
         : _cpu(cpu), name(name), value(value), cycles(cycles)
     {
         if (name.size() == 0)
@@ -23,17 +23,17 @@ public:
         }
     }
 
-    virtual std::vector<byte> bytes(const std::vector<std::string>& operands)
+    virtual std::vector<byte> bytes(const std::vector<std::string>& operands) const
     {
         return bytes();
     }
 
-    virtual std::vector<byte> bytes()
+    virtual std::vector<byte> bytes() const
     {
         return value;
     }
 
-    virtual std::string to_str(byte* next)
+    virtual std::string to_str(const byte* next) const
     {
         return name;
     }
@@ -41,9 +41,14 @@ public:
     virtual void run() = 0;
     virtual ~opcode() = default;
     
-    virtual int size()
+    int size() const
     {
         return value.size();
+    }
+
+    virtual int full_size() const
+    {
+        return size();
     }
 
 };

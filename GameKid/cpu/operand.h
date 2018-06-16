@@ -9,9 +9,9 @@ class operand
 {
 public:
     virtual ~operand() = default;
-    virtual std::string to_str(byte* next) const = 0;
+    virtual std::string to_str(const byte* next) const = 0;
     
-    virtual std::vector<byte> bytes(std::string operand) const
+    virtual std::vector<byte> bytes(const std::string& operand) const
     {
         return {};
     }
@@ -49,7 +49,7 @@ public:
         return _value;
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return _name;
     }
@@ -137,7 +137,7 @@ public:
         return (*_high << 8) + *_low;
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return _name;
     }
@@ -155,7 +155,7 @@ public:
     byte value;
     explicit constant_operand(byte value) : value(value){}
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return std::to_string(value);
     }
@@ -178,7 +178,7 @@ public:
 
     explicit reg16_addressing(reg16& reg) : reg(reg){}
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return "[" + reg.name() + "]";
     }

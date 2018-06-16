@@ -17,26 +17,28 @@ int main(int argc, const char** argv)
     }
 
     std::string fileName(argv[1]);
-    std::ifstream f(fileName, std::ios::binary | std::ios::in);
-    byte* opcodes = new byte[1024 * 1024];
-    f.read((char*)opcodes, 1024 * 1024);
-    byte* opcode_ptr = &opcodes[0];
+    std::ifstream f(fileName, std::ios::binary | std::ios::in | std::ios::ate);
+    int file_size = f.tellg();
+    f.seekg(std::ios::beg);
+    std::vector<byte> opcodes(file_size);
+    f.read((char*)opcodes.data(), file_size);
     
-    while (f.eof())
+    const byte* opcode_ptr = opcodes.data();
+    
+    for (int i=0; i<file_size;)
     {
-        opcode* op = d.decode(opcode_ptr);
+        const opcode* op = d.decode(opcode_ptr+i);
 
         if (op == nullptr)
         {
             std::cout << "ERR" << std::endl;
-            opcode_ptr += 1;
-
+            i += 1;
         }
         else
         {
-            int opcode_size = op->size();
-            std::cout << op->to_str(opcode_ptr + opcode_size) << std::endl;
-            opcode_ptr += opcode_size;
+            const byte* immidiate_ptr = opcode_ptr + i + op->size();
+            std::cout << std::hex << i << " " << op->to_str(immidiate_ptr) << std::endl;
+            i += op->full_size();
         }
     }
 

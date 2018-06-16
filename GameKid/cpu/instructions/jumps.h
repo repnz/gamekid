@@ -17,7 +17,7 @@ public:
     {
     }
 
-    std::string to_str(byte* next) const override
+    std::string to_str(const byte* next) const override
     {
         return _name;
     }

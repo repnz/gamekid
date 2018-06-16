@@ -11,5 +11,5 @@ private:
     void initialize_tables();
 public:
     explicit opcode_decoder(instruction_set& set);
-    opcode* decode(byte* bytes);
+    opcode* decode(const byte* bytes);
 };

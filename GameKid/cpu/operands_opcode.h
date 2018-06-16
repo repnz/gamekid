@@ -18,11 +18,11 @@ public:
 
     void run() override;
 
-    std::vector<byte> bytes(const std::vector<std::string>& operands) override;
+    std::vector<byte> bytes(const std::vector<std::string>& operands) const override;
 
-    std::string to_str(byte* next) override;
+    std::string to_str(const byte* next) const override;
 
-    int size() override;
+    int full_size() const override;
 };
 
 template <typename ... operand_types>
@@ -43,7 +43,7 @@ void operands_opcode<operand_types...>::run()
 }
 
 template <typename ... operand_types>
-std::vector<byte> operands_opcode<operand_types...>::bytes(const std::vector<std::string>& operands)
+std::vector<byte> operands_opcode<operand_types...>::bytes(const std::vector<std::string>& operands) const
 {
     std::vector<byte> v;
 
@@ -67,7 +67,7 @@ std::vector<byte> operands_opcode<operand_types...>::bytes(const std::vector<std
 }
 
 template <typename ... operand_types>
-std::string operands_opcode<operand_types...>::to_str(byte* next)
+std::string operands_opcode<operand_types...>::to_str(const byte* next) const
 {
     std::vector<std::string> operands_str;
     
@@ -80,7 +80,7 @@ std::string operands_opcode<operand_types...>::to_str(byte* next)
 }
 
 template <typename ... operand_types>
-int operands_opcode<operand_types...>::size()
+int operands_opcode<operand_types...>::full_size() const
 {
     int size = value.size();
 

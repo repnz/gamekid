@@ -26,7 +26,7 @@ void opcode_decoder::initialize_tables()
     }
 }
 
-opcode* opcode_decoder::decode(byte* bytes)
+opcode* opcode_decoder::decode(const byte* bytes)
 {
     std::map<byte, opcode*>* correct_table;
 
