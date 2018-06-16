@@ -8,7 +8,7 @@ TEST(ALU, ADD_NORMAL)
     cpu c;
     test_operand<byte> test_operand(10);
     alu::add_operation(c, test_operand);
-    ASSERT_EQ(c.A.load(), 12);
+    ASSERT_EQ(c.A.load(), 10);
 }
 
 TEST (ALU, ADD_CARRY_ON)
