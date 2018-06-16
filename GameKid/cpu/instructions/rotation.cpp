@@ -2,7 +2,7 @@
 #include "GameKid/cpu/operands.h"
 #include "GameKid/opcodes.h"
 
-void rl_operation(cpu& cpu, operand<byte>& op)
+void rotation::rl_operation(cpu& cpu, operand<byte>& op)
 {
     const byte value = op.load();
     const byte new_value = (value << 1) | cpu.F.carry_bit();
@@ -15,7 +15,12 @@ void rl_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void rr_operation(cpu& cpu, operand<byte>& op)
+void rotation::rla_operation(cpu& cpu) 
+{
+    rl_operation(cpu, cpu.A);
+}
+
+void rotation::rr_operation(cpu& cpu, operand<byte>& op)
 {
     const byte value = op.load();
     const byte new_value = (value >> 1) | (value << 7);
@@ -29,7 +34,12 @@ void rr_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void rlc_operation(cpu& cpu, operand<byte>& op)
+void rotation::rra_operation(cpu& cpu) 
+{
+    rr_operation(cpu, cpu.A);
+}
+
+void rotation::rlc_operation(cpu& cpu, operand<byte>& op)
 {
     const byte value = op.load();
     const byte new_value = (value << 1) | cpu.F.carry_bit();
@@ -43,7 +53,12 @@ void rlc_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void rrc_operation(cpu& cpu, operand<byte>& op)
+void rotation::rlca_operation(cpu& cpu) 
+{
+    rlc_operation(cpu, cpu.A);
+}
+
+void rotation::rrc_operation(cpu& cpu, operand<byte>& op)
 {
     const byte value = op.load();
     const byte new_value = (value >> 1) | (cpu.F.carry_bit() << 7);
@@ -57,8 +72,12 @@ void rrc_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
+void rotation::rrca_operation(cpu& cpu) 
+{
+    rrc_operation(cpu, cpu.A);
+}
 
-void sla_operation(cpu& cpu, operand<byte>& op)
+void rotation::sla_operation(cpu& cpu, operand<byte>& op)
 {
     const byte value = op.load();
     const byte new_value = value << 1;
@@ -71,7 +90,7 @@ void sla_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void srl_operation(cpu& cpu, operand<byte>& op)
+void rotation::srl_operation(cpu& cpu, operand<byte>& op)
 {
     const byte value = op.load();
     const byte new_value = value >> 1;
@@ -84,7 +103,7 @@ void srl_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void sra_operation(cpu& cpu, operand<byte>& op)
+void rotation::sra_operation(cpu& cpu, operand<byte>& op)
 {
     const byte value = op.load();
     const byte new_value = ((char)value) >> 1;
@@ -104,7 +123,7 @@ void rotation::initialize(instruction_set& set, cpu& c)
         .operands()
         .opcode(RLCA)
         .cycles(4)
-        .operation([](cpu& cpu) { cpu.rlca(); })
+        .operation(rlca_operation)
         .add().build()
     );
 
@@ -112,7 +131,7 @@ void rotation::initialize(instruction_set& set, cpu& c)
         .operands()
         .opcode(RRA)
         .cycles(4)
-        .operation([](cpu& cpu) { cpu.rra(); })
+        .operation(rra_operation)
         .add().build()
     );
 
@@ -120,7 +139,7 @@ void rotation::initialize(instruction_set& set, cpu& c)
         .operands()
         .opcode(RLA)
         .cycles(4)
-        .operation([](cpu& cpu) { cpu.rla(); })
+        .operation(rla_operation)
         .add().build()
     );
 
@@ -128,7 +147,7 @@ void rotation::initialize(instruction_set& set, cpu& c)
         .operands()
         .opcode(RRCA)
         .cycles(4)
-        .operation([](cpu& cpu) { cpu.rrca(); })
+        .operation(rrca_operation)
         .add().build()
     );
 
