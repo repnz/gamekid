@@ -18,7 +18,7 @@ void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry)
     cpu.F.substract(false);
     cpu.F.carry(new_value < original_value);
     cpu.F.half_carry(cpu::check_carry_up(original_value, new_value, 4));
-    op.store(new_value);
+    cpu.A.store(new_value);
 }
 
 void alu::add_operation(cpu& cpu, operand<byte>& op)
