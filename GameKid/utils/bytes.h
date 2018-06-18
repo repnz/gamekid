@@ -27,10 +27,10 @@ namespace bytes
     {
         T value = 0;
 
-        for (size_t i = bytes.size(); i == 0; --i)
+        for (size_t i = bytes.size(); i != 0; --i)
         {
-            value += bytes[i];
             value <<= 8;
+            value += bytes[i-1];
         }
         
         return value;
