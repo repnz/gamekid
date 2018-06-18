@@ -1,7 +1,7 @@
 #include "pch.h"
 #include <GameKid/cpu.h>
 #include <GameKid/cpu/opcode_decoder.h>
-
+#include <GameKid/utils/bytes.h>
 
 TEST(OPCODE_DECODER, DECODE)
 {
@@ -14,10 +14,17 @@ TEST(OPCODE_DECODER, DECODE)
         for (opcode* current_opcode : *current_instruction)
         {
             opcode* decoded_opcode = d.decode(current_opcode->value.data());
-            
-            ASSERT_EQ(current_opcode, decoded_opcode)
-                << "Opcode '" << current_opcode->name << "' does not decode correctly"
-                << ". Decoded into " << ((decoded_opcode == nullptr) ? "nullptr" : decoded_opcode->name);
+            byte imm[4] = { 0 };
+
+            if (current_opcode != decoded_opcode)
+            {
+                FAIL()
+                    << "Opcode '" << current_opcode->to_str(imm) << "' does not decode correctly." << std::endl
+                    << "Opcode byte: "
+                    << std::hex << bytes::little_endian_decode<word>(current_opcode->value) << std::endl
+                    << "Decoded into '"
+                    << ((decoded_opcode == nullptr) ? "nullptr" : decoded_opcode->to_str(imm)) << "'";
+            }   
         }
     }
 }
