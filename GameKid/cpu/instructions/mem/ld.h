@@ -65,6 +65,8 @@ public:
         add_imm_to_reg(0x26, cpu.H);
         add_imm_to_reg(0x2E, cpu.L);
 
+        // Move from Register to Register
+
         add_reg_to_reg_opcodes(0x78, cpu.A);
         add_reg_to_reg_opcodes(0x40, cpu.B);
         add_reg_to_reg_opcodes(0x48, cpu.C);
@@ -150,7 +152,7 @@ public:
 
     void add_reg_to_reg_opcodes(byte b_value, reg8& dst)
     {
-        add_reg_to_reg(b_value - 7, _cpu.A, dst);
+        add_reg_to_reg(b_value + 7, _cpu.A, dst);
         add_reg_to_reg(b_value + 0, _cpu.B, dst);
         add_reg_to_reg(b_value + 1, _cpu.C, dst);
         add_reg_to_reg(b_value + 2, _cpu.D, dst);
