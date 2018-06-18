@@ -27,4 +27,16 @@ namespace bits
     {
         return value & (1 << place);
     }
+
+    inline bool check_carry_up(word before, word after, byte bit_place)
+    {
+        const word bits = (1 << bit_place);
+        return (before & bits) < (after & bits);
+    }
+
+    inline bool check_carry_down(word before, word after, byte bit_place)
+    {
+        const word bits = (1 << bit_place);
+        return (before & bits) > (after & bits);
+    }
 }

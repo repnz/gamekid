@@ -13,10 +13,6 @@ class instruction_set
 private:
     std::vector<std::unique_ptr<instruction>> _instructions;
     std::vector<instruction*> _ptr_instructions;
-    alu _alu;
-    mem _mem;
-    bitmask _bitmask;
-    misc _misc;
 public:
     cpu & _cpu;
     const std::vector<instruction*>& instructions();

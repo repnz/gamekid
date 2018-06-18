@@ -3,12 +3,12 @@
 #include <GameKid/cpu/instruction_set.h>
 #include <GameKid/cpu/operands.h>
 
-void jp_operation(cpu& cpu, operand<word>& address)
+void jumps::jp_operation(cpu& cpu, operand<word>& address)
 {
     cpu.PC = address.load();
 }
 
-void jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address)
+void jumps::jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address)
 {
     if (condition.load())
     {
@@ -16,13 +16,13 @@ void jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<wor
     }
 }
 
-void jr_operation(cpu& cpu, operand<byte>& offset)
+void jumps::jr_operation(cpu& cpu, operand<byte>& offset)
 {
     const char value = static_cast<char>(offset.load());
     cpu.PC += value;
 }
 
-void jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byte>& offset)
+void jumps::jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byte>& offset)
 {
     if (condition.load())
     {
@@ -30,13 +30,13 @@ void jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byt
     }
 }
 
-void call_operation(cpu& cpu, operand<word>& address)
+void jumps::call_operation(cpu& cpu, operand<word>& address)
 {
-    cpu.push(cpu.PC+1);
+    mem::push(cpu, cpu.PC + 1);
     cpu.PC = address.load();
 }
 
-void call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address)
+void jumps::call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address)
 {
     if (condition.load())
     {
@@ -44,19 +44,19 @@ void call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<w
     }
 }
 
-void rst_operation(cpu& cpu, operand<byte>& address)
+void jumps::rst_operation(cpu& cpu, operand<byte>& address)
 {
-    cpu.push(cpu.PC);
+    mem::push(cpu, cpu.PC);
     cpu.PC = address.load();
 }
 
 
-void ret_operation(cpu& cpu)
+void jumps::ret_operation(cpu& cpu)
 {
-    cpu.PC = cpu.pop();
+    cpu.PC = mem::pop(cpu);
 }
 
-void ret_with_condition_operation(cpu& cpu, operand<bool>& condition)
+void jumps::ret_with_condition_operation(cpu& cpu, operand<bool>& condition)
 {
     if (condition.load())
     {
@@ -64,7 +64,7 @@ void ret_with_condition_operation(cpu& cpu, operand<bool>& condition)
     }
 }
 
-void reti_operation(cpu& cpu)
+void jumps::reti_operation(cpu& cpu)
 {
     ret_operation(cpu);
     cpu.enable_interrupts();

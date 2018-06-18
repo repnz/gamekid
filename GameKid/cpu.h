@@ -8,6 +8,14 @@ class cpu;
 #include <GameKid/cpu_types.h>
 #include <GameKid/memory.h>
 
+struct scheduled_operation
+{
+    cpu_operation<> operation;
+    int instruction_count;
+
+    scheduled_operation(cpu_operation<> operation, int instruction_count) :
+        operation(operation), instruction_count(instruction_count) {}
+};
 
 class cpu
 {
@@ -15,16 +23,6 @@ private:
     byte _sp_value_low;
     byte _sp_value_high;
     std::unique_ptr<operands> _operands;
-    
-    struct scheduled_operation
-    {
-        cpu_operation<> operation;
-        int instruction_count;
-
-        scheduled_operation(cpu_operation<> operation, int instruction_count) : 
-        operation(operation), instruction_count(instruction_count){}
-    };
-
     std::vector<scheduled_operation> _scheduled_operations;
 public:
     reg8 A;
@@ -44,9 +42,6 @@ public:
     bool _interrupts_enabled;
     void schedule_operation(cpu_operation<> operation, int instruction_count);
     operands& operands();
-    void push(word value);
-    word pop();
-    void jump(word address);
     void enable_interrupts();
     void disable_interrupts();
 
@@ -55,15 +50,9 @@ public:
     cpu();
 
     void next();
-
     void halt();
     void stop();
     void error();
-    void ccf();
-    void scf();
     void run();
-    void swap(byte* val);
-    static bool check_carry_up(word before, word after, byte bit_place);
-    static bool check_carry_down(word before, word after, byte bit_place);
     ~cpu();
 };

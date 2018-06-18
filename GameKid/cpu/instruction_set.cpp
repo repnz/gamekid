@@ -7,13 +7,18 @@
 #include "instructions/jumps.h"
 
 
-instruction_set::instruction_set(cpu& cpu) : _cpu(cpu), 
-_misc(cpu, *this), _alu(*this, cpu), _mem(cpu, *this), _bitmask(cpu, *this)
+instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
 {
-    _misc.initialize();
-    _alu.initialize();
-    _mem.initialize();
-    _bitmask.initialize();
+    misc::initialize(cpu, *this);
+    
+    alu alu(*this, cpu);
+    alu.initialize();
+
+    mem::initialize(cpu, *this);
+
+    bitmask bitmask(cpu, *this);
+    bitmask.initialize();
+
     rotation::initialize(*this, cpu);
     jumps::initialize(cpu, *this);
 }

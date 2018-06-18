@@ -17,7 +17,7 @@ void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry)
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.carry(new_value < original_value);
-    cpu.F.half_carry(cpu::check_carry_up(original_value, new_value, 4));
+    cpu.F.half_carry(bits::check_carry_up(original_value, new_value, 4));
     cpu.A.store(new_value);
 }
 
@@ -44,7 +44,7 @@ void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_r
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.carry(new_value > original_value);
-    cpu.F.half_carry(cpu::check_carry_down(original_value, new_value, 4));
+    cpu.F.half_carry(bits::check_carry_down(original_value, new_value, 4));
 
     if (save_result)
     {
@@ -138,8 +138,8 @@ void base_add_word_operation(cpu& cpu, operand<word>& op, word value)
     const word result = original + value;
     op.store(result);
 
-    cpu.F.half_carry(cpu::check_carry_up(original, result, 11));
-    cpu.F.carry(cpu::check_carry_up(original, result, 15));
+    cpu.F.half_carry(bits::check_carry_up(original, result, 11));
+    cpu.F.carry(bits::check_carry_up(original, result, 15));
     cpu.F.substract(false);
 }
 

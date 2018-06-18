@@ -5,7 +5,7 @@
 #include "GameKid/cpu/instruction_set.h"
 
 
-void swap_operation(cpu& cpu, operand<byte>& op)
+void misc::swap_operation(cpu& cpu, operand<byte>& op)
 {
     const byte original_value = op.load();
     const byte swapped_value = original_value >> 4 | original_value << 4;
@@ -17,31 +17,31 @@ void swap_operation(cpu& cpu, operand<byte>& op)
     cpu.F.carry(false);
 }
 
-void cpl_operation(cpu& cpu)
+void misc::cpl_operation(cpu& cpu)
 {
     cpu.A.store(~cpu.A.load());
     cpu.F.half_carry(true);
     cpu.F.substract(true);
 }
 
-void nop_operation(cpu& cpu)
+void misc::nop_operation(cpu& cpu)
 {
     // do nothing 
 }
 
-void scf_operation(cpu& cpu)
+void misc::scf_operation(cpu& cpu)
 {
     cpu.F.half_carry(false);
     cpu.F.substract(false);
     cpu.F.carry(true);
 }
 
-void stop_operation(cpu& cpu)
+void misc::stop_operation(cpu& cpu)
 {
     cpu.stop();
 }
 
-void daa_operation(cpu& cpu)
+void misc::daa_operation(cpu& cpu)
 {
     const byte left_digit = (cpu.A.load() & 0xF0) >> 4;
     const byte right_digit = (cpu.A.load() & 0x0F);
@@ -58,16 +58,19 @@ void daa_operation(cpu& cpu)
 }
 
 
-void ccf_operation(cpu& cpu)
+void misc::ccf_operation(cpu& cpu)
 {
     cpu.F.substract(false);
     cpu.F.half_carry(false);
     cpu.F.carry(!cpu.F.carry());
 }
 
-void halt_operation(cpu& cpu) { cpu.halt(); }
+void misc::halt_operation(cpu& cpu)
+{ 
+    cpu.halt(); 
+}
 
-void ei_operation(cpu& cpu)
+void misc::ei_operation(cpu& cpu)
 {
     cpu.schedule_operation([](class cpu& cpu)
     {
@@ -75,7 +78,7 @@ void ei_operation(cpu& cpu)
     }, 1);
 }
 
-void di_operation(cpu& cpu)
+void misc::di_operation(cpu& cpu)
 {
     cpu.schedule_operation([](class cpu& cpu)
     {
@@ -83,20 +86,20 @@ void di_operation(cpu& cpu)
     }, 1);
 }
 
-void misc::initialize()
+void misc::initialize(cpu& cpu, instruction_set& set)
 {
-    _set.add_instruction(instruction_builder(_cpu, "swap")
-        .operands(_cpu.A).opcode(CB_PREFIX, SWAP_A).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.B).opcode(CB_PREFIX, SWAP_B).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.C).opcode(CB_PREFIX, SWAP_C).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.D).opcode(CB_PREFIX, SWAP_D).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.E).opcode(CB_PREFIX, SWAP_E).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.H).opcode(CB_PREFIX, SWAP_H).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.L).opcode(CB_PREFIX, SWAP_L).operation(swap_operation).cycles(8).add()
-        .operands(_cpu.operands().reg_mem(_cpu.HL)).operation(swap_operation).opcode(CB_PREFIX, SWAP_HL).cycles(8).add()
+    set.add_instruction(instruction_builder(cpu, "swap")
+        .operands(cpu.A).opcode(CB_PREFIX, SWAP_A).operation(swap_operation).cycles(8).add()
+        .operands(cpu.B).opcode(CB_PREFIX, SWAP_B).operation(swap_operation).cycles(8).add()
+        .operands(cpu.C).opcode(CB_PREFIX, SWAP_C).operation(swap_operation).cycles(8).add()
+        .operands(cpu.D).opcode(CB_PREFIX, SWAP_D).operation(swap_operation).cycles(8).add()
+        .operands(cpu.E).opcode(CB_PREFIX, SWAP_E).operation(swap_operation).cycles(8).add()
+        .operands(cpu.H).opcode(CB_PREFIX, SWAP_H).operation(swap_operation).cycles(8).add()
+        .operands(cpu.L).opcode(CB_PREFIX, SWAP_L).operation(swap_operation).cycles(8).add()
+        .operands(cpu.operands().reg_mem(cpu.HL)).operation(swap_operation).opcode(CB_PREFIX, SWAP_HL).cycles(8).add()
         .build());
 
-    _set.add_instruction(instruction_builder(_cpu, "cpl")
+    set.add_instruction(instruction_builder(cpu, "cpl")
         .operands()
         .opcode(0x2F)
         .cycles(4)
@@ -104,7 +107,7 @@ void misc::initialize()
         .add().build()
     );
 
-    _set.add_instruction(instruction_builder(_cpu, "nop")
+    set.add_instruction(instruction_builder(cpu, "nop")
         .operands()
         .opcode(NOP)
         .cycles(4)
@@ -112,7 +115,7 @@ void misc::initialize()
         .add().build()
     );
 
-    _set.add_instruction(instruction_builder(_cpu, "scf")
+    set.add_instruction(instruction_builder(cpu, "scf")
         .operands()
         .opcode(SCF)
         .cycles(4)
@@ -120,7 +123,7 @@ void misc::initialize()
         .add().build()
     );
 
-    _set.add_instruction(instruction_builder(_cpu, "stop")
+    set.add_instruction(instruction_builder(cpu, "stop")
         .operands()
         .opcode(0x10, 0)
         .cycles(4)
@@ -129,7 +132,7 @@ void misc::initialize()
     );
 
 
-    _set.add_instruction(instruction_builder(_cpu, "daa")
+    set.add_instruction(instruction_builder(cpu, "daa")
         .operands()
         .opcode(0x27)
         .cycles(4)
@@ -137,7 +140,7 @@ void misc::initialize()
         .add().build()
     );
 
-    _set.add_instruction(instruction_builder(_cpu, "ccf")
+    set.add_instruction(instruction_builder(cpu, "ccf")
         .operands()
         .opcode(CCF)
         .cycles(4)
@@ -145,7 +148,7 @@ void misc::initialize()
         .add().build()
     );
 
-    _set.add_instruction(instruction_builder(_cpu, "halt")
+    set.add_instruction(instruction_builder(cpu, "halt")
         .operands()
         .opcode(HALT)
         .cycles(4)
@@ -153,14 +156,14 @@ void misc::initialize()
         .add().build()
     );
 
-    _set.add_instruction(instruction_builder(_cpu, "ei")
+    set.add_instruction(instruction_builder(cpu, "ei")
         .operands()
         .opcode(0xFB)
         .cycles(4)
         .operation(ei_operation)
         .add().build());
 
-    _set.add_instruction(instruction_builder(_cpu, "di")
+    set.add_instruction(instruction_builder(cpu, "di")
         .operands()
         .opcode(0xF3)
         .cycles(4)
