@@ -31,7 +31,7 @@ int main(int argc, const char** argv)
 
         if (op == nullptr)
         {
-            std::cout << "ERR" << std::endl;
+            std::cout << ".byte " << std::hex << (int)opcode_ptr[i] << std::endl;
             i += 1;
         }
         else
@@ -42,5 +42,5 @@ int main(int argc, const char** argv)
         }
     }
 
-    
+    return 0;
 }
