@@ -5,8 +5,7 @@
 class opcode_decoder
 {
 private:
-    std::map<byte, opcode*> _main_table;
-    std::map<byte, opcode*> _cb_prefix_table;
+    std::map<word, opcode*> _opcode_table;
     instruction_set & _set;
     void initialize_tables();
 public:

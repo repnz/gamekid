@@ -1,4 +1,5 @@
 #include "mem_operands.h"
+#include <GameKid/utils/bytes.h>
 
 std::vector<byte> immidiate_bytes(const std::string& operand, int size_in_bytes)
 {
@@ -11,13 +12,5 @@ std::vector<byte> immidiate_bytes(const std::string& operand, int size_in_bytes)
         throw std::exception("Operand value exeeds");
     }
 
-    std::vector<byte> v(size_in_bytes);
-
-    for (byte i = 0; i<size_in_bytes; ++i)
-    {
-        v[i] = (parsed & 0xFF);
-        parsed >>= 8;
-    }
-
-    return v;
+    return bytes::little_endian_encode(parsed, size_in_bytes);
 }

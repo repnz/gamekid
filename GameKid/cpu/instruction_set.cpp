@@ -23,10 +23,10 @@ instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
     jumps::initialize(cpu, *this);
 }
 
-void instruction_set::add_instruction(std::unique_ptr<instruction> instruction)
+void instruction_set::add_instruction(std::unique_ptr<instruction> ins)
 {
-    _ptr_instructions.push_back(instruction.get());
-    _instructions.push_back(std::move(instruction));
+    _ptr_instructions.push_back(ins.get());
+    _instructions.push_back(std::move(ins));
 }
 
 const std::vector<instruction*>& instruction_set::instructions()

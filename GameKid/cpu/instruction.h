@@ -11,6 +11,8 @@ private:
     std::vector<opcode*> _opcodes_ptr;
 public:
     cpu & _cpu;
+    std::string name;
+
     instruction(cpu& cpu, const std::string& name) : _cpu(cpu), name(name)
     {
         if (name.size() == 0)
@@ -27,11 +29,10 @@ public:
 
     virtual ~instruction() = default;
 
-    std::string name;
-    const std::vector<opcode*>& opcodes()
-    {
-        return _opcodes_ptr;
-    }
+    std::vector<opcode*>::iterator begin() { return _opcodes_ptr.begin(); }
+    std::vector<opcode*>::iterator end() { return _opcodes_ptr.end(); }
+    std::vector<opcode*>::const_iterator begin() const { return _opcodes_ptr.cbegin(); }
+    std::vector<opcode*>::const_iterator end() const { return _opcodes_ptr.cend(); } 
 
     virtual std::vector<byte> parse(const std::vector<std::string>& operands)
     {

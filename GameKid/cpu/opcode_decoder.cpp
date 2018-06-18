@@ -1,6 +1,7 @@
 #include "opcode_decoder.h"
 #include <memory>
 #include <set>
+#include <GameKid/utils/bytes.h>
 
 opcode_decoder::opcode_decoder(instruction_set & set)
     : _set(set)
@@ -12,39 +13,31 @@ void opcode_decoder::initialize_tables()
 {
     for (instruction* instruction : _set.instructions())
     {
-        for (opcode* op : instruction->opcodes())
+        for (opcode* op : *instruction)
         {
-            if (op->value[0] == 0xCB)
-            {
-                _cb_prefix_table[op->value[1]] = op;
-            }
-            else
-            {
-                _main_table[op->value[0]] = op;
-            }
+            const word opcode_word_value = bytes::little_endian_decode<word>(op->value);
+            _opcode_table.insert(std::pair<word, opcode*>(opcode_word_value, op));
         }
     }
 }
 
 opcode* opcode_decoder::decode(const byte* bytes)
 {
-    std::map<byte, opcode*>* correct_table;
+    const word opcode_word = *(word*)bytes;
 
-    if (bytes[0] == 0xCB)
-    {
-        correct_table = &_cb_prefix_table;
-        bytes++;
-    }
-    else
-    {
-        correct_table = &_main_table;
-    }
-    auto opcode_key = correct_table->find(bytes[0]);
+    auto one_byte_opcode = _opcode_table.find(opcode_word & 0xFF);
 
-    if (opcode_key == correct_table->end())
+    if (one_byte_opcode != _opcode_table.end())
     {
-        return nullptr;
+        return one_byte_opcode->second;
     }
 
-    return opcode_key->second;
+    auto two_bytes_opcode = _opcode_table.find(opcode_word);
+
+    if (two_bytes_opcode != _opcode_table.end())
+    {
+        return two_bytes_opcode->second;
+    }
+
+    return nullptr;
 }

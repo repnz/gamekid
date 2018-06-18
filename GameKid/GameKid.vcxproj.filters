@@ -146,5 +146,8 @@
     <ClInclude Include="utils\bits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utils\bytes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

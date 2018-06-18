@@ -17,6 +17,5 @@ public:
     cpu & _cpu;
     const std::vector<instruction*>& instructions();
     explicit instruction_set(cpu& cpu);
-
     void add_instruction(std::unique_ptr<instruction> instruction);
 };
