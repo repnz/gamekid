@@ -180,8 +180,8 @@ void rotation::initialize(instruction_set& set, cpu& c)
         .operands(c.C).opcode(0xcb, CB_RR_C).operation(rr_operation).cycles(8).add()
         .operands(c.D).opcode(0xcb, CB_RR_D).operation(rr_operation).cycles(8).add()
         .operands(c.E).opcode(0xcb, CB_RR_E).operation(rr_operation).cycles(8).add()
-        .operands(c.L).opcode(0xcb, CB_RR_H).operation(rr_operation).cycles(8).add()
-        .operands(c.H).opcode(0xcb, CB_RR_L).operation(rr_operation).cycles(8).add()
+        .operands(c.L).opcode(0xcb, CB_RR_L).operation(rr_operation).cycles(8).add()
+        .operands(c.H).opcode(0xcb, CB_RR_H).operation(rr_operation).cycles(8).add()
         .operands(c.operands().reg_mem(c.HL)).operation(rr_operation).opcode(0xcb, CB_RR_HL).cycles(16).add()
         .build());
         
@@ -191,8 +191,8 @@ void rotation::initialize(instruction_set& set, cpu& c)
             .operands(c.C).opcode(0xcb, CB_RLC_C).operation(rlc_operation).cycles(8).add()
             .operands(c.D).opcode(0xcb, CB_RLC_D).operation(rlc_operation).cycles(8).add()
             .operands(c.E).opcode(0xcb, CB_RLC_E).operation(rlc_operation).cycles(8).add()
-            .operands(c.L).opcode(0xcb, CB_RLC_H).operation(rlc_operation).cycles(8).add()
-            .operands(c.H).opcode(0xcb, CB_RLC_L).operation(rlc_operation).cycles(8).add()
+            .operands(c.H).opcode(0xcb, CB_RLC_H).operation(rlc_operation).cycles(8).add()
+            .operands(c.L).opcode(0xcb, CB_RLC_L).operation(rlc_operation).cycles(8).add()
             .operands(c.operands().reg_mem(c.HL)).operation(rlc_operation).opcode(0xcb, CB_RLC_HL).cycles(16).add()
             .build());
 
@@ -202,8 +202,8 @@ void rotation::initialize(instruction_set& set, cpu& c)
             .operands(c.C).opcode(0xcb, CB_RRC_C).operation(rrc_operation).cycles(8).add()
             .operands(c.D).opcode(0xcb, CB_RRC_D).operation(rrc_operation).cycles(8).add()
             .operands(c.E).opcode(0xcb, CB_RRC_E).operation(rrc_operation).cycles(8).add()
-            .operands(c.L).opcode(0xcb, CB_RRC_H).operation(rrc_operation).cycles(8).add()
-            .operands(c.H).opcode(0xcb, CB_RRC_L).operation(rrc_operation).cycles(8).add()
+            .operands(c.H).opcode(0xcb, CB_RRC_H).operation(rrc_operation).cycles(8).add()
+            .operands(c.L).opcode(0xcb, CB_RRC_L).operation(rrc_operation).cycles(8).add()
             .operands(c.operands().reg_mem(c.HL)).operation(rrc_operation).opcode(0xcb, CB_RRC_HL).cycles(16).add()
             .build());
 
@@ -214,8 +214,8 @@ void rotation::initialize(instruction_set& set, cpu& c)
             .operands(c.C).opcode(0xcb, CB_SLA_C).operation(sla_operation).cycles(8).add()
             .operands(c.D).opcode(0xcb, CB_SLA_D).operation(sla_operation).cycles(8).add()
             .operands(c.E).opcode(0xcb, CB_SLA_E).operation(sla_operation).cycles(8).add()
-            .operands(c.L).opcode(0xcb, CB_SLA_H).operation(sla_operation).cycles(8).add()
-            .operands(c.H).opcode(0xcb, CB_SLA_L).operation(sla_operation).cycles(8).add()
+            .operands(c.H).opcode(0xcb, CB_SLA_H).operation(sla_operation).cycles(8).add()
+            .operands(c.L).opcode(0xcb, CB_SLA_L).operation(sla_operation).cycles(8).add()
             .operands(c.operands().reg_mem(c.HL)).operation(sla_operation).opcode(0xcb, CB_SLA_HL).cycles(16).add()
             .build());
 
