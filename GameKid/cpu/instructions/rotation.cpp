@@ -165,12 +165,12 @@ void rotation::initialize(instruction_set& set, cpu& c)
 
     set.add_instruction(instruction_builder(c, "rl")
         .operands(c.A).opcode(0xCB, CB_RL_A).operation(rl_operation).cycles(8).add()
-        .operands(c.L).opcode(0xcb, CB_RL_B).operation(rl_operation).cycles(8).add()
-        .operands(c.B).opcode(0xcb, CB_RL_C).operation(rl_operation).cycles(8).add()
-        .operands(c.C).opcode(0xcb, CB_RL_D).operation(rl_operation).cycles(8).add()
-        .operands(c.D).opcode(0xcb, CB_RL_E).operation(rl_operation).cycles(8).add()
-        .operands(c.E).opcode(0xcb, CB_RL_H).operation(rl_operation).cycles(8).add()
-        .operands(c.H).opcode(0xcb, CB_RL_L).operation(rl_operation).cycles(8).add()
+        .operands(c.B).opcode(0xcb, CB_RL_B).operation(rl_operation).cycles(8).add()
+        .operands(c.C).opcode(0xcb, CB_RL_C).operation(rl_operation).cycles(8).add()
+        .operands(c.D).opcode(0xcb, CB_RL_D).operation(rl_operation).cycles(8).add()
+        .operands(c.E).opcode(0xcb, CB_RL_E).operation(rl_operation).cycles(8).add()
+        .operands(c.H).opcode(0xcb, CB_RL_H).operation(rl_operation).cycles(8).add()
+        .operands(c.L).opcode(0xcb, CB_RL_L).operation(rl_operation).cycles(8).add()
         .operands(c.operands().reg_mem(c.HL)).opcode(0xcb, CB_RL_HL).operation(rl_operation).cycles(16).add()
         .build());
 
