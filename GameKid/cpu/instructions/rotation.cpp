@@ -236,8 +236,8 @@ void rotation::initialize(instruction_set& set, cpu& c)
             .operands(c.C).opcode(0xcb, CB_SRA_C).operation(sla_operation).cycles(8).add()
             .operands(c.D).opcode(0xcb, CB_SRA_D).operation(sla_operation).cycles(8).add()
             .operands(c.E).opcode(0xcb, CB_SRA_E).operation(sla_operation).cycles(8).add()
-            .operands(c.L).opcode(0xcb, CB_SRA_H).operation(sla_operation).cycles(8).add()
-            .operands(c.H).opcode(0xcb, CB_SRA_L).operation(sla_operation).cycles(8).add()
+            .operands(c.L).opcode(0xcb, CB_SRA_L).operation(sla_operation).cycles(8).add()
+            .operands(c.H).opcode(0xcb, CB_SRA_H).operation(sla_operation).cycles(8).add()
             .operands(c.operands().reg_mem(c.HL)).operation(sla_operation).opcode(0xcb, CB_SRA_HL).cycles(16).add()
             .build());
 }
