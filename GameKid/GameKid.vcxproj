@@ -148,6 +148,7 @@
     <ClCompile Include="cpu\instructions\bitmask.cpp" />
     <ClCompile Include="cpu\instructions\jumps.cpp" />
     <ClCompile Include="cpu\instructions\mem.cpp" />
+    <ClCompile Include="cpu\instructions\mem\mem_operands.cpp" />
     <ClCompile Include="cpu\instructions\misc.cpp" />
     <ClCompile Include="cpu\instructions\rotation.cpp" />
     <ClCompile Include="cpu\instruction_set.cpp" />

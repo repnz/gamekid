@@ -34,27 +34,12 @@ public:
     }
 };
 
+std::vector<byte> immidiate_bytes(const std::string& operand, int size_in_bytes);
+
 template <typename T>
 std::vector<byte> immidiate_bytes(const std::string& operand)
 {
-    int parsed = stoi(operand);
-
-    if (parsed > sizeof(T))
-    {
-        throw std::exception("Operand value exeeds");
-    }
-
-    T real_value = (T)parsed;
-
-    std::vector<byte> v(sizeof(T));
-
-    for (byte i = 0; i<sizeof(T); ++i)
-    {
-        v.push_back(real_value & 0xFF);
-        real_value >>= 8;
-    }
-
-    return v;
+    return immidiate_bytes(operand, sizeof(T));
 }
 
 template <typename T>
