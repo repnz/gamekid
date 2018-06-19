@@ -55,6 +55,7 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_operand.h" />
+    <ClInclude Include="test_tools.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alu_tests.cpp" />
@@ -69,6 +70,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="rotation_tests.cpp" />
+    <ClCompile Include="utils_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameKid\GameKid.vcxproj">
