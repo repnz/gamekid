@@ -28,15 +28,20 @@ namespace bits
         return value & (1 << place);
     }
 
+    inline word mask_bits(byte bit_place)
+    {
+        return (1 << (bit_place + 1)) - 1;
+    }
+
     inline bool check_carry_up(word before, word after, byte bit_place)
     {
-        const word bits = (1 << bit_place);
-        return (before & bits) < (after & bits);
+        const word mask = mask_bits(bit_place);
+        return (before & mask) > (after & mask);
     }
 
     inline bool check_carry_down(word before, word after, byte bit_place)
     {
-        const word bits = (1 << bit_place);
-        return (before & bits) > (after & bits);
+        const word mask = mask_bits(bit_place);
+        return (before & mask) < (after & mask);
     }
 }

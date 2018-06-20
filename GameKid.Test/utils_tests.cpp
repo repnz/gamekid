@@ -44,3 +44,15 @@ TEST(UTILS, SET_BIT)
     ASSERT_EQ(0x8f, bits::set_bit<byte>(0x0f, 7, true));
     ASSERT_EQ(0x0f, bits::set_bit<byte>(0x8f, 7, false));
 }
+
+TEST(UTILS, CHECK_CARRY_UP)
+{
+    ASSERT_EQ(true, bits::check_carry_up(0xFF, 0x00, 7));
+    ASSERT_EQ(false, bits::check_carry_up(0xFF, 0x100, 8));
+}
+
+TEST(UTILS, CHECK_CARRY_DOWN)
+{
+    ASSERT_EQ(true, bits::check_carry_down(0x00, 0xFF, 7));
+    ASSERT_EQ(false, bits::check_carry_down(0xFF, 0xFE, 8));
+}

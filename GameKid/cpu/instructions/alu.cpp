@@ -17,7 +17,7 @@ void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry)
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.carry(new_value < original_value);
-    cpu.F.half_carry(bits::check_carry_up(original_value, new_value, 4));
+    cpu.F.half_carry(bits::check_carry_up(original_value, new_value, 3));
     cpu.A.store(new_value);
 }
 
@@ -44,7 +44,7 @@ void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_r
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.carry(new_value > original_value);
-    cpu.F.half_carry(bits::check_carry_down(original_value, new_value, 4));
+    cpu.F.half_carry(bits::check_carry_down(original_value, new_value, 3));
 
     if (save_result)
     {
@@ -103,11 +103,10 @@ void alu::inc_operation(cpu& cpu, operand<byte>& op)
 {
     const byte new_value = op.load() + 1;
     
-    cpu.F.half_carry((new_value & 0xF) == 0);
+    cpu.F.half_carry(new_value == 0x10);
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     // carry flag is not affected.
-
     op.store(new_value);
 }
 
