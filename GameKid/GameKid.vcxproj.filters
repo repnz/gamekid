@@ -57,6 +57,9 @@
     <ClCompile Include="cpu\instructions\mem\mem_operands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cartridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpu.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\bytes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cartridge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
