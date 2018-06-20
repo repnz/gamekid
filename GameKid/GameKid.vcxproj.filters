@@ -155,5 +155,8 @@
     <ClInclude Include="cartridge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="io\io_registers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
