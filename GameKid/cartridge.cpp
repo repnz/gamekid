@@ -1,6 +1,6 @@
 #include "cartridge.h"
 
-byte calculate_header_checksum(byte* data)
+byte cartridge::calculate_header_checksum(const byte* data)
 {
     byte checksum = 0;
 
@@ -11,11 +11,10 @@ byte calculate_header_checksum(byte* data)
 
     return checksum;
 }
-bool validate_header_checksum(byte * data)
+bool cartridge::validate_header_checksum(const byte * data)
 {
-    byte actual = calculate_header_checksum(data);
+    byte actual = cartridge::calculate_header_checksum(data);
     byte checksum = data[cartridge_offsets::header_checksum.start];
 
     return (checksum == actual);
 }
-

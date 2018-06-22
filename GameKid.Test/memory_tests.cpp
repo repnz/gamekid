@@ -22,5 +22,4 @@ TEST(MEMORY, ECHO_INTERNAL_MEMO)
 
         ++offset;
     }
-   
 }

@@ -26,9 +26,12 @@ private:
     byte mem[64 * 1024];
     joypad _joypad;
 public:
+    
     memory();
     memory(const memory&) = delete;
     memory& operator=(memory&) = delete;
+
+    byte * buffer() { return &mem[0]; }
 
     template <typename T>
     T load(word address)

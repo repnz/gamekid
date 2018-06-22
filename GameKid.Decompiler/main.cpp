@@ -1,8 +1,6 @@
 #include <GameKid/cpu/opcode_decoder.h>
+#include <GameKid/utils/files.h>
 #include <iostream>
-#include <fstream>
-
-std::vector<byte> read_file(const std::string& fileName);
 
 int main(int argc, const char** argv)
 {    
@@ -12,7 +10,7 @@ int main(int argc, const char** argv)
         return -1;
     }
     
-    std::vector<byte> opcodes = read_file(argv[1]);
+    std::vector<byte> opcodes = files::read_file(argv[1]);
     const byte* opcode_ptr = opcodes.data();
 
     cpu cpu;
@@ -38,14 +36,3 @@ int main(int argc, const char** argv)
 
     return 0;
 }
-
-std::vector<byte> read_file(const std::string& fileName)
-{
-    std::ifstream f(fileName, std::ios::binary | std::ios::in | std::ios::ate);
-    int file_size = f.tellg();
-    f.seekg(std::ios::beg);
-    std::vector<byte> opcodes(file_size);
-    f.read((char*)opcodes.data(), file_size);
-    return opcodes;
-}
-

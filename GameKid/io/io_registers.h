@@ -1,6 +1,12 @@
 #pragma once
 
 ///
+/// Boot ROM
+///
+#define ENABLE_BOOT_ROM 0xFF50
+
+
+///
 /// Interrups
 ///
 #define IE 0xFFFF // Interrupts Enable (R/W)

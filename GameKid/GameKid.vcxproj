@@ -158,6 +158,8 @@
     <ClCompile Include="cpu\operands.cpp" />
     <ClCompile Include="io\joypad.cpp" />
     <ClCompile Include="memory.cpp" />
+    <ClCompile Include="runner.cpp" />
+    <ClCompile Include="utils\files.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cartridge.h" />
@@ -177,6 +179,7 @@
     <ClInclude Include="io\joypad.h" />
     <ClInclude Include="utils\bits.h" />
     <ClInclude Include="utils\bytes.h" />
+    <ClInclude Include="utils\files.h" />
     <ClInclude Include="utils\function_tools.h" />
     <ClInclude Include="cpu\opcode_builder.h" />
     <ClInclude Include="cpu\operand.h" />
@@ -192,6 +195,7 @@
     <ClInclude Include="memory.h" />
     <ClInclude Include="opcodes.h" />
     <ClInclude Include="cpu_types.h" />
+    <ClInclude Include="runner.h" />
     <ClInclude Include="utils\str.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

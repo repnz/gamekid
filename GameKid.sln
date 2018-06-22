@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid.Decompiler", "GameK
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid.Emulator", "GameKid.Emulator\GameKid.Emulator.vcxproj", "{450014CB-11EC-4387-BBDA-F16201AF8A3D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid.Debugger", "GameKid.Debugger\GameKid.Debugger.vcxproj", "{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{450014CB-11EC-4387-BBDA-F16201AF8A3D}.Release|x64.Build.0 = Release|x64
 		{450014CB-11EC-4387-BBDA-F16201AF8A3D}.Release|x86.ActiveCfg = Release|Win32
 		{450014CB-11EC-4387-BBDA-F16201AF8A3D}.Release|x86.Build.0 = Release|Win32
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Debug|x64.ActiveCfg = Debug|x64
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Debug|x64.Build.0 = Debug|x64
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Debug|x86.ActiveCfg = Debug|Win32
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Debug|x86.Build.0 = Debug|Win32
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Release|x64.ActiveCfg = Release|x64
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Release|x64.Build.0 = Release|x64
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Release|x86.ActiveCfg = Release|Win32
+		{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

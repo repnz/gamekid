@@ -27,4 +27,8 @@ namespace cartridge_offsets {
     const offset global_checksum(0x14e, 0x14f);
 };
 
-bool validate_checksum(byte* data);
+namespace cartridge 
+{
+    byte calculate_header_checksum(const byte* data);
+    bool validate_header_checksum(const byte* data);
+}

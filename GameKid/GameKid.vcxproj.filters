@@ -63,6 +63,12 @@
     <ClCompile Include="io\joypad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="runner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\files.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpu.h">
@@ -162,6 +168,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="io\joypad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\files.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="runner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
