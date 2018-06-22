@@ -156,6 +156,7 @@
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands.cpp" />
+    <ClCompile Include="io\joypad.cpp" />
     <ClCompile Include="memory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +174,7 @@
     <ClInclude Include="cpu\instructions\mem\ld.h" />
     <ClInclude Include="cpu\instructions\mem\mem_operands.h" />
     <ClInclude Include="io\io_registers.h" />
+    <ClInclude Include="io\joypad.h" />
     <ClInclude Include="utils\bits.h" />
     <ClInclude Include="utils\bytes.h" />
     <ClInclude Include="utils\function_tools.h" />

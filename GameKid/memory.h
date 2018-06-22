@@ -1,14 +1,17 @@
 #pragma once
 #include "cpu_types.h"
+#include "io/joypad.h"
 
 class memory
 {
 private:
     byte mem[64 * 1024];
-
+    joypad _joypad;
 public:
-    
-    
+    memory();
+    memory(const memory&) = delete;
+    memory& operator=(memory&) = delete;
+
     template <typename T>
     T load(word address)
     {

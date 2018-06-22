@@ -19,7 +19,7 @@ int main(int argc, const char** argv)
     instruction_set s(cpu);
     opcode_decoder d(s);
     
-    for (int i=0; i<opcodes.size();)
+    for (size_t i=0; i<opcodes.size();)
     {
         const opcode* op = d.decode(opcode_ptr+i);
 
