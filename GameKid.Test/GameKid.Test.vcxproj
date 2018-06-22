@@ -60,6 +60,7 @@
   <ItemGroup>
     <ClCompile Include="alu_tests.cpp" />
     <ClCompile Include="bitmask_tests.cpp" />
+    <ClCompile Include="memory_tests.cpp" />
     <ClCompile Include="misc_tests.cpp" />
     <ClCompile Include="opcode_decoder_tests.cpp" />
     <ClCompile Include="operands_tests.cpp" />
