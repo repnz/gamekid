@@ -3,6 +3,18 @@
 void memory::store_byte(word address, byte value)
 {
 	mem[address] = value;
+
+    // handle duplication of the 8kb internal ram
+    if (address >= 0xC000 && address < 0xDE00)
+    {
+        const word offset = address - 0xC000;
+        mem[0xE000 + offset] = value;
+    }
+    else if (address >= 0xE000 && address < 0xFE00)
+    {
+        const word offset = address - 0xE000;
+        mem[0xC000] = value;
+    }
 }
 
 byte memory::load_byte(word address)
