@@ -2,9 +2,21 @@
 #include <GameKid/cartridge.h>
 
 runner::runner(std::vector<byte>&& rom) :
-    _rom(rom), _set(_cpu), _decoder(_set)
+    _rom(std::move(rom)), _set(_cpu), _decoder(_set)
 {
     cartridge::validate_header_checksum(_rom.data());
+    
+    if (_rom.size() > 0xFFFF) 
+    {
+        throw "OverflowError";
+    }
+
+    word rom_size_word = static_cast<word>(_rom.size());
+
+    for (word i = 0; i < rom_size_word; ++i) 
+    {
+        _cpu.mem.store_byte(i, _rom[i]);
+    }
 }
 
 void runner::add_breakpoint(word address)
@@ -49,7 +61,9 @@ std::vector<std::string> runner::list(int count)
 
     for (int i = 0; i < count; i++)
     {
-        opcode* op = _decoder.decode(_cpu.mem.buffer() + pc);
+        const byte* buffer = _cpu.mem.buffer();
+        const byte* buffer_pc = buffer + pc;
+        opcode* op = _decoder.decode(buffer_pc);
 
         if (op == nullptr) 
         {
