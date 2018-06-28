@@ -157,7 +157,8 @@
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands.cpp" />
     <ClCompile Include="io\joypad.cpp" />
-    <ClCompile Include="memory.cpp" />
+    <ClCompile Include="memory\memory.cpp" />
+    <ClCompile Include="memory\memory_impl.cpp" />
     <ClCompile Include="runner.cpp" />
     <ClCompile Include="utils\files.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="cpu\instructions\mem\mem_operands.h" />
     <ClInclude Include="io\io_registers.h" />
     <ClInclude Include="io\joypad.h" />
+    <ClInclude Include="memory\memory_impl.h" />
     <ClInclude Include="utils\bits.h" />
     <ClInclude Include="utils\bytes.h" />
     <ClInclude Include="utils\files.h" />
@@ -192,10 +194,11 @@
     <ClInclude Include="cpu\opcode_encoder.h" />
     <ClInclude Include="cpu\operands.h" />
     <ClInclude Include="cpu\operands_opcode.h" />
-    <ClInclude Include="memory.h" />
+    <ClInclude Include="memory\memory.h" />
     <ClInclude Include="opcodes.h" />
     <ClInclude Include="cpu_types.h" />
     <ClInclude Include="runner.h" />
+    <ClInclude Include="memory\memory_map.h" />
     <ClInclude Include="utils\str.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "GameKid/memory.h"
+#include "GameKid/memory/memory.h"
 #include <vector>
 #include "GameKid/utils/bits.h"
 

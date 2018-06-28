@@ -21,10 +21,8 @@ void opcode_decoder::initialize_tables()
     }
 }
 
-opcode* opcode_decoder::decode(const byte* bytes)
+opcode* opcode_decoder::decode(word opcode_word)
 {
-    const word opcode_word = *(word*)bytes;
-
     auto two_bytes_opcode = _opcode_table.find(opcode_word);
 
     if (two_bytes_opcode != _opcode_table.end())

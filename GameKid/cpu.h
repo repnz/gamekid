@@ -6,7 +6,7 @@
 class operands;
 class cpu;
 #include <GameKid/cpu_types.h>
-#include <GameKid/memory.h>
+#include <GameKid/memory/memory.h>
 
 struct scheduled_operation
 {
@@ -40,6 +40,8 @@ public:
     reg16 SP;
     word PC;
     bool _interrupts_enabled;
+    
+    cpu(const std::vector<byte>& rom);
     void schedule_operation(cpu_operation<> operation, int instruction_count);
     operands& operands();
     void enable_interrupts();

@@ -34,7 +34,8 @@ void runner::run_until_break()
 
 void runner::next()
 {
-    opcode* opcode = _decoder.decode(_cpu.mem.buffer() + _cpu.PC);
+    const word opcode_word = _cpu.mem.load_word(_cpu.PC);
+    opcode* opcode = _decoder.decode(opcode_word);
 
     if (opcode == nullptr) 
     {
@@ -61,13 +62,12 @@ std::vector<std::string> runner::list(int count)
 
     for (int i = 0; i < count; i++)
     {
-        const byte* buffer = _cpu.mem.buffer();
-        const byte* buffer_pc = buffer + pc;
-        opcode* op = _decoder.decode(buffer_pc);
+        const word opcode_word = _cpu.mem.load_word(pc);
+        opcode* op = _decoder.decode(opcode_word);
 
         if (op == nullptr) 
         {
-            const byte current_byte = *(_cpu.mem.buffer() + pc);
+            const byte current_byte = static_cast<byte>(opcode_word);
             opcodes[i] = ".byte " + std::to_string(current_byte);
             pc += 1;
         }

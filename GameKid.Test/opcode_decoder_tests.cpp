@@ -13,7 +13,9 @@ TEST(OPCODE_DECODER, DECODE)
     {
         for (opcode* current_opcode : *current_instruction)
         {
-            opcode* decoded_opcode = d.decode(current_opcode->value.data());
+            
+            const word opcode_word = bytes::little_endian_decode<word>(current_opcode->value);
+            opcode* decoded_opcode = d.decode(opcode_word);
             byte imm[4] = { 0 };
 
             if (current_opcode != decoded_opcode)

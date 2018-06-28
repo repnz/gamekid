@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <GameKid/cpu_types.h>
+#include <algorithm>
 
 namespace bytes 
 {
@@ -27,13 +28,19 @@ namespace bytes
     {
         T value = 0;
 
-        for (size_t i = bytes.size(); i != 0; --i)
+        for (size_t i = std::min(sizeof(T), bytes.size()); i != 0; --i)
         {
             value <<= 8;
             value += bytes[i-1];
         }
         
         return value;
+    }
+
+    template <typename T>
+    T read_value(const void* ptr)
+    {
+        return *static_cast<const T*>(ptr);
     }
 }
 

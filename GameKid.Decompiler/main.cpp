@@ -1,5 +1,6 @@
 #include <GameKid/cpu/opcode_decoder.h>
 #include <GameKid/utils/files.h>
+#include <GameKid/utils/bytes.h>
 #include <iostream>
 
 int main(int argc, const char** argv)
@@ -19,7 +20,8 @@ int main(int argc, const char** argv)
     
     for (size_t i=0; i<opcodes.size();)
     {
-        const opcode* op = d.decode(opcode_ptr+i);
+        const word opcode_word = bytes::read_value<word>(opcode_ptr + i);
+        const opcode* op = d.decode(opcode_word);
 
         if (op == nullptr)
         {

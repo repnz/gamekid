@@ -37,6 +37,10 @@ TEST(UTILS, LITTLE_ENDIAN_DECODE)
     assert_equals<word>(0x10, bytes::little_endian_decode<word>({ 0x10 , 0x00}));
 
     assert_equals<word>(0x100, bytes::little_endian_decode<word>({ 0x00 , 0x01 }));
+
+    assert_equals<byte>(0x10, bytes::little_endian_decode<byte>({ 0x10 , 0x00 }));
+
+    assert_equals<word>(0x110, bytes::little_endian_decode<word>({ 0x10 , 0x01, 0x00 }));
 }
 
 TEST(UTILS, SET_BIT) 

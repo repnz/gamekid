@@ -88,7 +88,7 @@ public:
 
     word get_address() const
     {
-        return _cpu.mem.load_word_le(_cpu.PC + 1);
+        return _cpu.mem.load_word(_cpu.PC + 1);
     }
 
     move_type load() const override

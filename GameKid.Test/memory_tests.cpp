@@ -1,10 +1,11 @@
 #include "pch.h"
-#include <GameKid/memory.h>
+#include <GameKid/memory/memory.h>
+#include <GameKid/memory/memory_map.h>
 
 
 TEST(MEMORY, ECHO_INTERNAL_MEMO)
 {
-    memory m;
+    memory m({});
     
     word offset = 0;
     const word size = memory_map::internal_ram_8kb_echo - memory_map::internal_ram_8kb;
