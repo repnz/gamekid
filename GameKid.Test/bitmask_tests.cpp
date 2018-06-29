@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <GameKid/cpu/instructions/bitmask.h>
 #include "test_operand.h"
+#include <GameKid/cpu/operand/constant_operand.h>
 
 TEST(BITMASK_OPCODES, BIT_TRUE_TURN_ZERO_OFF)
 {

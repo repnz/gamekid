@@ -1,4 +1,4 @@
-#include "joypad.h"
+#include "joypad_cell.h"
 #include <GameKid/utils/bits.h>
 
 /*
@@ -15,8 +15,7 @@ P12     Up          Select
 P13     Down        Start
 */
 
-namespace joypad_bits 
-{
+namespace joypad_bits {
     const byte P10 = 0;
     const byte P11 = 1;
     const byte P12 = 2;
@@ -25,31 +24,16 @@ namespace joypad_bits
     const byte P15 = 5;
 }
 
-void joypad::set_byte_value(joypad_button b1, joypad_button b2, joypad_button b3, joypad_button b4)
-{
-    *_p1 = bits::set_bit(*_p1, joypad_bits::P10, _status[b1]);
-    *_p1 = bits::set_bit(*_p1, joypad_bits::P11, _status[b2]);
-    *_p1 = bits::set_bit(*_p1, joypad_bits::P12, _status[b3]);
-    *_p1 = bits::set_bit(*_p1, joypad_bits::P13, _status[b4]);
-}
+void joypad_cell::store(byte value){
 
-joypad::joypad(byte * p1_reg)
-{
-}
-
-void joypad::update(byte value)
-{
-    if (bits::check_bit(value, joypad_bits::P14)) 
-    {
+    if (bits::check_bit(value, joypad_bits::P14)) {
         set_byte_value(
             joypad_button::right,
             joypad_button::left,
             joypad_button::up,
             joypad_button::down
         );
-    }
-    else 
-    {
+    } else {
         set_byte_value(
             joypad_button::a,
             joypad_button::b,
@@ -59,12 +43,25 @@ void joypad::update(byte value)
     }
 }
 
-bool joypad::get_status(joypad_button button)
-{
+void joypad_cell::set_byte_value(joypad_button b1, joypad_button b2, joypad_button b3, joypad_button b4){
+    // load value
+    byte p1 = memory_cell::load();
+    
+    // set value
+    p1 = bits::set_bit(p1, joypad_bits::P10, _status[b1]);
+    p1 = bits::set_bit(p1, joypad_bits::P11, _status[b2]);
+    p1 = bits::set_bit(p1, joypad_bits::P12, _status[b3]);
+    p1 = bits::set_bit(p1, joypad_bits::P13, _status[b4]);
+
+    // store value
+    memory_cell::store(p1);
+}
+
+
+bool joypad_cell::get_status(joypad_button button){
     return _status[button];
 }
 
-void joypad::set_status(joypad_button button, bool status)
-{
+void joypad_cell::set_status(joypad_button button, bool status){
     _status[button] = status;
 }

@@ -3,75 +3,63 @@
 #include <GameKid/cpu/instruction_set.h>
 #include <GameKid/cpu/operands.h>
 
-void jumps::jp_operation(cpu& cpu, operand<word>& address)
-{
+void jumps::jp_operation(cpu& cpu, operand<word>& address) {
     cpu.PC = address.load();
 }
 
-void jumps::jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address)
-{
+void jumps::jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address){
     if (condition.load())
     {
         jp_operation(cpu, address);
     }
 }
 
-void jumps::jr_operation(cpu& cpu, operand<byte>& offset)
-{
+void jumps::jr_operation(cpu& cpu, operand<byte>& offset){
     const char value = static_cast<char>(offset.load());
     cpu.PC += value;
 }
 
-void jumps::jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byte>& offset)
-{
+void jumps::jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byte>& offset){
     if (condition.load())
     {
         jr_operation(cpu, offset);
     }
 }
 
-void jumps::call_operation(cpu& cpu, operand<word>& address)
-{
+void jumps::call_operation(cpu& cpu, operand<word>& address){
     mem::push(cpu, cpu.PC + 1);
     cpu.PC = address.load();
 }
 
-void jumps::call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address)
-{
+void jumps::call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address){
     if (condition.load())
     {
         call_operation(cpu, address);
     }
 }
 
-void jumps::rst_operation(cpu& cpu, operand<byte>& address)
-{
+void jumps::rst_operation(cpu& cpu, operand<byte>& address){
     mem::push(cpu, cpu.PC);
     cpu.PC = address.load();
 }
 
 
-void jumps::ret_operation(cpu& cpu)
-{
+void jumps::ret_operation(cpu& cpu){
     cpu.PC = mem::pop(cpu);
 }
 
-void jumps::ret_with_condition_operation(cpu& cpu, operand<bool>& condition)
-{
-    if (condition.load())
-    {
+void jumps::ret_with_condition_operation(cpu& cpu, operand<bool>& condition){
+    if (condition.load()){
         ret_operation(cpu);
     }
 }
 
-void jumps::reti_operation(cpu& cpu)
-{
+void jumps::reti_operation(cpu& cpu){
     ret_operation(cpu);
     cpu.enable_interrupts();
 }
 
-void jumps::initialize(cpu & cpu, instruction_set & set)
-{
+void jumps::initialize(cpu & cpu, instruction_set & set){
     set.add_instruction(instruction_builder(cpu, "jp")
         .operands(cpu.operands().immidiate_word())
             .opcode(0xC3)

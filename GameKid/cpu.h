@@ -1,5 +1,8 @@
 #pragma once
 #include "cpu/operand.h"
+#include "cpu/operand/flags_reg8.h"
+#include "cpu/operand/reg8.h"
+#include "cpu/operand/reg16.h"
 #include <memory>
 #include <functional>
 #include "cpu/builders/cpu_operation.h"

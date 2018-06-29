@@ -1,4 +1,5 @@
 #include "operands.h"
+#include "operand/flags_reg8.h"
 
 operands::operands(cpu& cpu) : 
 _cpu(cpu),
@@ -80,7 +81,7 @@ reg16_addressing& operands::hl_addressing()
     return _hl_addressing;
 }
 
-reg_mem_operand& operands::reg_mem(reg16& r)
+reg_mem_operand& operands::reg_mem(reg16& r) 
 {
     for (auto& offset : _reg_mem_operands)
     {

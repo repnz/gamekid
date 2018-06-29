@@ -7,8 +7,7 @@
 #include "instructions/jumps.h"
 
 
-instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
-{
+instruction_set::instruction_set(cpu& cpu) : _cpu(cpu){
     misc::initialize(cpu, *this);
     
     alu alu(*this, cpu);
@@ -23,13 +22,11 @@ instruction_set::instruction_set(cpu& cpu) : _cpu(cpu)
     jumps::initialize(cpu, *this);
 }
 
-void instruction_set::add_instruction(std::unique_ptr<instruction> ins)
-{
+void instruction_set::add_instruction(std::unique_ptr<instruction> ins) {
     _ptr_instructions.push_back(ins.get());
     _instructions.push_back(std::move(ins));
 }
 
-const std::vector<instruction*>& instruction_set::instructions()
-{
+const std::vector<instruction*>& instruction_set::instructions() {
     return _ptr_instructions;
 }

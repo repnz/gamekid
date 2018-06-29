@@ -1,6 +1,14 @@
 #pragma once
-#include "instructions/mem/mem_operands.h"
-#include "instructions/jumps.h"
+#include "operand/cc_operand.h"
+#include "operand/constant_operand.h"
+#include "operand/reg16_addressing.h"
+#include "operand/reg_mem_operand.h"
+#include "operand/reg16_with_offset.h"
+#include "operand/imm_operand.h"
+#include "operand/imm_mem_operand.h"
+#include "operand/c_mem_operand.h"
+#include "operand/ff_offset_mem_operand.h"
+#include "operand/op_reg_mem_operand.h"
 
 class operands
 {

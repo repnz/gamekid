@@ -1,8 +1,7 @@
 #pragma once
 #include <GameKid/cpu_types.h>
 
-namespace memory_map
-{
+namespace memory_map {
     const word
         rom_bank_0 = 0,
         switchable_rom_bank_16kb = 0x4000,

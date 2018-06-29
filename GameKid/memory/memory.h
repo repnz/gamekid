@@ -23,7 +23,6 @@ public:
     void store_word(word address, word value);
     byte load_byte(word address);
     word load_word(word address);
-    const byte* buffer() const;
 
     /*
         Templated Operations

@@ -2,7 +2,7 @@
 #include "opcode.h"
 #include <functional>
 #include <GameKid/utils/function_tools.h>
-#include "GameKid/utils/str.h"
+#include "GameKid/utils/string_tools.h"
 #include "builders/cpu_operation.h"
 
 template <typename... operand_types>
@@ -18,7 +18,7 @@ public:
 
     void run() override;
 
-    std::vector<byte> bytes(const std::vector<std::string>& operands) const override;
+    std::vector<byte> encode(const std::vector<std::string>& operands) const override;
 
     std::string to_str(const byte* next) const override;
 
@@ -43,7 +43,7 @@ void operands_opcode<operand_types...>::run()
 }
 
 template <typename ... operand_types>
-std::vector<byte> operands_opcode<operand_types...>::bytes(const std::vector<std::string>& operands) const
+std::vector<byte> operands_opcode<operand_types...>::encode(const std::vector<std::string>& operands) const
 {
     std::vector<byte> v;
 
@@ -56,7 +56,7 @@ std::vector<byte> operands_opcode<operand_types...>::bytes(const std::vector<std
 
     function_tools::for_each(_operands, [&](auto& operand)
     {
-        for (byte b : operand.bytes(operands[index]))
+        for (byte b : operand.encode(operands[index]))
         {
             v.push_back(b);
             ++index;

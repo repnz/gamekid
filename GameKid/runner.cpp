@@ -73,8 +73,9 @@ std::vector<std::string> runner::list(int count)
         }
         else
         {
-            const byte* immidiate_ptr = _cpu.mem.buffer() + pc + op->size();
-            opcodes[i] = op->to_str(immidiate_ptr);
+            const word imm_bytes = _cpu.mem.load_word(pc + op->size());
+            const byte* imm_ptr = (byte*)(&imm_bytes);
+            opcodes[i] = op->to_str(imm_ptr);
             pc += op->full_size();
         }
     }

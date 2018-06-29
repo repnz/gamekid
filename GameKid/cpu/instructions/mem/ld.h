@@ -1,6 +1,5 @@
 #pragma once
 #include "GameKid/cpu/instruction.h"
-#include "mem_operands.h"
 #include "GameKid/cpu/operands.h"
 #include <GameKid/cpu/builders/opcode_builder.h>
 

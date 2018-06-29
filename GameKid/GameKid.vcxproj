@@ -149,17 +149,19 @@
     <ClCompile Include="cpu\instructions\bitmask.cpp" />
     <ClCompile Include="cpu\instructions\jumps.cpp" />
     <ClCompile Include="cpu\instructions\mem.cpp" />
-    <ClCompile Include="cpu\instructions\mem\mem_operands.cpp" />
     <ClCompile Include="cpu\instructions\misc.cpp" />
     <ClCompile Include="cpu\instructions\rotation.cpp" />
     <ClCompile Include="cpu\instruction_set.cpp" />
+    <ClCompile Include="cpu\opcode.cpp" />
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands.cpp" />
-    <ClCompile Include="io\joypad.cpp" />
+    <ClCompile Include="io\joypad_cell.cpp" />
     <ClCompile Include="memory\memory.cpp" />
     <ClCompile Include="memory\memory_impl.cpp" />
     <ClCompile Include="runner.cpp" />
+    <ClCompile Include="utils\bytes.cpp" />
+    <ClCompile Include="utils\convert.cpp" />
     <ClCompile Include="utils\files.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,18 +171,33 @@
     <ClInclude Include="cpu\builders\instruction_builder.h" />
     <ClInclude Include="cpu\builders\instruction_opcode_adder.h" />
     <ClInclude Include="cpu\builders\opcode_builder.h" />
+    <ClInclude Include="cpu\operand\cc_operand.h" />
+    <ClInclude Include="cpu\operand\constant_operand.h" />
+    <ClInclude Include="cpu\operand\c_mem_operand.h" />
+    <ClInclude Include="cpu\operand\ff_offset_mem_operand.h" />
+    <ClInclude Include="cpu\operand\flags_reg8.h" />
     <ClInclude Include="cpu\instructions\alu.h" />
     <ClInclude Include="cpu\instructions\bitmask.h" />
     <ClInclude Include="cpu\instruction.h" />
     <ClInclude Include="cpu\instructions\jumps.h" />
     <ClInclude Include="cpu\instructions\mem.h" />
     <ClInclude Include="cpu\instructions\mem\ld.h" />
-    <ClInclude Include="cpu\instructions\mem\mem_operands.h" />
+    <ClInclude Include="cpu\operand\imm_mem_operand.h" />
+    <ClInclude Include="cpu\operand\imm_operand.h" />
+    <ClInclude Include="cpu\operand\op_reg_mem_operand.h" />
+    <ClInclude Include="cpu\operand\reg16.h" />
+    <ClInclude Include="cpu\operand\reg16_addressing.h" />
+    <ClInclude Include="cpu\operand\reg16_with_offset.h" />
+    <ClInclude Include="cpu\operand\reg8.h" />
+    <ClInclude Include="cpu\operand\reg_mem_operand.h" />
     <ClInclude Include="io\io_registers.h" />
-    <ClInclude Include="io\joypad.h" />
+    <ClInclude Include="io\joypad_cell.h" />
+    <ClInclude Include="memory\memory_cell.h" />
     <ClInclude Include="memory\memory_impl.h" />
+    <ClInclude Include="memory\readonly_memory_cell.h" />
     <ClInclude Include="utils\bits.h" />
     <ClInclude Include="utils\bytes.h" />
+    <ClInclude Include="utils\convert.h" />
     <ClInclude Include="utils\files.h" />
     <ClInclude Include="utils\function_tools.h" />
     <ClInclude Include="cpu\opcode_builder.h" />
@@ -199,7 +216,7 @@
     <ClInclude Include="cpu_types.h" />
     <ClInclude Include="runner.h" />
     <ClInclude Include="memory\memory_map.h" />
-    <ClInclude Include="utils\str.h" />
+    <ClInclude Include="utils\string_tools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

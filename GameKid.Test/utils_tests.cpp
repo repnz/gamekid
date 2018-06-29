@@ -1,5 +1,5 @@
 #include "pch.h"
-#include <GameKid/utils/str.h>
+#include <GameKid/utils/string_tools.h>
 #include <GameKid/utils/bytes.h>
 #include <GameKid/utils/bits.h>
 #include "test_tools.h"
@@ -41,6 +41,14 @@ TEST(UTILS, LITTLE_ENDIAN_DECODE)
     assert_equals<byte>(0x10, bytes::little_endian_decode<byte>({ 0x10 , 0x00 }));
 
     assert_equals<word>(0x110, bytes::little_endian_decode<word>({ 0x10 , 0x01, 0x00 }));
+}
+
+TEST(OPERANDS, LITTLE_ENDIAN_ENCODE_STR)
+{
+    assert_equals({ 0xFF }, bytes::little_endian_encode_str<byte>("255"));
+    assert_equals({ 0xFF, 0x00 }, bytes::little_endian_encode_str<word>("255"));
+    assert_equals({ 0x00 }, bytes::little_endian_encode_str<byte>("0"));
+    assert_equals({ 0x01, 0x02 }, bytes::little_endian_encode_str<word>("513"));
 }
 
 TEST(UTILS, SET_BIT) 

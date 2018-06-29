@@ -3,6 +3,7 @@
 #include "GameKid/cpu/builders/instruction_builder.h"
 #include "GameKid/opcodes.h"
 #include "GameKid/cpu/operands.h"
+#include "GameKid/utils/bits.h"
 
 void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry)
 {

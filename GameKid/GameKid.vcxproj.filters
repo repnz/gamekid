@@ -51,13 +51,7 @@
     <ClCompile Include="cpu\instructions\alu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cpu\instructions\mem\mem_operands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cartridge.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="io\joypad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="runner.cpp">
@@ -70,6 +64,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="memory\memory_impl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="io\joypad_cell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu\opcode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\bytes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\convert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,9 +125,6 @@
     <ClInclude Include="cpu\operand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cpu\instructions\mem\mem_operands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cpu\opcode_builder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -141,9 +144,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\function_tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils\str.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cpu\operands_opcode.h">
@@ -167,9 +167,6 @@
     <ClInclude Include="io\io_registers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="io\joypad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="utils\files.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -183,6 +180,60 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="memory\memory_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\memory_cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="io\joypad_cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\flags_reg8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\reg8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\reg16.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\constant_operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\reg16_addressing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\readonly_memory_cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\reg_mem_operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\imm_operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\imm_mem_operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\reg16_with_offset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\ff_offset_mem_operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\c_mem_operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\op_reg_mem_operand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\string_tools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\convert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu\operand\cc_operand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

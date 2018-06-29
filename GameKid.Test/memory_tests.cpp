@@ -7,10 +7,7 @@ TEST(MEMORY, ECHO_INTERNAL_MEMO)
 {
     memory m({});
     
-    word offset = 0;
-    const word size = memory_map::internal_ram_8kb_echo - memory_map::internal_ram_8kb;
-    
-    while (offset < size)
+    for (int offset=0; offset<0x1e00; ++offset)
     {
         const word a_address = memory_map::internal_ram_8kb + offset;
         const word b_address = memory_map::internal_ram_8kb_echo + offset;
