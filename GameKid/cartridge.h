@@ -28,10 +28,32 @@ namespace cartridge_offsets {
 };
 
 enum class cartrage_types {
-    rom_only = 0,
-    mbc1 = 0x01,
+    /// Rom Only
+    /// 32kb rom only at memory 0x0000-0x7FFF
+    rom_only = 0,               
+    
+    /// Memory Bank Controller 1
+    ///
+    /// 0x0000-0x3FFF - Rom Bank 00 - First 16kb of rom - ReadOnly
+    ///
+    /// 0x4000-0x7FFF - Rom Bank 01-7F
+    ///     - Allows accessing 2mb 
+    ///     - Banks 0x20, 0x40, 0x60 cannot be used
+    ///
+    /// 0xA000-0xBFFFF - Ram Bank 00-03 - If Any (Read/Write)
+    ///     - Allowing to store game positions or high score tables 
+    ///     - Available ram sizes are 2kb (0xA000-0xA7FFF), 8kb (0xA000-0xBFFFF), 32kb (0xA000-0xBFFF)
+    ///
+    /// 0x0000-0x1FFF - Ram Enable - Write Only 
+    ///     - Any value with 0xA in the lower nibble enables ram, other value disables
+    ///
+    /// 0x2000-0x3FFF - Rom Bank Number - Write Only
+    ///     - Use 5 lower bits to choose the rom bank number
+    ///     - 0 to 1, 20 to 21, 40 to 41, 60 to 61
+    mbc1 = 0x01,                
     mbc1_ram = 0x02,
     mbc1_ram_battery = 0x03,
+
     mbc2 = 0x5,
     mbc2_battery = 0x5,
     rom_ram = 0x08,
