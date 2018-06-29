@@ -12,10 +12,6 @@ public:
     reg16(const std::string& name, byte* low, byte* high) :
         _name(name), _low(low), _high(high) {}
 
-    // non copyable
-    reg16(const reg16&) = delete;
-    reg16& operator=(reg16&) = delete;
-
     const std::string& name() const { return _name; }
 
     word load() const override { return (*_high << 8) + *_low; }
