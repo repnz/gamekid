@@ -19,7 +19,6 @@ namespace gamekid::cpu::impl{
         gamekid::system & _system;
     public:
         explicit ld_instruction(gamekid::system& system);
-        void reg_to_imm(byte* reg_address);
         void add_imm_to_reg(byte op_value, reg8& reg);
         void add_reg_to_reg_opcodes(byte b_value, reg8& dst);
         void add_reg_to_reg(byte val, reg8& src, reg8& dst);

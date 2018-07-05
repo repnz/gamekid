@@ -6,6 +6,7 @@
 
 using namespace gamekid::cpu;
 using namespace gamekid::cpu::impl;
+using namespace gamekid::utils;
 
 void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry){
     const byte value = op.load();
@@ -17,7 +18,7 @@ void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry){
         new_value |= (value >> 7);
     }
 
-    cpu.F.carry(gamekid::utils::bits::check_bit(value, 7));
+    cpu.F.carry(bits::check_bit(value, 7));
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.half_carry(false);
@@ -52,7 +53,7 @@ void base_rr_operation(cpu& cpu, operand<byte>& op, bool move_carry){
     }
 
     // update flags
-    cpu.F.carry(gamekid::utils::bits::check_bit(value, 0));
+    cpu.F.carry(bits::check_bit(value, 0));
     cpu.F.half_carry(false);
     cpu.F.substract(false);
     cpu.F.zero(new_value == 0);
@@ -83,7 +84,7 @@ void rotation::sla_operation(cpu& cpu, operand<byte>& op){
     const byte new_value = value << 1;
     
     cpu.F.zero(new_value == 0);
-    cpu.F.carry(gamekid::utils::bits::check_bit(value, 7));
+    cpu.F.carry(bits::check_bit(value, 7));
     cpu.F.half_carry(false);
     cpu.F.substract(false);
     
@@ -95,7 +96,7 @@ void rotation::srl_operation(cpu& cpu, operand<byte>& op){
     const byte new_value = value >> 1;
 
     cpu.F.zero(new_value == 0);
-    cpu.F.carry(gamekid::utils::bits::check_bit(value, 0));
+    cpu.F.carry(bits::check_bit(value, 0));
     cpu.F.half_carry(false);
     cpu.F.substract(false);
 
@@ -107,7 +108,7 @@ void rotation::sra_operation(cpu& cpu, operand<byte>& op){
     const byte new_value = ((char)value) >> 1;
     
     cpu.F.zero(new_value == 0);
-    cpu.F.carry(gamekid::utils::bits::check_bit(value, 0));
+    cpu.F.carry(bits::check_bit(value, 0));
     cpu.F.half_carry(false);
     cpu.F.substract(false);
 

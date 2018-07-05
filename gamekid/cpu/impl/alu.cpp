@@ -7,6 +7,7 @@
 using namespace gamekid::cpu::impl;
 using namespace gamekid::cpu::builders;
 using namespace gamekid::cpu;
+using namespace gamekid::utils;
 
 template <bool add_carry>
 static void base_add_operation(cpu& cpu, operand<byte>& op){
@@ -20,7 +21,7 @@ static void base_add_operation(cpu& cpu, operand<byte>& op){
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.carry(new_value < original_value);
-    cpu.F.half_carry(gamekid::utils::bits::check_carry_up(original_value, new_value, 3));
+    cpu.F.half_carry(bits::check_carry_up(original_value, new_value, 3));
     cpu.A.store(new_value);
 }
 
@@ -43,7 +44,7 @@ void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_r
     cpu.F.zero(new_value == 0);
     cpu.F.substract(false);
     cpu.F.carry(new_value > original_value);
-    cpu.F.half_carry(gamekid::utils::bits::check_carry_down(original_value, new_value, 3));
+    cpu.F.half_carry(bits::check_carry_down(original_value, new_value, 3));
 
     if (save_result){
         cpu.A.store(new_value);
@@ -124,8 +125,8 @@ static void base_add_word_operation(cpu& cpu, operand<word>& op, word value){
     const word result = original + value;
     op.store(result);
 
-    cpu.F.half_carry(gamekid::utils::bits::check_carry_up(original, result, 11));
-    cpu.F.carry(gamekid::utils::bits::check_carry_up(original, result, 15));
+    cpu.F.half_carry(bits::check_carry_up(original, result, 11));
+    cpu.F.carry(bits::check_carry_up(original, result, 15));
     cpu.F.substract(false);
 }
 

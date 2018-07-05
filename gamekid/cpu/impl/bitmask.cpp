@@ -6,9 +6,10 @@
 
 using namespace gamekid::cpu;
 using namespace gamekid::cpu::impl;
+using namespace gamekid::utils;
 
 void bitmask::bit_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_check){
-    const bool is_on = gamekid::utils::bits::check_bit(byte_to_check.load(), bit.load());
+    const bool is_on = bits::check_bit(byte_to_check.load(), bit.load());
     cpu.F.zero(!is_on);
     cpu.F.substract(false);
     cpu.F.half_carry(true);
@@ -16,13 +17,13 @@ void bitmask::bit_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to
 
 void bitmask::res_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change){
     // Flags are not affected.
-    const byte new_value = gamekid::utils::bits::set_bit_off(byte_to_change.load(), bit.load());
+    const byte new_value = bits::set_bit_off(byte_to_change.load(), bit.load());
     byte_to_change.store(new_value);
 }
 
 void bitmask::set_operation(cpu& cpu, operand<byte>& bit, operand<byte>& byte_to_change){
     // Flags are not affected.
-    const byte new_value = gamekid::utils::bits::set_bit_on(byte_to_change.load(), bit.load());
+    const byte new_value = bits::set_bit_on(byte_to_change.load(), bit.load());
     byte_to_change.store(new_value);
 }
 
