@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace convert {
+namespace gamekid::utils::convert {
 
     int to_number(const std::string& str, int byte_size, int base = 10);
 

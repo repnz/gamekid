@@ -145,7 +145,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameKid\GameKid.vcxproj">
+    <ProjectReference Include="..\gamekid\gamekid.vcxproj">
       <Project>{eb54ece3-fa75-42df-8a7e-08184f0d07cc}</Project>
     </ProjectReference>
   </ItemGroup>

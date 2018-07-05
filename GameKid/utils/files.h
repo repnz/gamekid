@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include <GameKid/cpu_types.h>
+#include <gamekid/utils/types.h>
 
-namespace files {
+namespace gamekid::utils::files {
     std::vector<byte> read_file(const std::string& fileName);
 }

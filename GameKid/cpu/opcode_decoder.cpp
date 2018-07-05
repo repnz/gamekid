@@ -1,7 +1,9 @@
 #include "opcode_decoder.h"
 #include <memory>
 #include <set>
-#include <GameKid/utils/bytes.h>
+#include <gamekid/utils/bytes.h>
+
+using namespace gamekid::cpu;
 
 opcode_decoder::opcode_decoder(instruction_set & set)
     : _set(set)
@@ -15,7 +17,7 @@ void opcode_decoder::initialize_tables()
     {
         for (opcode* op : *instruction)
         {
-            const word opcode_word_value = bytes::little_endian_decode<word>(op->value);
+            const word opcode_word_value = gamekid::utils::bytes::little_endian_decode<word>(op->value);
             _opcode_table.insert(std::pair<word, opcode*>(opcode_word_value, op));
         }
     }

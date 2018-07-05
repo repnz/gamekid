@@ -3,6 +3,8 @@
 #include "memory_map.h"
 #include "memory_impl.h"
 
+using gamekid::memory::memory;
+
 memory::memory(const std::vector<byte>& rom) : _impl(std::make_unique<memory::impl>(rom)) {
 }
 

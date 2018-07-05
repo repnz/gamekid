@@ -1,5 +1,7 @@
 #include "opcode.h"
 
+using namespace gamekid::cpu;
+
 opcode::opcode(cpu & cpu, const std::string & name, const std::vector<byte>& value, byte cycles)
     : _cpu(cpu), name(name), value(value), cycles(cycles) {
     if (name.size() == 0) {

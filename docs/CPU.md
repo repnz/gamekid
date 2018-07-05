@@ -4,7 +4,7 @@
 
 ### Why make this?
 
-CPU documentation for the GameKid project - 
+CPU documentation for the gamekid project - 
 CPU manual for GameBoy is pretty bad, 
 So writing a good manual will make the development of an
 Emulator, Debugger, Disassembler, Assembler easier.

@@ -1,6 +1,8 @@
 #include "memory_impl.h"
 #include "memory_map.h"
-#include <GameKid/io/io_registers.h>
+#include <gamekid/io/io_registers.h>
+
+using gamekid::memory::memory;
 
 memory::impl::impl(const std::vector<byte>& rom) : _rom(rom) {
     initialize_cells();

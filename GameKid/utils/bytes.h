@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
-#include <GameKid/cpu_types.h>
+#include <gamekid/utils/types.h>
 #include <algorithm>
 #include "convert.h"
 
-namespace bytes {
+namespace gamekid::utils::bytes {
     std::vector<byte> little_endian_encode(int value, int size_in_bytes);
 
     template <typename T>

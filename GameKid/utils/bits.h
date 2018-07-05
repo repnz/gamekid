@@ -1,7 +1,7 @@
 #pragma once
-#include "GameKid/cpu_types.h"
+#include "gamekid/utils/types.h"
 
-namespace bits {
+namespace gamekid::utils::bits {
     template <typename T>
     T set_bit_on(T value, byte place) {
         return value | (1 << place);

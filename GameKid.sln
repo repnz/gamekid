@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid", "GameKid\GameKid.vcxproj", "{EB54ECE3-FA75-42DF-8A7E-08184F0D07CC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamekid", "gamekid\gamekid.vcxproj", "{EB54ECE3-FA75-42DF-8A7E-08184F0D07CC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid.Test", "GameKid.Test\GameKid.Test.vcxproj", "{7A7BADF5-2EF5-447D-B227-43417541D58F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamekid.tests", "gamekid.tests\gamekid.tests.vcxproj", "{7A7BADF5-2EF5-447D-B227-43417541D58F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F7ECDAF1-8331-4F24-B1AC-782FEFF64145}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,11 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid.Decompiler", "GameKid.Decompiler\GameKid.Decompiler.vcxproj", "{29E6636F-AF7F-4D9F-A715-AC12818F52B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamekid.disassembler", "gamekid.disassembler\gamekid.disassembler.vcxproj", "{29E6636F-AF7F-4D9F-A715-AC12818F52B4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid.Emulator", "GameKid.Emulator\GameKid.Emulator.vcxproj", "{450014CB-11EC-4387-BBDA-F16201AF8A3D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamekid.emulator", "gamekid.emulator\gamekid.emulator.vcxproj", "{450014CB-11EC-4387-BBDA-F16201AF8A3D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameKid.Debugger", "GameKid.Debugger\GameKid.Debugger.vcxproj", "{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamekid.debugger", "gamekid.debugger\gamekid.debugger.vcxproj", "{30754CD6-0EA1-4BD9-9BBD-0A10D99542DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

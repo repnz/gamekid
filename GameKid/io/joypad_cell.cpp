@@ -1,5 +1,7 @@
 #include "joypad_cell.h"
-#include <GameKid/utils/bits.h>
+#include <gamekid/utils/bits.h>
+
+using namespace gamekid::io;
 
 /*
 This is the matrix layout for the joypad byte
@@ -26,7 +28,7 @@ namespace joypad_bits {
 
 void joypad_cell::store(byte value){
 
-    if (bits::check_bit(value, joypad_bits::P14)) {
+    if (gamekid::utils::bits::check_bit(value, joypad_bits::P14)) {
         set_byte_value(
             joypad_button::right,
             joypad_button::left,
@@ -43,18 +45,19 @@ void joypad_cell::store(byte value){
     }
 }
 
-void joypad_cell::set_byte_value(joypad_button b1, joypad_button b2, joypad_button b3, joypad_button b4){
+void joypad_cell::set_byte_value(joypad_button b1, joypad_button b2, 
+    joypad_button b3, joypad_button b4){
     // load value
-    byte p1 = memory_cell::load();
+    byte p1 = cell::load();
     
     // set value
-    p1 = bits::set_bit(p1, joypad_bits::P10, _status[b1]);
-    p1 = bits::set_bit(p1, joypad_bits::P11, _status[b2]);
-    p1 = bits::set_bit(p1, joypad_bits::P12, _status[b3]);
-    p1 = bits::set_bit(p1, joypad_bits::P13, _status[b4]);
+    p1 = gamekid::utils::bits::set_bit(p1, joypad_bits::P10, _status[b1]);
+    p1 = gamekid::utils::bits::set_bit(p1, joypad_bits::P11, _status[b2]);
+    p1 = gamekid::utils::bits::set_bit(p1, joypad_bits::P12, _status[b3]);
+    p1 = gamekid::utils::bits::set_bit(p1, joypad_bits::P13, _status[b4]);
 
     // store value
-    memory_cell::store(p1);
+    cell::store(p1);
 }
 
 

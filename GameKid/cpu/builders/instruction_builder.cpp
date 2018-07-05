@@ -1,6 +1,9 @@
 #include <memory>
 #include "instruction_builder.h"
-#include <GameKid/cpu/instruction.h>
+#include <gamekid/cpu/instruction.h>
+
+using namespace gamekid::cpu;
+using namespace gamekid::cpu::builders;
 
 instruction_builder::instruction_builder(cpu& cpu, const std::string& name): 
 _cpu(cpu),
