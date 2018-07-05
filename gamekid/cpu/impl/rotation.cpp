@@ -8,11 +8,12 @@ using namespace gamekid::cpu;
 using namespace gamekid::cpu::impl;
 using namespace gamekid::utils;
 
-void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry){
+template <bool move_carry>
+static void base_rl_operation(cpu& cpu, operand<byte>& op){
     const byte value = op.load();
     byte new_value = (value << 1);
 
-    if (move_carry) {
+    if constexpr (move_carry) {
         new_value |= cpu.F.carry_bit();
     } else {
         new_value |= (value >> 7);
@@ -27,11 +28,11 @@ void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry){
 }
 
 void rotation::rl_operation(cpu& cpu, operand<byte>& op){
-    base_rl_operation(cpu, op, false);
+    base_rl_operation<false>(cpu, op);
 }
 
 void rotation::rlc_operation(cpu& cpu, operand<byte>& op){
-    base_rl_operation(cpu, op, true);
+    base_rl_operation<true>(cpu, op);
 }
 
 void rotation::rla_operation(cpu& cpu) {
@@ -42,11 +43,12 @@ void rotation::rlca_operation(cpu& cpu){
     rlc_operation(cpu, cpu.A);
 }
 
-void base_rr_operation(cpu& cpu, operand<byte>& op, bool move_carry){
+template <bool move_carry>
+static void base_rr_operation(cpu& cpu, operand<byte>& op){
     const byte value = op.load();
     byte new_value = value >> 1;
 
-    if (move_carry){
+    if constexpr (move_carry){
         new_value |= (cpu.F.carry_bit() << 7);
     } else {
         new_value |= value << 7;
@@ -62,11 +64,11 @@ void base_rr_operation(cpu& cpu, operand<byte>& op, bool move_carry){
 }
 
 void rotation::rr_operation(cpu& cpu, operand<byte>& op) {
-    base_rr_operation(cpu, op, false);
+    base_rr_operation<false>(cpu, op);
 }
 
 void rotation::rrc_operation(cpu& cpu, operand<byte>& op){
-    base_rr_operation(cpu, op, true);
+    base_rr_operation<true>(cpu, op);
 }
 
 

@@ -33,11 +33,12 @@ void alu::adc_operation(cpu& cpu, operand<byte>& op){
     base_add_operation<true>(cpu, op);
 }
 
-void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_result){
+template <bool sub_carry, bool save_result>
+static void base_sub_operation(cpu& cpu, operand<byte>& op){
     byte original_value = cpu.A.load();
     byte new_value = original_value - op.load();
 
-    if (sub_carry){
+    if constexpr (sub_carry){
         new_value -= cpu.F.carry_bit();
     }
 
@@ -46,18 +47,18 @@ void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_r
     cpu.F.carry(new_value > original_value);
     cpu.F.half_carry(bits::check_carry_down(original_value, new_value, 3));
 
-    if (save_result){
+    if constexpr (save_result){
         cpu.A.store(new_value);
     }
 }
 
 
 void alu::sub_operation(cpu& cpu, operand<byte>& op){
-    base_sub_operation(cpu, op, false, true);
+    base_sub_operation<false, true>(cpu, op);
 }
 
 void alu::sbc_operation(cpu& cpu, operand<byte>& op){
-    base_sub_operation(cpu, op, true, true);
+    base_sub_operation<true, true>(cpu, op);
 }
 
 void alu::and_operation(cpu& cpu, operand<byte>& op){
@@ -88,7 +89,7 @@ void alu::xor_operation(cpu& cpu, operand<byte>& op){
 }
 
 void alu::cp_operation(cpu& cpu, operand<byte>& op){
-    base_sub_operation(cpu, op, false, false);
+    base_sub_operation<false, false>(cpu, op);
 }
 
 
