@@ -8,11 +8,12 @@ using namespace gamekid::cpu::impl;
 using namespace gamekid::cpu::builders;
 using namespace gamekid::cpu;
 
-static void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry){
+template <bool add_carry>
+static void base_add_operation(cpu& cpu, operand<byte>& op){
     byte original_value = cpu.A.load();
     byte new_value = original_value + op.load();
 
-    if (add_carry){
+    if constexpr (add_carry){
         new_value += cpu.F.carry_bit();
     }
 
@@ -24,11 +25,11 @@ static void base_add_operation(cpu& cpu, operand<byte>& op, bool add_carry){
 }
 
 void alu::add_operation(cpu& cpu, operand<byte>& op){
-    base_add_operation(cpu, op, false);
+    base_add_operation<false>(cpu, op);
 }
 
 void alu::adc_operation(cpu& cpu, operand<byte>& op){
-    base_add_operation(cpu, op, true);
+    base_add_operation<true>(cpu, op);
 }
 
 void base_sub_operation(cpu& cpu, operand<byte>& op, bool sub_carry, bool save_result){
