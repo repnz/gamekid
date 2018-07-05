@@ -191,7 +191,8 @@
     <ClInclude Include="cpu\operands\reg16_with_offset.h" />
     <ClInclude Include="cpu\operands\reg8.h" />
     <ClInclude Include="cpu\operands\reg_mem_operand.h" />
-    <ClInclude Include="rom\cartridge_types.h" />
+    <ClInclude Include="rom\cartridge.h" />
+    <ClInclude Include="rom\cartridge_type.h" />
     <ClInclude Include="rom\checksum.h" />
     <ClInclude Include="rom\header_offsets.h" />
     <ClInclude Include="system.h" />

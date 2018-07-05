@@ -1,7 +1,7 @@
 #pragma once
 
 namespace gamekid::rom {
-    enum class cartrage_types {
+    enum class cartridge_type {
         /// Rom Only
         /// 32kb rom only at memory 0x0000-0x7FFF
         rom_only = 0,
