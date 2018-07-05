@@ -1,9 +1,7 @@
-#include "cartridge.h"
+#include "checksum.h"
 #include "header_offsets.h"
 
-using namespace gamekid::rom;
-
-byte cartridge::calculate_header_checksum(const byte* data) {
+byte gamekid::rom::checksum::calculate_header_checksum(const byte* data) {
     byte checksum = 0;
 
     for (int i = 0x134; i < 0x14c; ++i) {
@@ -13,8 +11,8 @@ byte cartridge::calculate_header_checksum(const byte* data) {
     return checksum;
 }
 
-bool cartridge::validate_header_checksum(const byte * data) {
-    byte actual = cartridge::calculate_header_checksum(data);
+bool gamekid::rom::checksum::validate_header_checksum(const byte * data) {
+    byte actual = checksum::calculate_header_checksum(data);
     byte checksum = data[header_offsets::header_checksum.start];
 
     return (checksum == actual);

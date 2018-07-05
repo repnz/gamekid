@@ -1,11 +1,13 @@
 #include "runner.h"
-#include <gamekid/rom/cartridge.h>
+#include <gamekid/rom/checksum.h>
 
 using namespace gamekid;
 
 runner::runner(std::vector<byte>& rom) : _system(rom), _set(_system.cpu()), _decoder(_set){
 
-    rom::cartridge::validate_header_checksum(rom.data());
+    if (!rom::checksum::validate_header_checksum(rom.data())) {
+        throw "ChecksumError";
+    }
     
     if (rom.size() > 0xFFFF) {
         throw "OverflowError";

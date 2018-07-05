@@ -1,7 +1,4 @@
 #pragma once
-#include "gamekid/utils/types.h"
-#include <gamekid/utils/offset.h>
-#include <tuple>
 
 namespace gamekid::rom {
     enum class cartrage_types {
@@ -56,10 +53,5 @@ namespace gamekid::rom {
         huc3 = 0xfe,
         huc1_ram_battery = 0xff
     };
-
-    namespace cartridge {
-        byte calculate_header_checksum(const byte* data);
-        bool validate_header_checksum(const byte* data);
-    }
 }
 

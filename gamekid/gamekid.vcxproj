@@ -143,7 +143,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cpu\operands\reg16_with_offset.cpp" />
-    <ClCompile Include="rom\cartridge.cpp" />
     <ClCompile Include="cpu\cpu.cpp" />
     <ClCompile Include="cpu\builders\instruction_builder.cpp" />
     <ClCompile Include="cpu\impl\alu.cpp" />
@@ -157,6 +156,7 @@
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands_container.cpp" />
+    <ClCompile Include="rom\checksum.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="io\joypad_cell.cpp" />
     <ClCompile Include="memory\memory.cpp" />
@@ -169,7 +169,6 @@
   <ItemGroup>
     <ClInclude Include="cpu\cpu_operation.h" />
     <ClInclude Include="cpu\impl\opcodes_struct.h" />
-    <ClInclude Include="rom\cartridge.h" />
     <ClInclude Include="cpu\base_opcodes\register_opcode.h" />
     <ClInclude Include="cpu\builders\instruction_builder.h" />
     <ClInclude Include="cpu\builders\instruction_opcode_adder.h" />
@@ -192,6 +191,8 @@
     <ClInclude Include="cpu\operands\reg16_with_offset.h" />
     <ClInclude Include="cpu\operands\reg8.h" />
     <ClInclude Include="cpu\operands\reg_mem_operand.h" />
+    <ClInclude Include="rom\cartridge_types.h" />
+    <ClInclude Include="rom\checksum.h" />
     <ClInclude Include="rom\header_offsets.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="io\io_registers.h" />
