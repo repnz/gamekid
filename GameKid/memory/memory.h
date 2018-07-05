@@ -4,8 +4,7 @@
 #include <vector>
 
 namespace gamekid::memory {
-    class memory
-    {
+    class memory {
     private:
         class impl;
         std::unique_ptr<impl> _impl;

@@ -51,19 +51,15 @@ std::vector<std::string> runner::list(int count) {
     
     word pc = _system.cpu().PC;
 
-    for (int i = 0; i < count; i++)
-    {
+    for (int i = 0; i < count; i++) {
         const word opcode_word = _system.memory().load_word(pc);
         gamekid::cpu::opcode* op = _decoder.decode(opcode_word);
 
-        if (op == nullptr) 
-        {
+        if (op == nullptr)  {
             const byte current_byte = static_cast<byte>(opcode_word);
             opcodes[i] = ".byte " + std::to_string(current_byte);
             pc += 1;
-        }
-        else
-        {
+        } else {
             const word imm_bytes = _system.memory().load_word(pc + op->size());
             const byte* imm_ptr = (byte*)(&imm_bytes);
             opcodes[i] = op->to_str(imm_ptr);

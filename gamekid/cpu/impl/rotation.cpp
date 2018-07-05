@@ -7,17 +7,13 @@
 using namespace gamekid::cpu;
 using namespace gamekid::cpu::impl;
 
-void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry)
-{
+void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry){
     const byte value = op.load();
     byte new_value = (value << 1);
 
-    if (move_carry) 
-    {
+    if (move_carry) {
         new_value |= cpu.F.carry_bit();
-    }
-    else 
-    {
+    } else {
         new_value |= (value >> 7);
     }
 
@@ -29,37 +25,29 @@ void base_rl_operation(cpu& cpu, operand<byte>& op, bool move_carry)
     op.store(new_value);
 }
 
-void rotation::rl_operation(cpu& cpu, operand<byte>& op)
-{
+void rotation::rl_operation(cpu& cpu, operand<byte>& op){
     base_rl_operation(cpu, op, false);
 }
 
-void rotation::rlc_operation(cpu& cpu, operand<byte>& op)
-{
+void rotation::rlc_operation(cpu& cpu, operand<byte>& op){
     base_rl_operation(cpu, op, true);
 }
 
-void rotation::rla_operation(cpu& cpu) 
-{
+void rotation::rla_operation(cpu& cpu) {
     rl_operation(cpu, cpu.A);
 }
 
-void rotation::rlca_operation(cpu& cpu)
-{
+void rotation::rlca_operation(cpu& cpu){
     rlc_operation(cpu, cpu.A);
 }
 
-void base_rr_operation(cpu& cpu, operand<byte>& op, bool move_carry)
-{
+void base_rr_operation(cpu& cpu, operand<byte>& op, bool move_carry){
     const byte value = op.load();
     byte new_value = value >> 1;
 
-    if (move_carry)
-    {
+    if (move_carry){
         new_value |= (cpu.F.carry_bit() << 7);
-    }
-    else 
-    {
+    } else {
         new_value |= value << 7;
     }
 
@@ -72,30 +60,25 @@ void base_rr_operation(cpu& cpu, operand<byte>& op, bool move_carry)
     op.store(new_value);
 }
 
-void rotation::rr_operation(cpu& cpu, operand<byte>& op)
-{
+void rotation::rr_operation(cpu& cpu, operand<byte>& op) {
     base_rr_operation(cpu, op, false);
 }
 
-void rotation::rrc_operation(cpu& cpu, operand<byte>& op)
-{
+void rotation::rrc_operation(cpu& cpu, operand<byte>& op){
     base_rr_operation(cpu, op, true);
 }
 
 
-void rotation::rra_operation(cpu& cpu) 
-{
+void rotation::rra_operation(cpu& cpu) {
     rr_operation(cpu, cpu.A);
 }
 
 
-void rotation::rrca_operation(cpu& cpu) 
-{
+void rotation::rrca_operation(cpu& cpu) {
     rrc_operation(cpu, cpu.A);
 }
 
-void rotation::sla_operation(cpu& cpu, operand<byte>& op)
-{
+void rotation::sla_operation(cpu& cpu, operand<byte>& op){
     const byte value = op.load();
     const byte new_value = value << 1;
     
@@ -107,8 +90,7 @@ void rotation::sla_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void rotation::srl_operation(cpu& cpu, operand<byte>& op)
-{
+void rotation::srl_operation(cpu& cpu, operand<byte>& op){
     const byte value = op.load();
     const byte new_value = value >> 1;
 
@@ -120,8 +102,7 @@ void rotation::srl_operation(cpu& cpu, operand<byte>& op)
     op.store(new_value);
 }
 
-void rotation::sra_operation(cpu& cpu, operand<byte>& op)
-{
+void rotation::sra_operation(cpu& cpu, operand<byte>& op){
     const byte value = op.load();
     const byte new_value = ((char)value) >> 1;
     
@@ -134,8 +115,7 @@ void rotation::sra_operation(cpu& cpu, operand<byte>& op)
 }
 
 
-void rotation::initialize(instruction_set& set, cpu& c)
-{
+void rotation::initialize(instruction_set& set, cpu& c){
     set.add_instruction(builders::instruction_builder(c, "rlca")
         .operands()
         .opcode(RLCA)

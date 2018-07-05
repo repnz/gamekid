@@ -6,8 +6,7 @@
 
 void decode_opcode_test(const gamekid::cpu::opcode& opcode, gamekid::cpu::opcode_decoder& decoder);
 
-TEST(OPCODE_DECODER, DECODE)
-{
+TEST(OPCODE_DECODER, DECODE){
     gamekid::system sys({});
     gamekid::cpu::cpu& cpu = sys.cpu();
     gamekid::cpu::instruction_set set(cpu);

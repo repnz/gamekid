@@ -13,8 +13,7 @@ void jumps::jp_operation(cpu& cpu, operand<word>& address) {
 }
 
 void jumps::jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address){
-    if (condition.load())
-    {
+    if (condition.load()) {
         jp_operation(cpu, address);
     }
 }
@@ -25,8 +24,7 @@ void jumps::jr_operation(cpu& cpu, operand<byte>& offset){
 }
 
 void jumps::jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byte>& offset){
-    if (condition.load())
-    {
+    if (condition.load()) {
         jr_operation(cpu, offset);
     }
 }
@@ -156,8 +154,7 @@ void jumps::initialize(cpu & cpu, instruction_set & set){
 
     builders::instruction_builder rst_builder(cpu, "rst");
 
-    for (int i=0x00; i<=0x38; i += 8)
-    {
+    for (int i=0x00; i<=0x38; i += 8){
         rst_builder
             .operands(cpu.operands().constant(i))
             .opcode(0xC7 + i)

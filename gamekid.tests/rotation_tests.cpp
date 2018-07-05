@@ -55,8 +55,7 @@ TEST(ROTATION, RLC_TURN_CARRY_ON) {
     ASSERT_EQ(cpu.F.carry(), true);
 }
 
-TEST(ROTATION, RLC_CARRY_ON)
-{
+TEST(ROTATION, RLC_CARRY_ON){
     // Arrange
     gamekid::system sys({});
     gamekid::cpu::cpu& cpu = sys.cpu();
@@ -88,8 +87,7 @@ TEST(ROTATION, RR_CARRY_ON) {
     ASSERT_EQ(cpu.F.carry(), true);
 }
 
-TEST(ROTATION, RR_CARRY_OFF)
-{
+TEST(ROTATION, RR_CARRY_OFF){
     // Arrange
     gamekid::system sys({});
     gamekid::cpu::cpu& cpu = sys.cpu();

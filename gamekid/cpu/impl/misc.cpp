@@ -53,8 +53,7 @@ void misc::daa_operation(cpu& cpu){
 }
 
 
-void misc::ccf_operation(cpu& cpu)
-{
+void misc::ccf_operation(cpu& cpu){
     cpu.F.substract(false);
     cpu.F.half_carry(false);
     cpu.F.carry(!cpu.F.carry());

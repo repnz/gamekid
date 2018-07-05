@@ -6,8 +6,7 @@
 
 namespace gamekid {
 
-    class runner
-    {
+    class runner {
     private:
         gamekid::system _system;
         gamekid::cpu::instruction_set _set;
