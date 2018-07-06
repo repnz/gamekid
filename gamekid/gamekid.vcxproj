@@ -156,6 +156,7 @@
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands_container.cpp" />
+    <ClCompile Include="memory\io_page.cpp" />
     <ClCompile Include="rom\cartridge.cpp" />
     <ClCompile Include="rom\checksum.cpp" />
     <ClCompile Include="system.cpp" />
@@ -192,6 +193,9 @@
     <ClInclude Include="cpu\operands\reg16_with_offset.h" />
     <ClInclude Include="cpu\operands\reg8.h" />
     <ClInclude Include="cpu\operands\reg_mem_operand.h" />
+    <ClInclude Include="memory\io_page.h" />
+    <ClInclude Include="memory\normal_page.h" />
+    <ClInclude Include="memory\page.h" />
     <ClInclude Include="rom\cartridge.h" />
     <ClInclude Include="rom\cartridge_header.h" />
     <ClInclude Include="rom\checksum.h" />

@@ -14,5 +14,6 @@ namespace gamekid::memory {
 
         virtual byte load() { return _value; }
         virtual void store(byte value) { _value = value; }
+        virtual ~cell() = default;
     };
 }

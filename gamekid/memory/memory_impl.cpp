@@ -4,29 +4,36 @@
 
 using gamekid::memory::memory;
 
-memory::impl::impl(const std::vector<byte>& rom) : _rom(rom) {
+int gamekid::memory::memory::impl::page_index(const word address) {
+    return address / 256;
+}
+
+gamekid::memory::memory::impl::impl(const std::vector<byte>& rom) : _rom(rom) {
     initialize_cells();
 }
 
-void memory::impl::initialize_cells() {
-    // create all the normal cells
-    for (int i = 0; i < 0xFFFF; ++i)  {
-        _cells[i] = &_normal_cells[i];
+void gamekid::memory::memory::impl::initialize_cells() {
+    // initialize all the pages with normal pages
+    for (int i = 0; i < 0xFF; ++i)  {
+        _pages[i] = &_normal_pages[i];
     }
 
-    // duplicate all the cells in the internal ram 
-    for (int i=0; i<0x1e00; ++i) {
-        _cells[memory_map::internal_ram_8kb + i] =
-            _cells[memory_map::internal_ram_8kb_echo + i];
+    // duplicate all the pages in the internal ram 
+    const int internal_ram_index = page_index(memory_map::internal_ram_8kb);
+    const int echo_ram_index  = page_index(memory_map::internal_ram_8kb_echo);
+
+    for (int i=0; i<0x1e; ++i) {
+        _pages[internal_ram_index +i] =
+            _pages[echo_ram_index +i];
     }
 
-    _cells[P1] = &_joypad;
+    _pages[io_page::io_page_memory >> 8] = &_io_page;
 }
 
-void memory::impl::store(word address, byte value){
-    _cells[address]->store(value);
+void gamekid::memory::memory::impl::store(word address, byte value){
+    _pages[address>>8]->store(address & 0xFF, value);
 }
 
-byte memory::impl::load(word address){
-    return _cells[address]->load();
+byte gamekid::memory::memory::impl::load(word address){
+    return _pages[address >> 8]->load(address & 0xFF);
 }
