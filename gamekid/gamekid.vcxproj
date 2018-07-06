@@ -156,6 +156,7 @@
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands_container.cpp" />
+    <ClCompile Include="rom\cartridge.cpp" />
     <ClCompile Include="rom\checksum.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="io\joypad_cell.cpp" />
@@ -192,7 +193,7 @@
     <ClInclude Include="cpu\operands\reg8.h" />
     <ClInclude Include="cpu\operands\reg_mem_operand.h" />
     <ClInclude Include="rom\cartridge.h" />
-    <ClInclude Include="rom\cartridge_type.h" />
+    <ClInclude Include="rom\cartridge_header.h" />
     <ClInclude Include="rom\checksum.h" />
     <ClInclude Include="rom\header_offsets.h" />
     <ClInclude Include="system.h" />
