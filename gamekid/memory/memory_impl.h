@@ -6,6 +6,7 @@
 #include "page.h"
 #include "normal_page.h"
 #include "io_page.h"
+#include "boot_rom_page.h"
 
 namespace gamekid::memory {
     class memory::impl {
@@ -13,6 +14,7 @@ namespace gamekid::memory {
         const std::vector<byte>& _rom;
         std::array<page*, 256> _pages{};
         std::array<normal_page, 256> _normal_pages;
+        boot_rom_page _boot_rom_page;
         io_page _io_page;
         static int page_index(const word address);
     public:
