@@ -156,6 +156,7 @@
     <ClCompile Include="cpu\opcode_decoder.cpp" />
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands_container.cpp" />
+    <ClCompile Include="io\boot_rom_status_cell.cpp" />
     <ClCompile Include="memory\boot_rom_page.cpp" />
     <ClCompile Include="memory\io_page.cpp" />
     <ClCompile Include="rom\cartridge.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="cpu\operands\reg16_with_offset.h" />
     <ClInclude Include="cpu\operands\reg8.h" />
     <ClInclude Include="cpu\operands\reg_mem_operand.h" />
+    <ClInclude Include="io\boot_rom_status_cell.h" />
     <ClInclude Include="memory\boot_rom_page.h" />
     <ClInclude Include="memory\io_page.h" />
     <ClInclude Include="memory\normal_page.h" />

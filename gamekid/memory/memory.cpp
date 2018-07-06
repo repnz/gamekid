@@ -5,7 +5,7 @@
 
 using gamekid::memory::memory;
 
-gamekid::memory::memory::memory(const std::vector<byte>& rom) : _impl(std::make_unique<memory::impl>(rom)) {
+gamekid::memory::memory::memory(const std::vector<byte>& rom) : _impl(std::make_unique<memory_impl>(rom)) {
 }
 
 byte gamekid::memory::memory::load_byte(word address) {

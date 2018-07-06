@@ -9,7 +9,7 @@
 #include "boot_rom_page.h"
 
 namespace gamekid::memory {
-    class memory::impl {
+    class memory_impl {
     private:
         const std::vector<byte>& _rom;
         std::array<page*, 256> _pages{};
@@ -18,10 +18,10 @@ namespace gamekid::memory {
         io_page _io_page;
         static int page_index(const word address);
     public:
-        explicit impl(const std::vector<byte>& rom);
+        explicit memory_impl(const std::vector<byte>& rom);
         void initialize_cells();
         void store(word address, byte value);
         byte load(word address);
-        
+        void set_boot_rom_status(bool on);
     };
 }

@@ -4,10 +4,11 @@
 #include <vector>
 
 namespace gamekid::memory {
+    class memory_impl;
+
     class memory {
     private:
-        class impl;
-        std::unique_ptr<impl> _impl;
+        std::unique_ptr<memory_impl> _impl;
     public:
         explicit memory(const std::vector<byte>& rom);
         memory(const memory&) = delete;
