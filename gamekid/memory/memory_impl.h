@@ -13,9 +13,10 @@ namespace gamekid::memory {
     private:
         const rom::cartridge& _rom;
         std::array<page*, 256> _pages{};
-        std::array<normal_page, 256> _normal_pages;
+        std::array<normal_page, 128> _normal_pages;
         boot_rom_page _boot_rom_page;
         io_page _io_page;
+        std::unique_ptr<rom::rom_map> _rom_map;
         static int page_index(const word address);
     public:
         explicit memory_impl(const rom::cartridge& rom);

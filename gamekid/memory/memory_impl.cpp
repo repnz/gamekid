@@ -7,14 +7,20 @@ int gamekid::memory::memory_impl::page_index(const word address) {
     return address / 256;
 }
 
-gamekid::memory::memory_impl::memory_impl(const rom::cartridge& rom) : _rom(rom), _io_page(*this){
+gamekid::memory::memory_impl::memory_impl(const rom::cartridge& rom) : 
+_rom(rom), _io_page(*this), _rom_map(rom.create_rom_map()) {
     initialize_cells();
 }
 
 void gamekid::memory::memory_impl::initialize_cells() {
-    // Initialize all the pages with normal pages
-    for (int i = 0; i < 0xFF; ++i)  {
-        _pages[i] = &_normal_pages[i];
+    // Initialize hald of the pages with rom pages
+    // Get the rom pages using the correct rom map
+    _rom_map->fill_pages(_pages.data());
+
+    // Initialize half the pages with normal pages
+    // Half of the pages are for the normal address space
+    for (int i = 128; i < 256; ++i) {
+        _pages[i] = &_normal_pages[i - 128];
     }
 
     // Duplicate all the pages in the internal ram 
@@ -43,6 +49,6 @@ void gamekid::memory::memory_impl::set_boot_rom_status(bool on) {
     if (on) {
         _pages[0] = &_boot_rom_page;
     } else {
-        _pages[0] = &_normal_pages[0];
+        _pages[0] = _rom_map->get_page(0);
     }
 }

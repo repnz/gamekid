@@ -1,9 +1,14 @@
 #include "cartridge.h"
 #include <gamekid/rom/header_offsets.h>
+#include "rom_only_map.h"
 
 using namespace gamekid::rom;
 
 cartridge::cartridge(std::vector<byte>&& rom): _rom(std::move(rom)) {
+}
+
+const std::vector<byte>& gamekid::rom::cartridge::data() const {
+    return _rom;
 }
 
 std::string cartridge::title() const {
@@ -94,6 +99,15 @@ word cartridge::calculate_global_checksum() const {
 
 bool cartridge::validate_global_checksum() const {
     return calculate_global_checksum() == global_checksum();
+}
+
+std::unique_ptr<rom_map> cartridge::create_rom_map() const {
+    switch (_rom[header_offsets::cartridge_type.start]) {
+    case (byte)cartridge_type::rom_only:
+        return std::make_unique<rom_only_map>(*this);
+    default:
+        throw std::exception("Unsupported cartridge type");
+    }
 }
 
 byte cartridge::sgb_flag() const {

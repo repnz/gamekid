@@ -159,7 +159,9 @@
     <ClCompile Include="io\boot_rom_status_cell.cpp" />
     <ClCompile Include="memory\boot_rom_page.cpp" />
     <ClCompile Include="memory\io_page.cpp" />
+    <ClCompile Include="memory\view_page.cpp" />
     <ClCompile Include="rom\cartridge.cpp" />
+    <ClCompile Include="rom\rom_only_map.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="io\joypad_cell.cpp" />
     <ClCompile Include="memory\memory.cpp" />
@@ -199,9 +201,12 @@
     <ClInclude Include="memory\io_page.h" />
     <ClInclude Include="memory\normal_page.h" />
     <ClInclude Include="memory\page.h" />
+    <ClInclude Include="memory\view_page.h" />
     <ClInclude Include="rom\cartridge.h" />
     <ClInclude Include="rom\cartridge_header.h" />
+    <ClInclude Include="rom\rom_only_map.h" />
     <ClInclude Include="rom\header_offsets.h" />
+    <ClInclude Include="rom\rom_map.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="io\io_registers.h" />
     <ClInclude Include="io\joypad_cell.h" />

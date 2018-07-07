@@ -3,6 +3,8 @@
 #include <gamekid/rom/cartridge_header.h>
 
 #include <string>
+#include <memory>
+#include "rom_map.h"
 
 namespace gamekid::rom {
     class cartridge {
@@ -10,7 +12,7 @@ namespace gamekid::rom {
         std::vector<byte> _rom;
     public:
         explicit cartridge(std::vector<byte>&& rom);
-        
+        const std::vector<byte>& data() const;
         std::string title() const;
         const byte* logo() const;
         byte cgb_flag() const;
@@ -27,5 +29,6 @@ namespace gamekid::rom {
         bool validate_header_checksum() const;
         word calculate_global_checksum() const;
         bool validate_global_checksum() const;
+        std::unique_ptr<rom_map> create_rom_map() const;
     };
 }
