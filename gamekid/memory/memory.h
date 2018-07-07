@@ -2,6 +2,7 @@
 #include <memory>
 #include <gamekid/utils/types.h>
 #include <vector>
+#include "gamekid/rom/cartridge.h"
 
 namespace gamekid::memory {
     class memory_impl;
@@ -10,7 +11,7 @@ namespace gamekid::memory {
     private:
         std::unique_ptr<memory_impl> _impl;
     public:
-        explicit memory(const std::vector<byte>& rom);
+        explicit memory(const rom::cartridge& cart);
         memory(const memory&) = delete;
         memory& operator=(memory&) = delete;
 

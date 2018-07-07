@@ -7,7 +7,7 @@ int gamekid::memory::memory_impl::page_index(const word address) {
     return address / 256;
 }
 
-gamekid::memory::memory_impl::memory_impl(const std::vector<byte>& rom) : _rom(rom), _io_page(*this){
+gamekid::memory::memory_impl::memory_impl(const rom::cartridge& rom) : _rom(rom), _io_page(*this){
     initialize_cells();
 }
 

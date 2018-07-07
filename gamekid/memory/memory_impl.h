@@ -11,14 +11,14 @@
 namespace gamekid::memory {
     class memory_impl {
     private:
-        const std::vector<byte>& _rom;
+        const rom::cartridge& _rom;
         std::array<page*, 256> _pages{};
         std::array<normal_page, 256> _normal_pages;
         boot_rom_page _boot_rom_page;
         io_page _io_page;
         static int page_index(const word address);
     public:
-        explicit memory_impl(const std::vector<byte>& rom);
+        explicit memory_impl(const rom::cartridge& rom);
         void initialize_cells();
         void store(word address, byte value);
         byte load(word address);

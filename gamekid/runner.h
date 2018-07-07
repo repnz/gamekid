@@ -13,7 +13,7 @@ namespace gamekid {
         gamekid::cpu::opcode_decoder _decoder;
         std::set<word> _breakpoints;
     public:
-        explicit runner(std::vector<byte>& rom);
+        explicit runner(rom::cartridge&& rom);
 
         std::vector<std::string> list(int count);
         void add_breakpoint(word address);

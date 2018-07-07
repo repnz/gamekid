@@ -7,10 +7,10 @@
 namespace gamekid::rom {
     class cartridge {
     private:
-        const byte* _rom;
+        std::vector<byte> _rom;
     public:
-        explicit cartridge(const byte* rom);
-
+        explicit cartridge(std::vector<byte>&& rom);
+        
         std::string title() const;
         const byte* logo() const;
         byte cgb_flag() const;
@@ -23,5 +23,9 @@ namespace gamekid::rom {
         byte mask_rom_version() const;
         byte header_checksum() const;
         word global_checksum() const;
+        byte calculate_header_checksum() const;
+        bool validate_header_checksum() const;
+        word calculate_global_checksum() const;
+        bool validate_global_checksum() const;
     };
 }

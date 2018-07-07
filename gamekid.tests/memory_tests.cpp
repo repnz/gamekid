@@ -4,7 +4,7 @@
 
 
 TEST(MEMORY, ECHO_INTERNAL_MEMO) {
-    gamekid::memory::memory m({});
+    gamekid::memory::memory m(gamekid::rom::cartridge({}));
     
     for (int offset=0; offset<0x1e00; ++offset) {
         const word a_address = gamekid::memory::memory_map::internal_ram_8kb + offset;

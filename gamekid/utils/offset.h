@@ -2,8 +2,8 @@
 
 namespace gamekid::utils {
     struct offset {
-        int start;
-        int length;
+        size_t start;
+        size_t length;
 
         offset(int start, int length) : start(start), length(length) {}
     };

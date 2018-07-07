@@ -6,9 +6,9 @@
 int main(const int argc, const char** argv) 
 {
     std::string filename(argv[1]);
-    auto rom = gamekid::utils::files::read_file(filename);
-    gamekid::runner r(rom);
-       
+    gamekid::rom::cartridge cart(gamekid::utils::files::read_file(filename));
+    gamekid::runner r(std::move(cart));
+    
     while (true){
         std::cout << ">>";
         std::vector<std::string> command;

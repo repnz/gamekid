@@ -160,7 +160,6 @@
     <ClCompile Include="memory\boot_rom_page.cpp" />
     <ClCompile Include="memory\io_page.cpp" />
     <ClCompile Include="rom\cartridge.cpp" />
-    <ClCompile Include="rom\checksum.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="io\joypad_cell.cpp" />
     <ClCompile Include="memory\memory.cpp" />
@@ -202,7 +201,6 @@
     <ClInclude Include="memory\page.h" />
     <ClInclude Include="rom\cartridge.h" />
     <ClInclude Include="rom\cartridge_header.h" />
-    <ClInclude Include="rom\checksum.h" />
     <ClInclude Include="rom\header_offsets.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="io\io_registers.h" />

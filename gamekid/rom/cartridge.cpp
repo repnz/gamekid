@@ -3,17 +3,17 @@
 
 using namespace gamekid::rom;
 
-cartridge::cartridge(const byte* rom): _rom(rom) {
+cartridge::cartridge(std::vector<byte>&& rom): _rom(std::move(rom)) {
 }
 
 std::string cartridge::title() const {
-    const char* title_ptr = header_offsets::title.start + (char*)_rom;
+    const char* title_ptr = header_offsets::title.start + (char*)_rom.data();
     const size_t length = strnlen_s(title_ptr, header_offsets::title.length);
     return std::string(title_ptr, length);
 }
 
 const byte* cartridge::logo() const {
-    return _rom + header_offsets::logo.start;
+    return _rom.data() + header_offsets::logo.start;
 }
 
 byte cartridge::cgb_flag() const {
@@ -60,6 +60,40 @@ byte cartridge::header_checksum() const {
 
 word cartridge::global_checksum() const {
     return _rom[header_offsets::global_checksum.start];
+}
+
+byte cartridge::calculate_header_checksum() const {
+    byte checksum = 0;
+
+    for (size_t i = header_offsets::title.start; i < header_offsets::mask_rom_version.start; ++i) {
+        checksum -= _rom[i] - 1;
+    }
+
+    return checksum;
+}
+
+bool cartridge::validate_header_checksum() const {
+    return (calculate_header_checksum() == header_checksum());
+}
+
+word cartridge::calculate_global_checksum() const {
+    word checksum = 0;
+
+    size_t i;
+
+    for (i = 0; i < header_offsets::global_checksum.start; ++i) {
+        checksum += _rom[i];
+    }
+
+    for (i += header_offsets::global_checksum.length; i<_rom.size(); ++i) {
+        checksum += _rom[i];
+    }
+
+    return checksum;
+}
+
+bool cartridge::validate_global_checksum() const {
+    return calculate_global_checksum() == global_checksum();
 }
 
 byte cartridge::sgb_flag() const {
