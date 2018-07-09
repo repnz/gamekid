@@ -6,63 +6,65 @@
 
 using gamekid::cpu::impl::bitmask;
 
-TEST(BITMASK_OPCODES, BIT_TRUE_TURN_ZERO_OFF) {
-    // Arrange
-    gamekid::system sys;
-    gamekid::cpu::cpu& cpu = sys.cpu();
-    test_operand<byte> test_val(1);
-    gamekid::cpu::operands::constant_operand bit_val(0);
-    
-    // Act
-    bitmask::bit_operation(cpu, bit_val, test_val);
+namespace gamekid::tests {
+    TEST(BITMASK_OPCODES, BIT_TRUE_TURN_ZERO_OFF) {
+        // Arrange
+        system sys;
+        cpu::cpu& cpu = sys.cpu();
+        test_operand<byte> test_val(1);
+        cpu::operands::constant_operand bit_val(0);
 
-    // Assert
-    ASSERT_EQ(cpu.F.zero(), false);
+        // Act
+        bitmask::bit_operation(cpu, bit_val, test_val);
 
-}
+        // Assert
+        ASSERT_EQ(cpu.F.zero(), false);
 
-TEST(BITMASK_OPCODES, BIT_FALSE_TURN_ZERO_ON) {
-    // Arrange
-    gamekid::system sys;
-    gamekid::cpu::cpu& cpu = sys.cpu();
-    test_operand<byte> test_val(1);
-    gamekid::cpu::operands::constant_operand bit_val(1);
+    }
 
-    // Act
-    bitmask::bit_operation(cpu, bit_val, test_val);
+    TEST(BITMASK_OPCODES, BIT_FALSE_TURN_ZERO_ON) {
+        // Arrange
+        system sys;
+        cpu::cpu& cpu = sys.cpu();
+        test_operand<byte> test_val(1);
+        cpu::operands::constant_operand bit_val(1);
 
-    // Assert
-    ASSERT_EQ(cpu.F.zero(), true);
-}
+        // Act
+        bitmask::bit_operation(cpu, bit_val, test_val);
 
-TEST(BITMASK_OPCODES, SET) {
-    // Arrange
-    gamekid::system sys;
-    gamekid::cpu::cpu& cpu = sys.cpu();
-    test_operand<byte> test_val(0);
-    gamekid::cpu::operands::constant_operand bit_val(3);
+        // Assert
+        ASSERT_EQ(cpu.F.zero(), true);
+    }
 
-    // Act
-    bitmask::set_operation(cpu, bit_val, test_val);
+    TEST(BITMASK_OPCODES, SET) {
+        // Arrange
+        system sys;
+        cpu::cpu& cpu = sys.cpu();
+        test_operand<byte> test_val(0);
+        cpu::operands::constant_operand bit_val(3);
 
-    // Assert
-    // 0 set 3 => 0b00001000 => 8
-    ASSERT_EQ(test_val.value, 8);
-}
+        // Act
+        bitmask::set_operation(cpu, bit_val, test_val);
+
+        // Assert
+        // 0 set 3 => 0b00001000 => 8
+        ASSERT_EQ(test_val.value, 8);
+    }
 
 
-TEST(BITMASK_OPCODES, RES) {
-    // Arrange
-    gamekid::system sys;
-    gamekid::cpu::cpu& cpu = sys.cpu();
-    test_operand<byte> test_val(6);
-    gamekid::cpu::operands::constant_operand bit_val(2);
+    TEST(BITMASK_OPCODES, RES) {
+        // Arrange
+        system sys;
+        cpu::cpu& cpu = sys.cpu();
+        test_operand<byte> test_val(6);
+        cpu::operands::constant_operand bit_val(2);
 
-    
-    // Act
-    bitmask::res_operation(cpu, bit_val, test_val);
 
-    // Assert
-    // 6 res 3 == 2
-    ASSERT_EQ(test_val.value, 2);
+        // Act
+        bitmask::res_operation(cpu, bit_val, test_val);
+
+        // Assert
+        // 6 res 3 == 2
+        ASSERT_EQ(test_val.value, 2);
+    }
 }
