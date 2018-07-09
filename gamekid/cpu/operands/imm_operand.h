@@ -23,7 +23,7 @@ namespace gamekid::cpu::operands {
         }
 
         std::vector<byte> encode(const std::string& operand) const override {
-            return gamekid::utils::bytes::little_endian_encode_str<T>(operand);
+            return utils::bytes::little_endian_encode_str<T>(operand);
         }
 
         int immidiate_size() const override {

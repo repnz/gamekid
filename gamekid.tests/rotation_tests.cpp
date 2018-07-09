@@ -5,12 +5,11 @@
 #include <gamekid/system.h>
 
 
-
 using gamekid::cpu::impl::rotation;
 
 TEST(ROTATION, RL_TURN_OFF_CARRY) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.F.carry(true);
     test_operand<byte> test_val(1);
@@ -27,7 +26,7 @@ TEST(ROTATION, RL_TURN_OFF_CARRY) {
 
 TEST(ROTATION, RL_TURN_CARRY_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(128);
 
@@ -42,7 +41,7 @@ TEST(ROTATION, RL_TURN_CARRY_ON) {
 
 TEST(ROTATION, RLC_TURN_CARRY_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(1 << 7);
 
@@ -57,7 +56,7 @@ TEST(ROTATION, RLC_TURN_CARRY_ON) {
 
 TEST(ROTATION, RLC_CARRY_ON){
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.F.carry(true);
     test_operand<byte> test_val(1);
@@ -74,7 +73,7 @@ TEST(ROTATION, RLC_CARRY_ON){
 
 TEST(ROTATION, RR_CARRY_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(1);
 
@@ -89,7 +88,7 @@ TEST(ROTATION, RR_CARRY_ON) {
 
 TEST(ROTATION, RR_CARRY_OFF){
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.F.carry(true);
     test_operand<byte> test_val(128);
@@ -105,7 +104,7 @@ TEST(ROTATION, RR_CARRY_OFF){
 
 TEST(ROTATION, RRC_CARRY_OFF) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(1);
 
@@ -122,7 +121,7 @@ TEST(ROTATION, RRC_CARRY_OFF) {
 TEST(ROTATION, RRC_CARRY_ON) {
     
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.F.carry(true);
     test_operand<byte> test_val(128);
@@ -138,7 +137,7 @@ TEST(ROTATION, RRC_CARRY_ON) {
 
 TEST(ROTATION, SLA_TURN_CARRY_TRUE) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(128);
     
@@ -153,7 +152,7 @@ TEST(ROTATION, SLA_TURN_CARRY_TRUE) {
 
 TEST(ROTATION, SLA_TURN_CARRY_OFF) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.F.carry(true);
     test_operand<byte> test_val(64);
@@ -169,7 +168,7 @@ TEST(ROTATION, SLA_TURN_CARRY_OFF) {
 
 TEST(ROTATION, SRA_TURN_CARRY_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(1);
 
@@ -185,7 +184,7 @@ TEST(ROTATION, SRA_TURN_CARRY_ON) {
 TEST(ROTATION, SRA_KEEP_SIGNED_VALUE) {
     
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.F.carry(false);
     test_operand<byte> test_val(0b10000000);
@@ -200,7 +199,7 @@ TEST(ROTATION, SRA_KEEP_SIGNED_VALUE) {
 
 TEST(ROTATION, SRL_TURN_CARRY_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(1);
 
@@ -215,7 +214,7 @@ TEST(ROTATION, SRL_TURN_CARRY_ON) {
 
 TEST(ROTATION, SRL_CHANGE_SIGNED) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(128);
     

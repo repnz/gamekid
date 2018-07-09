@@ -5,6 +5,8 @@
 #include <array>
 
 namespace gamekid::memory {
+    class gameboy_memory_map;
+
     class io_page : public page {
     private:
         io::joypad_cell _joypad_cell;
@@ -13,7 +15,7 @@ namespace gamekid::memory {
 
     public:
         static const word io_page_memory = 0xFF00;
-        explicit io_page(memory_impl& memory);
+        explicit io_page(gameboy_memory_map& memory_map);
         byte load(byte offset) override;
         void store(byte offset, byte value) override;
     };

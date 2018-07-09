@@ -6,7 +6,7 @@
 using gamekid::cpu::impl::misc;
 
 TEST(MISC, SWAP) {
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();    
     test_operand<byte> test_val(0b00001111);
     misc::swap_operation(cpu, test_val);

@@ -3,6 +3,8 @@
 #include <gamekid/memory/memory.h>
 #include <functional>
 #include "rom/cartridge.h"
+#include "memory/gameboy_memory_map.h"
+#include "memory/error_memory_map.h"
 
 namespace gamekid {
     namespace cpu {
@@ -28,14 +30,18 @@ namespace gamekid {
 
     class system {
     private:
-        rom::cartridge _cart;
-        gamekid::cpu::cpu _cpu;
+        memory::memory_map& _map;
         gamekid::memory::memory _memory;
+        gamekid::cpu::cpu _cpu;
         std::vector<scheduled_operation> _scheduled_operations;
     public:
-        explicit system(rom::cartridge&& cart) : _cart(cart), _cpu(*this), _memory(_cart){}
-        explicit system(std::vector<byte>&& cart) : _cart(std::move(cart)), _cpu(*this), _memory(_cart){}
+        explicit system(memory::memory_map& map) : 
+        _map(map), _memory(_map), _cpu(*this){
+        }
 
+        system() : system(memory::error_memory_map::instance()){
+            
+        }
 
         system(const system&) = delete;
         system& operator=(const system&) = delete;
@@ -46,10 +52,6 @@ namespace gamekid {
 
         memory::memory& memory() {
             return _memory;
-        }
-
-        rom::cartridge& cartridge() {
-            return _cart;
         }
 
         void schedule_operation(system_operation<> operation, int instruction_count);

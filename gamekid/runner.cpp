@@ -3,9 +3,11 @@
 
 using namespace gamekid;
 
-runner::runner(rom::cartridge&& cart) : _system(std::move(cart)), _set(_system.cpu()), _decoder(_set){
+runner::runner(rom::cartridge&& cart) : 
+_cart(cart), _rom_map(cart.create_rom_map()), _memory_map(*_rom_map),
+_system(_memory_map), _set(_system.cpu()), _decoder(_set){
 
-    if (!_system.cartridge().validate_header_checksum()) {
+    if (!_cart.validate_header_checksum()) {
         throw std::exception("Header checksum error");
     }
 }
@@ -25,7 +27,7 @@ void runner::next(){
     gamekid::cpu::opcode* opcode = _decoder.decode(opcode_word);
 
     if (opcode == nullptr) {
-        throw "InvalidOpcode";
+        throw std::exception("InvalidOpcode");
     }
 
     opcode->run();

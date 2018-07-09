@@ -9,7 +9,6 @@
 namespace gamekid::cpu{ class operands_container;}
 
 #include <memory>
-#include <functional>
 
 namespace gamekid { class system; }
 

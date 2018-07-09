@@ -3,14 +3,18 @@
 #include "cpu/instruction_set.h"
 #include "cpu/opcode_decoder.h"
 #include <set>
+#include "gamekid.tests/test_rom_map.h"
 
 namespace gamekid {
 
     class runner {
     private:
-        gamekid::system _system;
-        gamekid::cpu::instruction_set _set;
-        gamekid::cpu::opcode_decoder _decoder;
+        rom::cartridge _cart;
+        std::unique_ptr<rom::rom_map> _rom_map;
+        memory::gameboy_memory_map _memory_map;
+        system _system;
+        cpu::instruction_set _set;
+        cpu::opcode_decoder _decoder;
         std::set<word> _breakpoints;
     public:
         explicit runner(rom::cartridge&& rom);

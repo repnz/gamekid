@@ -1,19 +1,18 @@
 #include "memory.h"
-#include <vector>
+#include "memory_map_offsets.h"
 #include "memory_map.h"
-#include "memory_impl.h"
 
 using gamekid::memory::memory;
 
-gamekid::memory::memory::memory(const rom::cartridge& rom) : _impl(std::make_unique<memory_impl>(rom)) {
+gamekid::memory::memory::memory(memory_map& map) : _map(map){
 }
 
 byte gamekid::memory::memory::load_byte(word address) {
-    return _impl->load(address);
+    return _map.pages[address >> 8]->load(address & 0xFF);
 }
 
 void gamekid::memory::memory::store_byte(word address, byte value) {
-    _impl->store(address, value);
+    _map.pages[address >> 8]->store(address & 0xFF, value);
 }
 
 void gamekid::memory::memory::store_word(word address, word value) {
@@ -25,5 +24,3 @@ void gamekid::memory::memory::store_word(word address, word value) {
 word gamekid::memory::memory::load_word(word address) {
     return (load_byte(address + 1) << 8) | load_byte(address);
 }
-
-gamekid::memory::memory::~memory() = default;

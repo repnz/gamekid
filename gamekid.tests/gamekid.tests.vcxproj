@@ -55,6 +55,7 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_operand.h" />
+    <ClInclude Include="test_rom_map.h" />
     <ClInclude Include="test_tools.h" />
   </ItemGroup>
   <ItemGroup>

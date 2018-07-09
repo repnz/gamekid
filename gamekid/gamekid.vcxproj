@@ -159,13 +159,13 @@
     <ClCompile Include="io\boot_rom_status_cell.cpp" />
     <ClCompile Include="memory\boot_rom_page.cpp" />
     <ClCompile Include="memory\io_page.cpp" />
+    <ClCompile Include="memory\gameboy_memory_map.cpp" />
     <ClCompile Include="memory\view_page.cpp" />
     <ClCompile Include="rom\cartridge.cpp" />
     <ClCompile Include="rom\rom_only_map.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="io\joypad_cell.cpp" />
     <ClCompile Include="memory\memory.cpp" />
-    <ClCompile Include="memory\memory_impl.cpp" />
     <ClCompile Include="runner.cpp" />
     <ClCompile Include="utils\bytes.cpp" />
     <ClCompile Include="utils\convert.cpp" />
@@ -198,7 +198,12 @@
     <ClInclude Include="cpu\operands\reg_mem_operand.h" />
     <ClInclude Include="io\boot_rom_status_cell.h" />
     <ClInclude Include="memory\boot_rom_page.h" />
+    <ClInclude Include="memory\error_cell.h" />
+    <ClInclude Include="memory\error_memory_map.h" />
+    <ClInclude Include="memory\error_page.h" />
+    <ClInclude Include="memory\gameboy_memory_map.h" />
     <ClInclude Include="memory\io_page.h" />
+    <ClInclude Include="memory\memory_map.h" />
     <ClInclude Include="memory\normal_page.h" />
     <ClInclude Include="memory\page.h" />
     <ClInclude Include="memory\view_page.h" />
@@ -211,7 +216,6 @@
     <ClInclude Include="io\io_registers.h" />
     <ClInclude Include="io\joypad_cell.h" />
     <ClInclude Include="memory\cell.h" />
-    <ClInclude Include="memory\memory_impl.h" />
     <ClInclude Include="memory\readonly_cell.h" />
     <ClInclude Include="utils\bits.h" />
     <ClInclude Include="utils\bytes.h" />
@@ -234,7 +238,7 @@
     <ClInclude Include="utils\offset.h" />
     <ClInclude Include="utils\types.h" />
     <ClInclude Include="runner.h" />
-    <ClInclude Include="memory\memory_map.h" />
+    <ClInclude Include="memory\memory_map_offsets.h" />
     <ClInclude Include="utils\str.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

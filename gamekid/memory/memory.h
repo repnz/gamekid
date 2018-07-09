@@ -1,22 +1,17 @@
 #pragma once
 #include <memory>
 #include <gamekid/utils/types.h>
-#include <vector>
-#include "gamekid/rom/cartridge.h"
 
 namespace gamekid::memory {
-    class memory_impl;
+    class memory_map;
 
     class memory {
     private:
-        std::unique_ptr<memory_impl> _impl;
+        memory_map & _map;
     public:
-        explicit memory(const rom::cartridge& cart);
+        explicit memory(memory_map& map);
         memory(const memory&) = delete;
         memory& operator=(memory&) = delete;
-
-        // declare because using pimpl idiom
-        ~memory();
 
         /*
         Implementation functions

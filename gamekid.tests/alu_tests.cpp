@@ -8,7 +8,7 @@ using gamekid::cpu::impl::alu;
 
 TEST(ALU_OPCODES, ADD_NORMAL) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(10);
 
@@ -21,7 +21,7 @@ TEST(ALU_OPCODES, ADD_NORMAL) {
 
 TEST (ALU_OPCODES, ADD_CARRY_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(1);
     test_operand<byte> test_operand(255);
@@ -36,7 +36,7 @@ TEST (ALU_OPCODES, ADD_CARRY_ON) {
 
 TEST(ALU_OPCODES, ADD_HALF_CARRY_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(1);
     test_operand<byte> test_operand(0b00001111);
@@ -52,7 +52,7 @@ TEST(ALU_OPCODES, ADD_HALF_CARRY_ON) {
 TEST(ALU_OPCODES, ADC_CARRY_TRUE) {
     
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(1);
     cpu.F.carry(true);
@@ -69,7 +69,7 @@ TEST(ALU_OPCODES, ADC_CARRY_TRUE) {
 TEST(ALU_OPCODES, ADC_CARRY_FALSE) {
     
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(1);
     cpu.F.carry(false);
@@ -85,7 +85,7 @@ TEST(ALU_OPCODES, ADC_CARRY_FALSE) {
 
 TEST(ALU_OPCODES, SUB_NORMAL) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(10);
     cpu.A.store(18);
@@ -100,7 +100,7 @@ TEST(ALU_OPCODES, SUB_NORMAL) {
 
 TEST(ALU_OPCODES, SUB_CARRY) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(1);
     cpu.A.store(0);
@@ -116,7 +116,7 @@ TEST(ALU_OPCODES, SUB_CARRY) {
 TEST(ALU_OPCODES, SUB_HALFCARRY) {
     
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(0b00010000);
     test_operand<byte> test_operand(1);
@@ -131,7 +131,7 @@ TEST(ALU_OPCODES, SUB_HALFCARRY) {
 
 TEST(ALU_OPCODES, SBC_CARRY_TRUE) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.F.carry(true);
     cpu.A.store(10);
@@ -146,7 +146,7 @@ TEST(ALU_OPCODES, SBC_CARRY_TRUE) {
 
 TEST(ALU_OPCODES, AND) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(0b1010);
     test_operand<byte> test_operand(0b0101);
@@ -162,7 +162,7 @@ TEST(ALU_OPCODES, AND) {
 TEST(ALU_OPCODES, OR) {
     
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(0b1010);
     test_operand<byte> test_operand(0b0101);
@@ -178,7 +178,7 @@ TEST(ALU_OPCODES, OR) {
 TEST(ALU_OPCODES, XOR) {
 
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(0b1110);
     test_operand<byte> test_operand(0b1101);
@@ -194,7 +194,7 @@ TEST(ALU_OPCODES, XOR) {
 TEST(ALU_OPCODES, CP_EQUALS) {
 
     // Arrange 
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(10);
     test_operand<byte> test_operand(10);
@@ -210,7 +210,7 @@ TEST(ALU_OPCODES, CP_EQUALS) {
 TEST(ALU_OPCODES, CP_GREATER) {
 
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(0);
     test_operand<byte> test_operand(1);
@@ -225,7 +225,7 @@ TEST(ALU_OPCODES, CP_GREATER) {
 
 TEST(ALU_OPCODES, CP_LOWER) {
     // Assert
-    gamekid::system sys({});
+    gamekid::system sys(gamekid::memory::error_memory_map::instance());
     gamekid::cpu::cpu& cpu = sys.cpu();
     cpu.A.store(100);
     test_operand<byte> test_operand(50);
@@ -241,7 +241,7 @@ TEST(ALU_OPCODES, CP_LOWER) {
 
 TEST(ALU, INC_NORMAL) {
     // Arrage 
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(10);
 
@@ -255,7 +255,7 @@ TEST(ALU, INC_NORMAL) {
 
 TEST(ALU, INC_HALF_CARRY){
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(0b1111);
 
@@ -268,7 +268,7 @@ TEST(ALU, INC_HALF_CARRY){
 
 TEST(ALU, INC_ZERO) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(255);
 
@@ -281,7 +281,7 @@ TEST(ALU, INC_ZERO) {
 
 TEST(ALU, DEC_NORMAL) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(10);
 
@@ -296,7 +296,7 @@ TEST(ALU, DEC_NORMAL) {
 
 TEST(ALU, DEC_HALF_CARRY) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(0b00010000);
 
@@ -311,7 +311,7 @@ TEST(ALU, DEC_HALF_CARRY) {
 
 TEST(ALU, DEC_ZERO) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_operand(1);
 

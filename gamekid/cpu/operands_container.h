@@ -35,7 +35,7 @@ namespace gamekid::cpu {
         operands::cc_operand _c;
         operands::reg16_addressing _hl_addressing;
     public:
-        explicit operands_container(system& cpu);
+        explicit operands_container(system& system);
         operands_container(const operands_container&) = delete;
         operands_container& operator=(operands_container&) = delete;
         operands::reg_mem_operand & reg_mem(operands::reg16& r);

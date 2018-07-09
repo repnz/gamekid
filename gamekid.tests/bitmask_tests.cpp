@@ -8,7 +8,7 @@ using gamekid::cpu::impl::bitmask;
 
 TEST(BITMASK_OPCODES, BIT_TRUE_TURN_ZERO_OFF) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(1);
     gamekid::cpu::operands::constant_operand bit_val(0);
@@ -23,7 +23,7 @@ TEST(BITMASK_OPCODES, BIT_TRUE_TURN_ZERO_OFF) {
 
 TEST(BITMASK_OPCODES, BIT_FALSE_TURN_ZERO_ON) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(1);
     gamekid::cpu::operands::constant_operand bit_val(1);
@@ -37,7 +37,7 @@ TEST(BITMASK_OPCODES, BIT_FALSE_TURN_ZERO_ON) {
 
 TEST(BITMASK_OPCODES, SET) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(0);
     gamekid::cpu::operands::constant_operand bit_val(3);
@@ -53,7 +53,7 @@ TEST(BITMASK_OPCODES, SET) {
 
 TEST(BITMASK_OPCODES, RES) {
     // Arrange
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     test_operand<byte> test_val(6);
     gamekid::cpu::operands::constant_operand bit_val(2);

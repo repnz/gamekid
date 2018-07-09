@@ -4,6 +4,7 @@
 #include <gamekid/utils/bytes.h>
 
 #include <iostream>
+#include "gamekid/memory/error_memory_map.h"
 
 int main(int argc, const char** argv){    
     if (argc < 2){
@@ -13,8 +14,8 @@ int main(int argc, const char** argv){
     
     std::vector<byte> opcodes = gamekid::utils::files::read_file(argv[1]);
     const byte* opcode_ptr = opcodes.data();
-
-    gamekid::system system({});
+    
+    gamekid::system system;
     gamekid::cpu::instruction_set s(system.cpu());
     gamekid::cpu::opcode_decoder d(s);
     

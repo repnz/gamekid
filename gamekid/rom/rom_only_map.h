@@ -11,6 +11,6 @@ namespace gamekid::rom {
     public:
         explicit rom_only_map(const cartridge& cart);
         memory::page* get_page(size_t index) override;
-        void fill_pages(memory::page** pages) override;
+        void fill_pages(std::array<memory::page*, 256>& pages) override;
     };
 }

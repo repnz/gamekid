@@ -7,7 +7,7 @@
 void decode_opcode_test(const gamekid::cpu::opcode& opcode, gamekid::cpu::opcode_decoder& decoder);
 
 TEST(OPCODE_DECODER, DECODE){
-    gamekid::system sys({});
+    gamekid::system sys;
     gamekid::cpu::cpu& cpu = sys.cpu();
     gamekid::cpu::instruction_set set(cpu);
     gamekid::cpu::opcode_decoder decoder(set);
@@ -26,10 +26,10 @@ void decode_opcode_test(const gamekid::cpu::opcode& opcode, gamekid::cpu::opcode
 
     const gamekid::cpu::opcode* decoded_opcode = decoder.decode(opcode_word);
 
-    byte imm[4] = { 0 };
-
     if (&opcode != decoded_opcode)
     {
+        byte imm[4] = { 0 };
+
         FAIL()
             << "Opcode '" << opcode.to_str(imm) << "' does not decode correctly." << std::endl
             << "Opcode byte: "
