@@ -70,8 +70,8 @@ word cartridge::global_checksum() const {
 byte cartridge::calculate_header_checksum() const {
     byte checksum = 0;
 
-    for (size_t i = header_offsets::title.start; i < header_offsets::mask_rom_version.start; ++i) {
-        checksum -= _rom[i] - 1;
+    for (size_t i = header_offsets::title.start; i < header_offsets::header_checksum.start; ++i) {
+        checksum = checksum - _rom[i] - 1;
     }
 
     return checksum;

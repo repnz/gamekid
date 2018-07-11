@@ -16,6 +16,6 @@ namespace gamekid::rom::header_offsets {
         dest_code(0x14a, 1),
         old_licensee_code(0x14b, 1),
         mask_rom_version(0x14c, 1),
-        header_checksum(0x14b, 1),
+        header_checksum(0x14d, 1),
         global_checksum(0x14e, 2);
 };
