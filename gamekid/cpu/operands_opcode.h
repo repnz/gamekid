@@ -54,10 +54,13 @@ namespace gamekid::cpu {
         int index = 0;
 
         gamekid::utils::functional::for_each(_operands, [&](auto& operand) {
-            for (byte b : operand.encode(operands[index])) {
-                v.push_back(b);
-                ++index;
-            }
+			std::vector<byte> operand_bytes = operand.encode(operands[index]);
+			
+			for (byte b : operand_bytes) {
+				v.push_back(b);
+			}
+
+			++index;
         });
 
         return v;
