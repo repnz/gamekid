@@ -4,7 +4,7 @@
 using namespace gamekid;
 
 runner::runner(rom::cartridge&& cart) : 
-_cart(cart), _rom_map(cart.create_rom_map()), _memory_map(*_rom_map),
+_cart(cart), _rom_map(cart.create_rom_map()), _memory_map(*_rom_map, _lcd),
 _system(_memory_map), _set(_system.cpu()), _decoder(_set){
 
     if (!_cart.validate_header_checksum()) {

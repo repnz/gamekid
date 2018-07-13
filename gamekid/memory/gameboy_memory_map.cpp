@@ -3,8 +3,8 @@
 
 using gamekid::memory::gameboy_memory_map;
 
-gameboy_memory_map::gameboy_memory_map(gamekid::rom::rom_map& rom_map): 
-_io_page(*this), _rom_map(rom_map) {
+gameboy_memory_map::gameboy_memory_map(gamekid::rom::rom_map& rom_map, gamekid::io::lcd& lcd): 
+_io_page(*this, lcd), _rom_map(rom_map) {
     // Initialize hald of the pages with rom pages
     // Get the rom pages using the correct rom map
     _rom_map.fill_pages(pages);

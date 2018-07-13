@@ -8,7 +8,8 @@
 namespace gamekid::tests {
     TEST(MEMORY, ECHO_INTERNAL_MEMO) {
         test_rom_map tst;
-        gamekid::memory::gameboy_memory_map memory_map(tst);
+        io::lcd tst_lcd;
+        gamekid::memory::gameboy_memory_map memory_map(tst, tst_lcd);
         gamekid::memory::memory m(memory_map);
 
         for (int offset = 0; offset<0x1e00; ++offset) {

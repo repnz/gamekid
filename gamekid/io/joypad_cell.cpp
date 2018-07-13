@@ -17,7 +17,7 @@ P12     Up          Select
 P13     Down        Start
 */
 
-namespace joypad_bits {
+namespace gamekid::io::joypad_bits {
     const byte P10 = 0;
     const byte P11 = 1;
     const byte P12 = 2;
