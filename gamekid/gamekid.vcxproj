@@ -157,8 +157,8 @@
     <ClCompile Include="cpu\opcode_encoder.cpp" />
     <ClCompile Include="cpu\operands_container.cpp" />
     <ClCompile Include="io\boot_rom_status_cell.cpp" />
-    <ClCompile Include="io\lcd.cpp" />
-    <ClCompile Include="io\lcd_control_cell.cpp" />
+    <ClCompile Include="io\video\lcd.cpp" />
+    <ClCompile Include="io\video\lcd_control_cell.cpp" />
     <ClCompile Include="memory\boot_rom_page.cpp" />
     <ClCompile Include="memory\io_page.cpp" />
     <ClCompile Include="memory\gameboy_memory_map.cpp" />
@@ -199,8 +199,8 @@
     <ClInclude Include="cpu\operands\reg8.h" />
     <ClInclude Include="cpu\operands\reg_mem_operand.h" />
     <ClInclude Include="io\boot_rom_status_cell.h" />
-    <ClInclude Include="io\lcd.h" />
-    <ClInclude Include="io\lcd_control_cell.h" />
+    <ClInclude Include="io\video\lcd.h" />
+    <ClInclude Include="io\video\lcd_control_cell.h" />
     <ClInclude Include="memory\boot_rom_page.h" />
     <ClInclude Include="memory\error_cell.h" />
     <ClInclude Include="memory\error_memory_map.h" />

@@ -2,7 +2,7 @@
 #include "lcd.h"
 #include "gamekid/memory/cell.h"
 
-namespace gamekid::io {
+namespace gamekid::io::video {
     class lcd;
 
     class lcd_control_cell : public memory::cell {

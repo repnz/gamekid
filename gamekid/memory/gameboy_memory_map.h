@@ -6,7 +6,7 @@
 #include "gamekid/rom/rom_map.h"
 #include "boot_rom_page.h"
 
-namespace gamekid::io {
+namespace gamekid::io::video {
     class lcd;
 }
 
@@ -19,7 +19,7 @@ namespace gamekid::memory {
         io_page _io_page;
         rom::rom_map& _rom_map;
     public:
-        explicit gameboy_memory_map(rom::rom_map& rom_map, io::lcd& lcd);
+        explicit gameboy_memory_map(rom::rom_map& rom_map, io::video::lcd& lcd);
         void disable_boot_rom();
     };
 }

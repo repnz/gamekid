@@ -10,7 +10,7 @@ namespace gamekid {
     class runner {
     private:
         rom::cartridge _cart;
-        io::lcd _lcd;
+        io::video::lcd _lcd;
         std::unique_ptr<rom::rom_map> _rom_map;
         memory::gameboy_memory_map _memory_map;
         system _system;

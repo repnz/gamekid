@@ -1,7 +1,7 @@
 #include "io_page.h"
 #include "gamekid/io/io_registers.h"
 
-gamekid::memory::io_page::io_page(gameboy_memory_map& memory_map, io::lcd& lcd) :
+gamekid::memory::io_page::io_page(gameboy_memory_map& memory_map, io::video::lcd& lcd) :
 _boot_rom_status_cell(memory_map), _lcd_control(lcd),
 _cells({}) {
     _cells[P1 - io_page_memory] = &_joypad_cell;

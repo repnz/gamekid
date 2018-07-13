@@ -1,6 +1,6 @@
 #pragma once
 
-namespace gamekid::io {
+namespace gamekid::io::video {
     class lcd;
 
     class lcd {

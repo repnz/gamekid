@@ -1,7 +1,7 @@
 #include "lcd_control_cell.h"
 #include "gamekid/utils/bits.h"
 
-namespace gamekid::io::lcd_control_bits {
+namespace gamekid::io::video::lcd_control_bits {
     const byte lcd_display_enable = 7;
     const byte window_tile_map_display_select = 6;
     const byte window_display_enable = 5;
@@ -12,10 +12,10 @@ namespace gamekid::io::lcd_control_bits {
     const byte bg_display = 0;
 }
 
-gamekid::io::lcd_control_cell::lcd_control_cell(lcd & lcd) : _lcd(lcd){
+gamekid::io::video::lcd_control_cell::lcd_control_cell(lcd & lcd) : _lcd(lcd){
 }
 
-void gamekid::io::lcd_control_cell::store(byte value) {
+void gamekid::io::video::lcd_control_cell::store(byte value) {
     const bool lcd_enabled = utils::bits::check_bit(value, lcd_control_bits::lcd_display_enable);
     _lcd.enabled(lcd_enabled);
     
