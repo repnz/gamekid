@@ -2,6 +2,7 @@
 #include <gamekid/runner.h>
 #include <gamekid/utils/files.h>
 #include <iostream>
+#include "gamekid/utils/str.h"
 
 int main(const int argc, const char** argv) 
 {
@@ -42,6 +43,8 @@ int main(const int argc, const char** argv)
             for (auto& op : list) {
                 std::cout << op << std::endl;
             }
+        } else {
+            std::cout << "Unknown command '" << gamekid::utils::str::join(command) << "'" << std::endl;
         }
     }
 }
