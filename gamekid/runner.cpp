@@ -1,5 +1,7 @@
 #include "runner.h"
 #include "rom/cartridge.h"
+#include <sstream>
+#include "utils/convert.h"
 
 using namespace gamekid;
 
@@ -53,14 +55,17 @@ std::vector<std::string> runner::list(int count) {
         const word opcode_word = _system.memory().load_word(pc);
         gamekid::cpu::opcode* op = _decoder.decode(opcode_word);
 
+        // Write the address
+        opcodes[i] = utils::convert::to_hex(pc) + " ";
+
         if (op == nullptr)  {
             const byte current_byte = static_cast<byte>(opcode_word);
-            opcodes[i] = ".byte " + std::to_string(current_byte);
+            opcodes[i] += ".byte " + std::to_string(current_byte);
             pc += 1;
         } else {
             const word imm_bytes = _system.memory().load_word(pc + op->size());
             const byte* imm_ptr = (byte*)(&imm_bytes);
-            opcodes[i] = op->to_str(imm_ptr);
+            opcodes[i] += op->to_str(imm_ptr);
             pc += op->full_size();
         }
     }

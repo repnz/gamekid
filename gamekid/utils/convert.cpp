@@ -1,4 +1,5 @@
 #include "convert.h"
+#include <sstream>
 
 int gamekid::utils::convert::to_number(const std::string& str, int byte_size, int base) {
 
