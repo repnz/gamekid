@@ -4,6 +4,8 @@
 #include <iostream>
 #include "gamekid/utils/str.h"
 
+std::vector<std::string> get_command();
+
 int main(const int argc, const char** argv) 
 {
     std::string filename(argv[1]);
@@ -11,14 +13,7 @@ int main(const int argc, const char** argv)
     gamekid::runner r(std::move(cart));
     
     while (true){
-        std::cout << ">>";
-        std::vector<std::string> command;
-
-        do {
-            std::string user_input;
-            std::cin >> user_input;
-            command.push_back(user_input);
-        } while (std::cin.peek() != '\n');
+        std::vector<std::string> command = get_command();
 
         if (command[0]== "run"){
             r.run_until_break();
@@ -28,6 +23,7 @@ int main(const int argc, const char** argv)
             r.add_breakpoint(address);
         }
         else if (command[0] == "regs") {
+            
             for (gamekid::cpu::reg* reg : r.cpu().regs) {
                 std::cout << reg->name() << ": " << std::hex << reg->load_as_word() << std::endl;
             }
@@ -35,6 +31,7 @@ int main(const int argc, const char** argv)
         }
         else if (command[0] == "next"){
             r.next();
+            std::cout << r.list(1)[0] << std::endl;
         }
         else if (command[0] == "list"){
             int count = std::stoi(command[1]);
@@ -46,5 +43,20 @@ int main(const int argc, const char** argv)
         } else {
             std::cout << "Unknown command '" << gamekid::utils::str::join(command) << "'" << std::endl;
         }
+
+        std::cout << std::endl;
     }
+}
+
+std::vector<std::string> get_command() {
+    std::cout << ">> ";
+    std::vector<std::string> command;
+
+    do {
+        std::string user_input;
+        std::cin >> user_input;
+        command.push_back(user_input);
+    } while (std::cin.peek() != '\n');
+
+    return command;
 }
