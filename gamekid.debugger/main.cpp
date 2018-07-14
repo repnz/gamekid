@@ -100,18 +100,17 @@ void add_breakpoint(gamekid::runner& runner, const std::vector<std::string>& arg
 
 void regs(gamekid::runner& runner, const std::vector<std::string>& args) {
     constexpr size_t regs_per_line = 4;
-    size_t index = 0;
+    const std::vector<gamekid::cpu::reg*>& regs = runner.cpu().regs;
 
-    for (gamekid::cpu::reg* reg : runner.cpu().regs) {
-        std::cout << reg->name() << ": " << std::hex << reg->load_as_word() << " ";
+    for (size_t i=0; i<regs.size(); ++i) {
+        std::cout << regs[i]->name() << ": " << std::hex << regs[i]->load_as_word() << " ";
         
-        ++index;
-
-        if (index == 4) {
+        if ((i+1) % regs_per_line == 0) {
             std::cout << std::endl;
-            index = 0;
         }
     }
+
+    std::cout << std::endl;
 }
 
 void next(gamekid::runner& runner, const std::vector<std::string>& args) {
@@ -147,7 +146,7 @@ void help(gamekid::runner& runner, const std::vector<std::string>& args) {
 }
 
 void view(gamekid::runner& runner, const std::vector<std::string>& args) {
-    const word address_to_view = gamekid::utils::convert::to_number<word>(args[1]);
+    const word address_to_view = gamekid::utils::convert::to_number<word>(args[1], 16);
     constexpr word default_length = 64;
     const word length_to_view = 
         args.size() >= 3 ? gamekid::utils::convert::to_number<word>(args[2]) : default_length;
@@ -163,6 +162,4 @@ void view(gamekid::runner& runner, const std::vector<std::string>& args) {
         std::cout << gamekid::utils::convert::to_hex<byte>(dump_byte) << " ";
         ++index;
     }
-    
-    std::cout << std::endl;
 }
