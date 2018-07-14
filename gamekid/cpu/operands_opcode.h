@@ -26,7 +26,7 @@ namespace gamekid::cpu {
 
         std::string to_str(const byte* next) const override;
 
-        int full_size() const override;
+        size_t full_size() const override;
     };
 
     template <typename ... operand_types>
@@ -78,8 +78,8 @@ namespace gamekid::cpu {
     }
 
     template <typename ... operand_types>
-    int operands_opcode<operand_types...>::full_size() const {
-        int size = value.size();
+    size_t operands_opcode<operand_types...>::full_size() const {
+        size_t size = value.size();
 
         gamekid::utils::functional::for_each(_operands, [&](auto& op) {
             size += op.immidiate_size();

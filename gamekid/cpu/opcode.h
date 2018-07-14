@@ -15,7 +15,7 @@ namespace gamekid::cpu {
         const std::vector<byte> value;
         const byte cycles;
 
-        opcode(cpu& cpu, const std::string& name, const std::vector<byte>& value, byte cycles);
+        opcode(cpu& cpu, const std::string& name, std::vector<byte> value, byte cycles);
 
         virtual void run() = 0;
         virtual ~opcode() = default;
@@ -24,8 +24,10 @@ namespace gamekid::cpu {
 
         virtual std::string to_str(const byte* next) const;
 
-        int size() const;
-        int immidiate_size() const;
-        virtual int full_size() const;
+        std::vector<byte> full_opcode(const byte* next) const;
+
+        size_t size() const;
+        size_t immidiate_size() const;
+        virtual size_t full_size() const;
     };
 }
