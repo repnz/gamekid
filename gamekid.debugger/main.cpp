@@ -26,6 +26,12 @@ int main(const int argc, const char** argv)
             const word address = std::stoi(command[1]);
             r.add_breakpoint(address);
         }
+        else if (command[0] == "regs") {
+            for (gamekid::cpu::reg* reg : r.cpu().regs) {
+                std::cout << reg->name() << ": " << std::hex << reg->load_as_word() << std::endl;
+            }
+
+        }
         else if (command[0] == "next"){
             r.next();
         }

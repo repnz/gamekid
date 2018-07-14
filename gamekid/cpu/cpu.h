@@ -5,6 +5,8 @@
 #include "operands/reg8.h"
 #include "operands/reg16.h"
 #include <gamekid/memory/memory.h>
+#include <functional>
+#include "reg.h"
 
 namespace gamekid::cpu{ class operands_container;}
 
@@ -18,6 +20,8 @@ namespace gamekid::cpu {
         system& _system;
         byte _sp_value_low;
         byte _sp_value_high;
+        byte _pc_value_low;
+        byte _pc_value_high;
         std::unique_ptr<operands_container> _operands;
     public:
         explicit cpu(system& system);
@@ -35,8 +39,10 @@ namespace gamekid::cpu {
         operands::reg16 DE;
         operands::reg16 HL;
         operands::reg16 SP;
-        word PC;
+        operands::reg16 PC;
         bool _interrupts_enabled;
+
+        std::vector<reg*> regs;
 
         operands_container& operands();
         void enable_interrupts();

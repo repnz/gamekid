@@ -10,7 +10,7 @@ namespace gamekid::cpu::operands {
         explicit imm_operand(system& system) : _system(system) {}
 
         T load() const override {
-            return _system.memory().load<T>(_system.cpu().PC + 1);
+            return _system.memory().load<T>(_system.cpu().PC.load() + 1);
         }
 
         void store(T value) override {

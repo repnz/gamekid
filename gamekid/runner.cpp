@@ -17,13 +17,13 @@ void runner::add_breakpoint(word address){
 }
 
 void runner::run_until_break(){
-    while (_breakpoints.find(_system.cpu().PC) == _breakpoints.end()){
+    while (_breakpoints.find(_system.cpu().PC.load()) == _breakpoints.end()){
         next();
     }
 }
 
 void runner::next(){
-    const word opcode_word = _system.memory().load_word(_system.cpu().PC);
+    const word opcode_word = _system.memory().load_word(_system.cpu().PC.load());
     gamekid::cpu::opcode* opcode = _decoder.decode(opcode_word);
 
     if (opcode == nullptr) {
@@ -31,7 +31,7 @@ void runner::next(){
     }
 
     opcode->run();
-    _system.cpu().PC += opcode->full_size();
+    _system.cpu().PC.store(_system.cpu().PC.load() + opcode->full_size());
 }
 
 void runner::run(){
@@ -40,10 +40,14 @@ void runner::run(){
     }
 }
 
+cpu::cpu& runner::cpu() {
+    return _system.cpu();
+}
+
 std::vector<std::string> runner::list(int count) {
     std::vector<std::string> opcodes(count);
     
-    word pc = _system.cpu().PC;
+    word pc = _system.cpu().PC.load();
 
     for (int i = 0; i < count; i++) {
         const word opcode_word = _system.memory().load_word(pc);

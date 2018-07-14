@@ -9,7 +9,7 @@ using namespace gamekid::cpu;
 using namespace gamekid::cpu::impl;
 
 void jumps::jp_operation(cpu& cpu, operand<word>& address) {
-    cpu.PC = address.load();
+    cpu.PC.store(address.load());
 }
 
 void jumps::jp_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address){
@@ -20,7 +20,7 @@ void jumps::jp_with_condition_operation(cpu& cpu, operand<bool>& condition, oper
 
 void jumps::jr_operation(cpu& cpu, operand<byte>& offset){
     const char value = static_cast<char>(offset.load());
-    cpu.PC += value;
+    cpu.PC.store(cpu.PC.load() + value);
 }
 
 void jumps::jr_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<byte>& offset){
@@ -30,8 +30,8 @@ void jumps::jr_with_condition_operation(cpu& cpu, operand<bool>& condition, oper
 }
 
 void jumps::call_operation(cpu& cpu, operand<word>& address){
-    mem::push(cpu, cpu.PC + 1);
-    cpu.PC = address.load();
+    mem::push(cpu, cpu.PC.load() + 1);
+    cpu.PC.store(address.load());
 }
 
 void jumps::call_with_condition_operation(cpu& cpu, operand<bool>& condition, operand<word>& address){
@@ -41,13 +41,13 @@ void jumps::call_with_condition_operation(cpu& cpu, operand<bool>& condition, op
 }
 
 void jumps::rst_operation(cpu& cpu, operand<byte>& address){
-    mem::push(cpu, cpu.PC);
-    cpu.PC = address.load();
+    mem::push(cpu, cpu.PC.load());
+    cpu.PC.store(address.load());
 }
 
 
 void jumps::ret_operation(cpu& cpu){
-    cpu.PC = mem::pop(cpu);
+    cpu.PC.store(mem::pop(cpu));
 }
 
 void jumps::ret_with_condition_operation(cpu& cpu, operand<bool>& condition){

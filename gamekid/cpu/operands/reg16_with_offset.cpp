@@ -3,7 +3,7 @@
 using gamekid::cpu::operands::reg16_with_offset;
 
 word reg16_with_offset::load() const {
-    const byte offset = _system.memory().load_byte(_system.cpu().PC + 1);
+    const byte offset = _system.memory().load_byte(_system.cpu().PC.load() + 1);
 
     if (offset <= CHAR_MAX) {
         return  _reg16.load() + offset;

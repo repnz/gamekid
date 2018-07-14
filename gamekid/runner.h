@@ -1,3 +1,4 @@
+#pragma once
 #include "system.h"
 #include "cpu/cpu.h"
 #include "cpu/instruction_set.h"
@@ -25,6 +26,7 @@ namespace gamekid {
         void run_until_break();
         void next();
         void run();
+        cpu::cpu& cpu();
     };
 
 }

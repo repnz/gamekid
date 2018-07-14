@@ -12,7 +12,7 @@ namespace gamekid::cpu::operands {
         explicit ff_offset_mem_operand(system& system) : _system(system) {}
 
         word load_address() const {
-            return _system.memory().load_byte(_system.cpu().PC + 1) + 0xFF00;
+            return _system.memory().load_byte(_system.cpu().PC.load() + 1) + 0xFF00;
         }
 
         byte load() const override {

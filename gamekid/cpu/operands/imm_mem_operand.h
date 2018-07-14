@@ -10,7 +10,7 @@ namespace gamekid::cpu::operands {
         explicit imm_mem_operand(system& system) : _system(system) {}
 
         word get_address() const {
-            return _system.memory().load_word(_system.cpu().PC + 1);
+            return _system.memory().load_word(_system.cpu().PC.load() + 1);
         }
 
         T load() const override {

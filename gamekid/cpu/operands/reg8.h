@@ -1,18 +1,14 @@
 #pragma once
 #include <gamekid/cpu/operand.h>
+#include <gamekid/cpu/reg.h>
 
 namespace gamekid::cpu::operands {
 
-    class reg8 : public operand<byte> {
+    class reg8 : public operand<byte>, public reg {
     protected:
-        std::string _name;
         byte _value;
     public:
-        explicit reg8(const std::string& name) : _name(name), _value(0) {}
-
-        const std::string& name() const {
-            return _name;
-        }
+        explicit reg8(const std::string& name) : reg(name, 1), _value(0) {}
 
         // non copyable
         reg8(const reg8&) = delete;
@@ -23,7 +19,9 @@ namespace gamekid::cpu::operands {
 
         void store(byte new_value) override { _value = new_value; }
 
-        std::string to_str(const byte* next) const override { return _name; }
+        std::string to_str(const byte* next) const override { return name(); }
+
+        word load_as_word() const override { return load(); }
 
         byte* address() { return &_value; }
     };
