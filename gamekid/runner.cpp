@@ -19,9 +19,9 @@ void runner::add_breakpoint(word address){
 }
 
 void runner::run_until_break(){
-    while (_breakpoints.find(_system.cpu().PC.load()) == _breakpoints.end()){
+    do {
         next();
-    }
+    } while (_breakpoints.find(_system.cpu().PC.load()) == _breakpoints.end());
 }
 
 void runner::next(){
