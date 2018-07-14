@@ -15,7 +15,7 @@ namespace gamekid::utils::convert {
     template <typename T>
     std::string to_hex(T value, int width = sizeof(T)*2) {
         std::stringstream ss;
-        ss << std::setfill('0') << std::setw(width) << std::hex << value;
+        ss << std::setfill('0') << std::setw(width) << std::hex << (int)value;
         return ss.str();
     }
 }

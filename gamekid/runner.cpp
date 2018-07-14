@@ -46,6 +46,16 @@ cpu::cpu& runner::cpu() {
     return _system.cpu();
 }
 
+std::vector<byte> runner::dump(word address_to_view, word length_to_view) {
+    std::vector<byte> bytes(length_to_view);
+
+    for (int i = 0; i < length_to_view; ++i) {
+        bytes[i] = _system.memory().load<byte>(address_to_view+i);
+    }
+
+    return bytes;
+}
+
 std::vector<std::string> runner::list(int count) {
     std::vector<std::string> opcodes(count);
     

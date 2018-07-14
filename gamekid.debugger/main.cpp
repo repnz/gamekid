@@ -19,6 +19,7 @@ void next(gamekid::runner& runner, const std::vector<std::string>& args);
 void list(gamekid::runner& runner, const std::vector<std::string>& args);
 void debugger_exit(gamekid::runner& runner, const std::vector<std::string>& args);
 void help(gamekid::runner& runner, const std::vector<std::string>& args);
+void view(gamekid::runner& runner, const std::vector<std::string>& args);
 
 const std::map<std::string, command> commands =
 {
@@ -28,7 +29,8 @@ const std::map<std::string, command> commands =
     { "next", next },
     { "list", list },
     { "exit", debugger_exit },
-    { "help", help }
+    { "help", help },
+    { "view", view}
 };
 
 bool debugger_running;
@@ -97,17 +99,18 @@ void add_breakpoint(gamekid::runner& runner, const std::vector<std::string>& arg
 }
 
 void regs(gamekid::runner& runner, const std::vector<std::string>& args) {
-    const auto& regs = runner.cpu().regs;
     constexpr size_t regs_per_line = 4;
+    size_t index = 0;
 
-    for (size_t i=0; i<regs.size(); i += regs_per_line) {
-        const size_t inner_end = (i + regs_per_line > regs.size()) ? regs.size() - i : regs_per_line;
+    for (gamekid::cpu::reg* reg : runner.cpu().regs) {
+        std::cout << reg->name() << ": " << std::hex << reg->load_as_word() << " ";
+        
+        ++index;
 
-        for (size_t j=0; j<inner_end; ++j) {
-            std::cout << regs[i+j]->name() << ": " << std::hex << regs[i+j]->load_as_word() << " ";
+        if (index == 4) {
+            std::cout << std::endl;
+            index = 0;
         }
-
-        std::cout << std::endl;
     }
 }
 
@@ -141,4 +144,25 @@ void help(gamekid::runner& runner, const std::vector<std::string>& args) {
     for (auto& command_pair : commands) {
         std::cout << command_pair.first << std::endl;
     }
+}
+
+void view(gamekid::runner& runner, const std::vector<std::string>& args) {
+    const word address_to_view = gamekid::utils::convert::to_number<word>(args[1]);
+    constexpr word default_length = 64;
+    const word length_to_view = 
+        args.size() >= 3 ? gamekid::utils::convert::to_number<word>(args[2]) : default_length;
+
+    size_t index = 0;
+
+    for (byte dump_byte : runner.dump(address_to_view, length_to_view)) {
+        if (index % 16 == 0) {
+            std::cout << std::endl;
+            std::cout << gamekid::utils::convert::to_hex<word>(address_to_view + index) << ": ";
+        }
+
+        std::cout << gamekid::utils::convert::to_hex<byte>(dump_byte) << " ";
+        ++index;
+    }
+    
+    std::cout << std::endl;
 }
