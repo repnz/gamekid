@@ -79,8 +79,17 @@ void add_breakpoint(gamekid::runner& runner, const std::vector<std::string>& arg
 }
 
 void regs(gamekid::runner& runner, const std::vector<std::string>& args) {
-    for (gamekid::cpu::reg* reg : runner.cpu().regs) {
-        std::cout << reg->name() << ": " << std::hex << reg->load_as_word() << std::endl;
+    const auto& regs = runner.cpu().regs;
+    constexpr size_t regs_per_line = 4;
+
+    for (size_t i=0; i<regs.size(); i += regs_per_line) {
+        const size_t inner_end = (i + regs_per_line > regs.size()) ? regs.size() - i : regs_per_line;
+
+        for (size_t j=0; j<inner_end; ++j) {
+            std::cout << regs[i+j]->name() << ": " << std::hex << regs[i+j]->load_as_word() << " ";
+        }
+
+        std::cout << std::endl;
     }
 }
 
@@ -96,7 +105,7 @@ void list(gamekid::runner& runner, const std::vector<std::string>& args) {
         count = gamekid::utils::convert::to_number<word>(args[1]);
     }
     else {
-        count = 5;
+        count = 10;
     }
 
     std::vector<std::string> list = runner.list(count);
