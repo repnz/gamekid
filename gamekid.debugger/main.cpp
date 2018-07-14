@@ -17,6 +17,18 @@ void regs(gamekid::runner& runner, const std::vector<std::string>& args);
 void next(gamekid::runner& runner, const std::vector<std::string>& args);
 void list(gamekid::runner& runner, const std::vector<std::string>& args);
 void debugger_exit(gamekid::runner& runner, const std::vector<std::string>& args);
+void help(gamekid::runner& runner, const std::vector<std::string>& args);
+
+const std::map<std::string, command> commands =
+{
+    { "run", run },
+    { "break", add_breakpoint },
+    { "regs", regs },
+    { "next", next },
+    { "list", list },
+    { "exit", debugger_exit },
+    { "help", help }
+};
 
 bool debugger_running;
 
@@ -25,16 +37,7 @@ int main(const int argc, const char** argv)
     std::string filename(argv[1]);
     gamekid::rom::cartridge cart(gamekid::utils::files::read_file(filename));
     gamekid::runner r(std::move(cart));
-    std::map<std::string, command> commands =
-    {
-        { "run", run},
-        { "break", add_breakpoint},
-        { "regs", regs},
-        { "next", next},
-        { "list", list},
-        { "exit", debugger_exit },
-    };
-
+   
     debugger_running = true;
 
     while (debugger_running) {
@@ -117,4 +120,10 @@ void list(gamekid::runner& runner, const std::vector<std::string>& args) {
 
 void debugger_exit(gamekid::runner& runner, const std::vector<std::string>& args) {
     debugger_running = false;
+}
+
+void help(gamekid::runner& runner, const std::vector<std::string>& args) {
+    for (auto& command_pair : commands) {
+        std::cout << command_pair.first << std::endl;
+    }
 }
