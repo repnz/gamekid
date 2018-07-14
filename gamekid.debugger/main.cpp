@@ -6,6 +6,7 @@
 #include "gamekid/cpu/operands_container.h"
 
 
+void welcome();
 std::vector<std::string> get_user_command();
 
 using command = std::function<void(gamekid::runner& runner, const std::vector<std::string>& arguments)>;
@@ -32,8 +33,9 @@ const std::map<std::string, command> commands =
 
 bool debugger_running;
 
-int main(const int argc, const char** argv)
-{
+int main(const int argc, const char** argv) {
+    welcome();
+
     std::string filename(argv[1]);
     gamekid::rom::cartridge cart(gamekid::utils::files::read_file(filename));
     gamekid::runner r(std::move(cart));
@@ -52,6 +54,19 @@ int main(const int argc, const char** argv)
             key_value_pair->second(r, command);
         }
     }
+}
+
+void welcome() {
+    const char* gamekid_art =
+        "                            _    _     _ \n"
+        "  __ _  __ _ _ __ ___   ___| | _(_) __| |\n"
+        " / _` |/ _` | '_ ` _ \\ / _ \\ |/ / |/ _` |\n"
+        "| (_| | (_| | | | | | |  __/   <| | (_| |\n"
+        " \\__, |\\__,_|_| |_| |_|\\___|_|\\_\\_|\\__,_|\n"
+        " |___/                                  \n";
+
+    std::cout << gamekid_art << "\n\n" << std::endl;
+    std::cout << ">> Welcome To GameKid Debugger~" << std::endl;
 }
 
 std::vector<std::string> get_user_command() {
