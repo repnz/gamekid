@@ -30,7 +30,7 @@ void jumps::jr_with_condition_operation(cpu& cpu, operand<bool>& condition, oper
 }
 
 void jumps::call_operation(cpu& cpu, operand<word>& address){
-    mem::push(cpu, cpu.PC.load() + 1);
+    mem::push(cpu, cpu.PC.load() + 3);
     cpu.PC.store(address.load());
 }
 
