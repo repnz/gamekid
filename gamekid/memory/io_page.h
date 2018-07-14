@@ -18,6 +18,7 @@ namespace gamekid::memory {
         io::boot_rom_status_cell _boot_rom_status_cell;
         io::video::lcd_control_cell _lcd_control;
         std::array<cell*, 256> _cells;
+        std::array<cell, 256> _normal_cells;
     public:
         static const word io_page_memory = 0xFF00;
         explicit io_page(gameboy_memory_map& memory_map, io::video::lcd& lcd);
