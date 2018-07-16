@@ -146,20 +146,33 @@ void help(gamekid::runner& runner, const std::vector<std::string>& args) {
 }
 
 void view(gamekid::runner& runner, const std::vector<std::string>& args) {
+    if (args.size() <= 1) {
+        std::cerr << "Missing <address_to_view> argument." << std::endl;
+        std::cout << "view <address_to_view> [length_to_view]" << std::endl;
+        return;
+    }
+
     const word address_to_view = gamekid::utils::convert::to_number<word>(args[1], 16);
-    constexpr word default_length = 64;
+
     const word length_to_view = 
-        args.size() >= 3 ? gamekid::utils::convert::to_number<word>(args[2]) : default_length;
+        args.size() >= 3 ? gamekid::utils::convert::to_number<word>(args[2]) : 64;
 
-    size_t index = 0;
+    std::vector<byte> mem_view = runner.dump(address_to_view, length_to_view);
 
-    for (byte dump_byte : runner.dump(address_to_view, length_to_view)) {
-        if (index % 16 == 0) {
-            std::cout << std::endl;
-            std::cout << gamekid::utils::convert::to_hex<word>(address_to_view + index) << ": ";
+    for (word i=0; i<mem_view.size(); ++i) {
+        // if it is a start of a new line
+        if (i % 16 == 0) {
+            if (i != 0) {
+                // print a new line if it is not the first line
+                std::cout << std::endl;
+            }
+            // print the address
+            std::cout << gamekid::utils::convert::to_hex<word>(address_to_view + i) << ": ";
         }
 
-        std::cout << gamekid::utils::convert::to_hex<byte>(dump_byte) << " ";
-        ++index;
+        // print the memory byte
+        std::cout << gamekid::utils::convert::to_hex<byte>(mem_view[i]) << " ";
     }
+
+    std::cout << std::endl;
 }
