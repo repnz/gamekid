@@ -4,7 +4,6 @@
 #include <gamekid/utils/bytes.h>
 
 #include <iostream>
-#include "gamekid/memory/error_memory_map.h"
 
 int main(int argc, const char** argv){    
     if (argc < 2){

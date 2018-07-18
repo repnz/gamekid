@@ -12,6 +12,6 @@ namespace gamekid::cpu::operands {
 
         byte load() const override { return value; }
 
-        void store(byte value) override { throw "Cannot store"; }
+        void store(byte value) override { throw std::exception("Cannot store"); }
     };
 }

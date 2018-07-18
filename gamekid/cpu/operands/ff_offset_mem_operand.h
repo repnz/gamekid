@@ -12,7 +12,7 @@ namespace gamekid::cpu::operands {
         explicit ff_offset_mem_operand(system& system) : _system(system) {}
 
         word load_address() const {
-            return _system.memory().load_byte(_system.cpu().PC.load() + 1) + 0xFF00;
+            return _system.cpu().immidiate<byte>() + 0xFF00;
         }
 
         byte load() const override {
@@ -21,7 +21,7 @@ namespace gamekid::cpu::operands {
 
         std::string to_str(const byte* next) const override {
             std::stringstream ss;
-            ss << "[$FF" << std::uppercase << std::hex << *next << "]";
+            ss << "[$FF" << std::uppercase << utils::convert::to_hex<byte>(*next) << "]";
             return ss.str();
         }
 
@@ -34,7 +34,7 @@ namespace gamekid::cpu::operands {
 
             if (value < -128 || value >= 128)
             {
-                throw "Error";
+                throw std::exception("Error");
             }
 
             return { static_cast<byte>(value) };

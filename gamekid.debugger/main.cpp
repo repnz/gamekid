@@ -20,6 +20,7 @@ void list(gamekid::runner& runner, const std::vector<std::string>& args);
 void debugger_exit(gamekid::runner& runner, const std::vector<std::string>& args);
 void help(gamekid::runner& runner, const std::vector<std::string>& args);
 void view(gamekid::runner& runner, const std::vector<std::string>& args);
+void del(gamekid::runner& runner, const std::vector<std::string>& args);
 
 const std::map<std::string, command> commands =
 {
@@ -30,7 +31,8 @@ const std::map<std::string, command> commands =
     { "list", list },
     { "exit", debugger_exit },
     { "help", help },
-    { "view", view}
+    { "view", view},
+    { "del", del}
 };
 
 bool debugger_running;
@@ -96,6 +98,7 @@ void add_breakpoint(gamekid::runner& runner, const std::vector<std::string>& arg
 
     const word address = gamekid::utils::convert::to_number<word>(args[1], 16);
     runner.add_breakpoint(address);
+    std::cout << "set breakpoint at address 0x" << gamekid::utils::convert::to_hex<word>(address) << std::endl;
 }
 
 void regs(gamekid::runner& runner, const std::vector<std::string>& args) {
@@ -175,4 +178,24 @@ void view(gamekid::runner& runner, const std::vector<std::string>& args) {
     }
 
     std::cout << std::endl;
+}
+
+void del(gamekid::runner& runner, const std::vector<std::string>& args) {
+    if (args.size() <= 1) {
+        std::cerr << "Missing breakpoint to delete" << std::endl;
+        std::cout << "del <address_to_delete>" << std::endl;
+        return;
+    }
+
+    const word breakpoint_address = gamekid::utils::convert::to_number<word>(args[1], 16);
+
+    try {
+        runner.delete_breakpoint(breakpoint_address);
+    } catch (const std::exception& e) {
+        std::cerr << "Cannot delete breakpoint: " << e.what() << std::endl;
+        return;
+    }
+
+    std::cout << "deleted breakpoint at 0x" <<
+        gamekid::utils::convert::to_hex<word>(breakpoint_address) << std::endl;
 }

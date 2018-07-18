@@ -54,7 +54,13 @@ namespace gamekid::cpu {
         void error(){}
 
         memory::memory& memory();
-        gamekid::system& system();
+        system& system();
+
+        template <typename T>
+        T immidiate() {
+            const word imm_ptr = PC.load() - sizeof(T);
+            return memory().load<T>(imm_ptr);
+        }
 
         ~cpu();
     };

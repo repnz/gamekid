@@ -26,15 +26,16 @@ void runner::run_until_break(){
 }
 
 void runner::next(){
-    const word opcode_word = _system.memory().load_word(_system.cpu().PC.load());
+    const word old_pc = _system.cpu().PC.load();
+    const word opcode_word = _system.memory().load_word(old_pc);
     gamekid::cpu::opcode* opcode = _decoder.decode(opcode_word);
 
     if (opcode == nullptr) {
         throw std::exception("InvalidOpcode");
     }
 
+    _system.cpu().PC.store(old_pc + opcode->full_size());
     opcode->run();
-    _system.cpu().PC.store(_system.cpu().PC.load() + opcode->full_size());
 }
 
 void runner::run(){
@@ -57,6 +58,16 @@ std::vector<byte> runner::dump(word address_to_view, word length_to_view) {
     return bytes;
 }
 
+void runner::delete_breakpoint(word breakpoint_address) {
+    auto addr_iter = _breakpoints.find(breakpoint_address);
+
+    if (addr_iter == _breakpoints.end()) {
+        throw std::exception("Breakpoint does not exist in that address");
+    }
+
+    _breakpoints.erase(addr_iter);
+}
+
 std::vector<std::string> runner::list(int count) {
     std::vector<std::string> opcodes(count);
     
@@ -66,26 +77,29 @@ std::vector<std::string> runner::list(int count) {
         const word opcode_word = _system.memory().load_word(pc);
         gamekid::cpu::opcode* op = _decoder.decode(opcode_word);
 
-        // Write the address
+        // Write the address 
         opcodes[i] = utils::convert::to_hex(pc) + "  ";
 
         if (op == nullptr)  {
+            // opcode was not found, write byte value
             const byte current_byte = static_cast<byte>(opcode_word);
             opcodes[i] += utils::convert::to_hex<byte>(current_byte);
-            opcodes[i] += "            .byte";
+            opcodes[i] += "              .byte";
             pc += 1;
         } else {
-            const word imm_bytes = _system.memory().load_word(pc + op->size());
+            // calculate the immidiate values of the opcode
+            const word imm_bytes = _system.memory().load_word(pc + static_cast<word>(op->size()));
             const byte* imm_ptr = (byte*)(&imm_bytes);
 
+            // add opcode bytes 
             for (byte b : op->full_opcode(imm_ptr)) {
                 opcodes[i] += utils::convert::to_hex<byte>(b) + ' ';
             }
 
-            for (size_t j=12; j>=op->full_size()*3+1; --j) {
-                opcodes[i] += " ";
-            }
-            
+            // add padding
+            opcodes[i] += std::string(12 - op->full_size() * 3 + 1, ' ');
+
+            // add opcode mnemonic
             opcodes[i] += op->to_str(imm_ptr);
             pc += op->full_size();
         }

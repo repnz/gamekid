@@ -28,6 +28,7 @@ namespace gamekid {
         void run();
         cpu::cpu& cpu();
         std::vector<byte> dump(word address_to_view, word length_to_view);
+        void delete_breakpoint(word breakpoint_address);
     };
 
 }

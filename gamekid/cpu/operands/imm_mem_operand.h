@@ -10,7 +10,7 @@ namespace gamekid::cpu::operands {
         explicit imm_mem_operand(system& system) : _system(system) {}
 
         word get_address() const {
-            return _system.memory().load_word(_system.cpu().PC.load() + 1);
+            return _system.cpu().immidiate<word>();
         }
 
         T load() const override {
@@ -19,7 +19,7 @@ namespace gamekid::cpu::operands {
 
         std::string to_str(const byte* next) const override {
             const word address = *(word*)next;
-            return std::to_string(address);
+            return gamekid::utils::convert::to_hex<word>(address);
         }
 
         void store(T value) override {

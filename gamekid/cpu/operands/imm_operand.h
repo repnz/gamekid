@@ -10,16 +10,16 @@ namespace gamekid::cpu::operands {
         explicit imm_operand(system& system) : _system(system) {}
 
         T load() const override {
-            return _system.memory().load<T>(_system.cpu().PC.load() + 1);
+            return _system.cpu().immidiate<T>();
         }
 
-        void store(T value) override {
-            throw "Cannot store";
+        void store(T) override {
+            throw std::exception("Cannot store");
         }
 
         std::string to_str(const byte* next) const override {
             T item = *(T*)next;
-            return std::to_string(item);
+            return gamekid::utils::convert::to_hex<T>(item);
         }
 
         std::vector<byte> encode(const std::string& operand) const override {

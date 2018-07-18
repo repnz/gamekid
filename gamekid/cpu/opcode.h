@@ -26,8 +26,8 @@ namespace gamekid::cpu {
 
         std::vector<byte> full_opcode(const byte* next) const;
 
-        size_t size() const;
-        size_t immidiate_size() const;
-        virtual size_t full_size() const;
+        byte size() const;
+        byte immidiate_size() const;
+        virtual byte full_size() const;
     };
 }

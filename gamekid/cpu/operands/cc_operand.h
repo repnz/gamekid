@@ -1,6 +1,7 @@
 #pragma once
 #include <gamekid/cpu/operand.h>
 #include <gamekid/cpu/operands/flags_reg8.h>
+#include <utility>
 
 namespace gamekid::cpu::operands {
     class cc_operand : public operand<bool>
@@ -11,8 +12,8 @@ namespace gamekid::cpu::operands {
         std::string _name;
         const bool _value;
     public:
-        explicit cc_operand(const flags_reg8& reg, const byte flag_place, const std::string& name, bool value) :
-            _reg(reg), _flag_place(flag_place), _name(name), _value(value)
+        explicit cc_operand(const flags_reg8& reg, const byte flag_place, std::string name, bool value) :
+            _reg(reg), _flag_place(flag_place), _name(std::move(name)), _value(value)
         {
         }
 

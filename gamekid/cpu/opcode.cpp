@@ -28,14 +28,14 @@ std::vector<byte> opcode::full_opcode(const byte* next) const {
     return bytes;
 }
 
-size_t opcode::size() const {
-    return value.size();
+byte opcode::size() const {
+    return static_cast<byte>(value.size());
 }
 
-size_t opcode::immidiate_size() const {
+byte opcode::immidiate_size() const {
     return full_size() - size();
 }
 
-size_t opcode::full_size() const {
+byte opcode::full_size() const {
     return size();
 }
