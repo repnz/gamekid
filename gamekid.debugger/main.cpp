@@ -43,7 +43,7 @@ int main(const int argc, const char** argv) {
     std::string filename(argv[1]);
     gamekid::rom::cartridge cart(gamekid::utils::files::read_file(filename));
     gamekid::runner r(std::move(cart));
-   
+
     debugger_running = true;
 
     while (debugger_running) {
@@ -105,10 +105,10 @@ void regs(gamekid::runner& runner, const std::vector<std::string>& args) {
     constexpr size_t regs_per_line = 4;
     const std::vector<gamekid::cpu::reg*>& regs = runner.cpu().regs;
 
-    for (size_t i=0; i<regs.size(); ++i) {
+    for (size_t i = 0; i < regs.size(); ++i) {
         std::cout << regs[i]->name() << ": " << std::hex << regs[i]->load_as_word() << " ";
-        
-        if ((i+1) % regs_per_line == 0) {
+
+        if ((i + 1) % regs_per_line == 0) {
             std::cout << std::endl;
         }
     }
@@ -118,20 +118,26 @@ void regs(gamekid::runner& runner, const std::vector<std::string>& args) {
 
 void next(gamekid::runner& runner, const std::vector<std::string>& args) {
     runner.next();
-    std::cout << runner.list(1)[0] << std::endl;
+    std::cout << runner.list(runner.cpu().PC.load(), 1)[0] << std::endl;
 }
 
 void list(gamekid::runner& runner, const std::vector<std::string>& args) {
     word count;
+    word address = runner.cpu().PC.load();
 
+    
     if (args.size() == 2) {
         count = gamekid::utils::convert::to_number<word>(args[1]);
+    }
+    else if (args.size() == 3) {
+        address = gamekid::utils::convert::to_number<word>(args[1], 16);
+        count = gamekid::utils::convert::to_number<word>(args[2]);
     }
     else {
         count = 10;
     }
 
-    std::vector<std::string> list = runner.list(count);
+    std::vector<std::string> list = runner.list(address, count);
 
     for (auto& op : list) {
         std::cout << op << std::endl;
@@ -157,12 +163,12 @@ void view(gamekid::runner& runner, const std::vector<std::string>& args) {
 
     const word address_to_view = gamekid::utils::convert::to_number<word>(args[1], 16);
 
-    const word length_to_view = 
+    const word length_to_view =
         args.size() >= 3 ? gamekid::utils::convert::to_number<word>(args[2]) : 64;
 
     std::vector<byte> mem_view = runner.dump(address_to_view, length_to_view);
 
-    for (word i=0; i<mem_view.size(); ++i) {
+    for (word i = 0; i < mem_view.size(); ++i) {
         // if it is a start of a new line
         if (i % 16 == 0) {
             if (i != 0) {
@@ -191,7 +197,8 @@ void del(gamekid::runner& runner, const std::vector<std::string>& args) {
 
     try {
         runner.delete_breakpoint(breakpoint_address);
-    } catch (const std::exception& e) {
+    }
+    catch (const std::exception& e) {
         std::cerr << "Cannot delete breakpoint: " << e.what() << std::endl;
         return;
     }

@@ -68,27 +68,25 @@ void runner::delete_breakpoint(word breakpoint_address) {
     _breakpoints.erase(addr_iter);
 }
 
-std::vector<std::string> runner::list(int count) {
+std::vector<std::string> runner::list(word address, word count) {
     std::vector<std::string> opcodes(count);
     
-    word pc = _system.cpu().PC.load();
-
-    for (int i = 0; i < count; i++) {
-        const word opcode_word = _system.memory().load_word(pc);
+    for (word i = 0; i < count; i++) {
+        const word opcode_word = _system.memory().load_word(address);
         gamekid::cpu::opcode* op = _decoder.decode(opcode_word);
 
         // Write the address 
-        opcodes[i] = utils::convert::to_hex(pc) + "  ";
+        opcodes[i] = utils::convert::to_hex(address) + "  ";
 
         if (op == nullptr)  {
             // opcode was not found, write byte value
             const byte current_byte = static_cast<byte>(opcode_word);
             opcodes[i] += utils::convert::to_hex<byte>(current_byte);
-            opcodes[i] += "              .byte";
-            pc += 1;
+            opcodes[i] += "          .byte";
+            address += 1;
         } else {
             // calculate the immidiate values of the opcode
-            const word imm_bytes = _system.memory().load_word(pc + static_cast<word>(op->size()));
+            const word imm_bytes = _system.memory().load_word(address + static_cast<word>(op->size()));
             const byte* imm_ptr = (byte*)(&imm_bytes);
 
             // add opcode bytes 
@@ -101,7 +99,7 @@ std::vector<std::string> runner::list(int count) {
 
             // add opcode mnemonic
             opcodes[i] += op->to_str(imm_ptr);
-            pc += op->full_size();
+            address += op->full_size();
         }
     }
 
