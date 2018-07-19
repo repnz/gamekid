@@ -21,6 +21,7 @@ void debugger_exit(gamekid::runner& runner, const std::vector<std::string>& args
 void help(gamekid::runner& runner, const std::vector<std::string>& args);
 void view(gamekid::runner& runner, const std::vector<std::string>& args);
 void del(gamekid::runner& runner, const std::vector<std::string>& args);
+void breakpoints(gamekid::runner& runner, const std::vector<std::string>& args);
 
 const std::map<std::string, command> commands =
 {
@@ -32,7 +33,8 @@ const std::map<std::string, command> commands =
     { "exit", debugger_exit },
     { "help", help },
     { "view", view},
-    { "del", del}
+    { "del", del},
+    { "breakpoints", breakpoints}
 };
 
 bool debugger_running;
@@ -55,7 +57,11 @@ int main(const int argc, const char** argv) {
             std::cout << "Unknown command '" << command[0] << "'" << std::endl;
         }
         else {
-            key_value_pair->second(r, command);
+            try {
+                key_value_pair->second(r, command);
+            } catch (const std::exception& e) {
+                std::cerr << e.what() << std::endl;
+            }
         }
     }
 }
@@ -205,4 +211,17 @@ void del(gamekid::runner& runner, const std::vector<std::string>& args) {
 
     std::cout << "deleted breakpoint at 0x" <<
         gamekid::utils::convert::to_hex<word>(breakpoint_address) << std::endl;
+}
+
+void breakpoints(gamekid::runner& runner, const std::vector<std::string>& args) {
+    const std::set<word>& bps = runner.breakpoints();
+
+    if (bps.empty()) {
+        std::cout << "No breakpoints set" << std::endl;
+        return;
+    }
+
+    for (word bp : bps) {
+        std::cout << "Breakpoint at address 0x" << gamekid::utils::convert::to_hex<word>(bp) << std::endl;
+    }
 }

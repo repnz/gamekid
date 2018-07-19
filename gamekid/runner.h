@@ -21,6 +21,10 @@ namespace gamekid {
     public:
         explicit runner(rom::cartridge&& rom);
 
+        const std::set<word>& breakpoints() const {
+            return _breakpoints;
+        }
+
         std::vector<std::string> list(word address, word count);
         void add_breakpoint(word address);
         void run_until_break();
