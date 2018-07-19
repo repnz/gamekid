@@ -19,7 +19,7 @@ namespace gamekid::cpu::operands {
 
         std::string to_str(const byte* next) const override {
             const word address = *(word*)next;
-            return gamekid::utils::convert::to_hex<word>(address);
+            return "[" + gamekid::utils::convert::to_hex<word>(address) + "]";
         }
 
         void store(T value) override {
