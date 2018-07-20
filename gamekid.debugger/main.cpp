@@ -4,7 +4,9 @@
 #include <iostream>
 #include "gamekid/utils/str.h"
 #include "gamekid/cpu/operands_container.h"
-
+#include "window.h"
+#include <thread>
+#undef main
 
 void welcome();
 std::vector<std::string> get_user_command();
@@ -23,6 +25,8 @@ void view(gamekid::runner& runner, const std::vector<std::string>& args);
 void del(gamekid::runner& runner, const std::vector<std::string>& args);
 void breakpoints(gamekid::runner& runner, const std::vector<std::string>& args);
 
+void sdl_handler();
+
 const std::map<std::string, command> commands =
 {
     { "run", run },
@@ -39,14 +43,16 @@ const std::map<std::string, command> commands =
 
 bool debugger_running;
 
-int main(const int argc, const char** argv) {
+int main(const int argc, const char* argv[]) {
+    debugger_running = true;
+    std::thread sdl_handler_thread(sdl_handler);
+
     welcome();
 
     std::string filename(argv[1]);
     gamekid::rom::cartridge cart(gamekid::utils::files::read_file(filename));
     gamekid::runner r(std::move(cart));
 
-    debugger_running = true;
 
     while (debugger_running) {
         std::vector<std::string> command = get_user_command();
@@ -63,6 +69,19 @@ int main(const int argc, const char** argv) {
                 std::cerr << e.what() << std::endl;
             }
         }
+    }
+
+    sdl_handler_thread.join();
+    return 0;
+}
+
+void sdl_handler() {
+    gamekid::debugger::window _window;
+    _window.put_pixel({ 0, 0 }, gamekid::debugger::colors::A);
+
+    while (debugger_running) {
+        _window.poll_events();
+        SDL_Delay(500);
     }
 }
 
@@ -94,7 +113,7 @@ std::vector<std::string> get_user_command() {
 
 void run(gamekid::runner& runner, const std::vector<std::string>& args) {
     runner.run_until_break();
-}
+ }
 
 void add_breakpoint(gamekid::runner& runner, const std::vector<std::string>& args) {
     if (args.size() <= 1) {

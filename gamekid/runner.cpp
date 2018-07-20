@@ -1,6 +1,5 @@
 #include "runner.h"
 #include "rom/cartridge.h"
-#include <sstream>
 #include "utils/convert.h"
 #include "utils/str.h"
 
