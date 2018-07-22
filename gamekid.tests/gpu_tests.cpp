@@ -11,5 +11,11 @@ namespace gamekid::tests {
         ASSERT_EQ(0b11, t.get_color(2));
     }
 
+    TEST(GPU, TILE_CAST_SAME_WORD) {
+        static_assert(sizeof(video::io::tile) == sizeof(word));
+        word value = 0x1234;
+        auto tile = reinterpret_cast<video::io::tile*>(&value);
+        ASSERT_EQ(0x1234, tile->value);
+    }
 
 }
