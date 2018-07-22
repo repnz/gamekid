@@ -202,6 +202,7 @@
     <ClInclude Include="io\boot_rom_status_cell.h" />
     <ClInclude Include="io\video\lcd.h" />
     <ClInclude Include="io\video\lcd_control_cell.h" />
+    <ClInclude Include="io\video\tile.h" />
     <ClInclude Include="memory\boot_rom_page.h" />
     <ClInclude Include="memory\error_cell.h" />
     <ClInclude Include="memory\error_memory_map.h" />

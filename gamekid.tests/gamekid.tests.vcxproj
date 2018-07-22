@@ -55,6 +55,7 @@
     <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="gpu_tests.cpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_operand.h" />
     <ClInclude Include="test_rom_map.h" />
