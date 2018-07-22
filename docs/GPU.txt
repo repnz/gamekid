@@ -1,0 +1,92 @@
+screen:
+	- screen -> 160*144 pixels
+	- 4 shades of gray
+	- 8x8 pixel tile-based, 20x18 background tiles
+	- 40 sprites (10 per line)
+	- 8 kb vram
+	- background scrolling: SCX and SCY control the viewport of the vram
+	- background scrolling wraps around
+	
+tiles:
+-  20x18 background tiles on the screen
+-  32x32 tiles in the video ram
+-  256x256 pixels in the video ram
+-	16 bytes per tile -> 
+	every color is 2 bits, 
+	8 colors * 8 colors = 
+	2bits*8=16 -> 
+	16 bits per line -> 
+	2 bytes per line->  
+	2 bytes per line*8 lines=16 bytes
+
+- the pallete of the tiles is global
+- 256 tiles in the system -> background tile data
+
+
+pallete:
+
+background and window pallete data in [$FF47] 
+0bDDCCBBAA -> AA=00 index color, BB=01 index color, CC=10 index color, DD=11 index color
+
+window:
+	- no transparency
+	- 
+	
+sprites:
+	- 10 sprites per line
+	- OAM -> object attribute map -> fits into 4 bytes -> in OAM ram
+		- position_X
+		- position_Y
+		- tile_number
+		- priority - 0 is on top, 1 is on the buttom of pixels (instead of white pixels)
+		- flip x
+		- flip y
+		- pallete (oh god)
+	- every sprite can contain 3 colors (because of transparent colors)
+	- so every sprite has a pallete bit which controls the pallete (OBP0 or OBP1)
+	- OBP0 and OBP1 works like pallete byte, exepct 00 means transparent
+	- sprite and sprite priority: the first sprite to draw is on top
+	- OBJ Size - LCD Control bit 2 -> 0=8*8/1=8*16 (width*height)
+	
+layers:
+	- 0 - lcd
+	- 1 - background
+	- 2 - sprites
+	- 3 - window
+	
+vram_memory_map:
+	- 32*32 window map (1kb) = 32*32 indexes -> every byte is an index to the tile map
+	- 32*32 bg map (1kb) -> as above
+	- 256 tiles x 16 bytes bg tiles (4kb)-> array of 256
+	- 256 tiles x 16 bytes sprite tiles (4kb)-> array of 256
+	- 8kb of video ram so what is the mapping? it does not fit.
+	- controled with: LCD Control -> WindowTileMapDisplaySelect, BG&WindowTileDataSelect, BGTileMapDisplaySelect,
+
+vertical_timing:
+	- Like CRT Systems
+	- Drawing the picture 16 times a second top to buttom left to right
+	- LYC -> setting it causes an interrupt on that line 
+	- LY - Read the current Y coordinate
+	- The window can be disabled in the middle of a drawing
+	- SCX - the road trick
+
+ppu_timing:
+	20 clocks ----|----- 43 clocks -------|---------- 51 clocks ---------- (114)
+	- OAM Search -| ---- Pixel Transfer --|----------- H-Blank -----------
+	----------------------------------------------------------------------
+	144 lines
+	
+	- OAM Search - search the sprites to be drawn in that line
+		- filter the sprites to know which sprites are written there
+		- filter: oam.x != 0 && (LY + 16 >= oam.y) && (LY+16 < oam.y + h)
+		- cannot access OAM Ram
+		- use DMA to copy shadow sprites to oam sprites
+	- Pixel Transfer - write the pixels to the screen
+		- cannot access VRAM
+	- H-Blank - Horizontal Blank - The PPU is idling between lines - 144 lines
+	- V-Blank - When the PPU does not do anything between screens  - 10 lines
+	- 114 x 154 = 17,556 clocks per screen
+	- 1,048,576 / 17,556 = 59.7 Hz
+	
+	
+	

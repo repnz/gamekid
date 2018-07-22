@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F7ECDAF1-8331-4F24-B1AC-782FEFF64145}"
 	ProjectSection(SolutionItems) = preProject
 		docs\CPU.md = docs\CPU.md
+		docs\GPU.txt = docs\GPU.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2FC55192-A9AE-49E6-867D-344AEFABBB3B}"
