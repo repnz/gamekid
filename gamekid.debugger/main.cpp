@@ -218,6 +218,11 @@ void del(gamekid::runner& runner, const std::vector<std::string>& args) {
         return;
     }
 
+    if (args[1] == "*") {
+        runner.delete_all_breakpoints();
+        return;
+    }
+
     const word breakpoint_address = gamekid::utils::convert::to_number<word>(args[1], 16);
 
     try {

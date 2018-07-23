@@ -67,6 +67,10 @@ void runner::delete_breakpoint(word breakpoint_address) {
     _breakpoints.erase(addr_iter);
 }
 
+void runner::delete_all_breakpoints() {
+    _breakpoints.erase(_breakpoints.begin(), _breakpoints.end());
+}
+
 std::vector<std::string> runner::list(word address, word count) {
     std::vector<std::string> opcodes(count);
     
