@@ -71,8 +71,7 @@ int main(const int argc, const char* argv[]) {
         }
     }
 
-    sdl_handler_thread.join();
-    return 0;
+    exit(0);
 }
 
 void sdl_handler() {
