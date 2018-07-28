@@ -168,8 +168,8 @@ void rotation::initialize(instruction_set& set, cpu& c){
         .operands(c.C).opcode(RR_C).operation(rr_operation).cycles(8).add()
         .operands(c.D).opcode(RR_D).operation(rr_operation).cycles(8).add()
         .operands(c.E).opcode(RR_E).operation(rr_operation).cycles(8).add()
-        .operands(c.L).opcode(RR_L).operation(rr_operation).cycles(8).add()
         .operands(c.H).opcode(RR_H).operation(rr_operation).cycles(8).add()
+        .operands(c.L).opcode(RR_L).operation(rr_operation).cycles(8).add()
         .operands(c.operands().reg_mem(c.HL)).operation(rr_operation).opcode(RR_HL_mem).cycles(16).add()
         .build());
         
@@ -208,24 +208,24 @@ void rotation::initialize(instruction_set& set, cpu& c){
             .build());
 
         set.add_instruction(builders::instruction_builder(c, "srl")
-            .operands(c.A).opcode(SRL_A).operation(sla_operation).cycles(8).add()
-            .operands(c.B).opcode(SRL_B).operation(sla_operation).cycles(8).add()
-            .operands(c.C).opcode(SRL_C).operation(sla_operation).cycles(8).add()
-            .operands(c.D).opcode(SRL_D).operation(sla_operation).cycles(8).add()
-            .operands(c.E).opcode(SRL_E).operation(sla_operation).cycles(8).add()
-            .operands(c.L).opcode(SRL_L).operation(sla_operation).cycles(8).add()
-            .operands(c.H).opcode(SRL_H).operation(sla_operation).cycles(8).add()
-            .operands(c.operands().reg_mem(c.HL)).operation(sla_operation).opcode(SRL_HL_mem).cycles(16).add()
+            .operands(c.A).opcode(SRL_A).operation(srl_operation).cycles(8).add()
+            .operands(c.B).opcode(SRL_B).operation(srl_operation).cycles(8).add()
+            .operands(c.C).opcode(SRL_C).operation(srl_operation).cycles(8).add()
+            .operands(c.D).opcode(SRL_D).operation(srl_operation).cycles(8).add()
+            .operands(c.E).opcode(SRL_E).operation(srl_operation).cycles(8).add()
+            .operands(c.L).opcode(SRL_L).operation(srl_operation).cycles(8).add()
+            .operands(c.H).opcode(SRL_H).operation(srl_operation).cycles(8).add()
+            .operands(c.operands().reg_mem(c.HL)).operation(srl_operation).opcode(SRL_HL_mem).cycles(16).add()
             .build());
 
         set.add_instruction(builders::instruction_builder(c, "sra")
-            .operands(c.A).opcode(SRA_A).operation(sla_operation).cycles(8).add()
-            .operands(c.B).opcode(SRA_B).operation(sla_operation).cycles(8).add()
-            .operands(c.C).opcode(SRA_C).operation(sla_operation).cycles(8).add()
-            .operands(c.D).opcode(SRA_D).operation(sla_operation).cycles(8).add()
-            .operands(c.E).opcode(SRA_E).operation(sla_operation).cycles(8).add()
-            .operands(c.L).opcode(SRA_L).operation(sla_operation).cycles(8).add()
-            .operands(c.H).opcode(SRA_H).operation(sla_operation).cycles(8).add()
-            .operands(c.operands().reg_mem(c.HL)).operation(sla_operation).opcode(SRA_HL_mem).cycles(16).add()
+            .operands(c.A).opcode(SRA_A).operation(sra_operation).cycles(8).add()
+            .operands(c.B).opcode(SRA_B).operation(sra_operation).cycles(8).add()
+            .operands(c.C).opcode(SRA_C).operation(sra_operation).cycles(8).add()
+            .operands(c.D).opcode(SRA_D).operation(sra_operation).cycles(8).add()
+            .operands(c.E).opcode(SRA_E).operation(sra_operation).cycles(8).add()
+            .operands(c.L).opcode(SRA_L).operation(sra_operation).cycles(8).add()
+            .operands(c.H).opcode(SRA_H).operation(sra_operation).cycles(8).add()
+            .operands(c.operands().reg_mem(c.HL)).operation(sra_operation).opcode(SRA_HL_mem).cycles(16).add()
             .build());
 }
