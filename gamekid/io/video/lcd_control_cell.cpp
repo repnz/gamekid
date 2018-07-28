@@ -22,5 +22,6 @@ void gamekid::io::video::lcd_control_cell::store(byte value) {
 
     const bool window_enabled = utils::bits::check_bit(value, lcd_control_bits::window_display_enable);
     _lcd.window_enabled(window_enabled);
-    
+
+    cell::store(value);
 }

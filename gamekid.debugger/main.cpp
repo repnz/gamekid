@@ -6,6 +6,8 @@
 #include "gamekid/cpu/operands_container.h"
 #include "window.h"
 #include <thread>
+#include "gamekid/io/video/tile.h"
+#include <atomic>
 #undef main
 
 void welcome();
@@ -24,8 +26,7 @@ void help(gamekid::runner& runner, const std::vector<std::string>& args);
 void view(gamekid::runner& runner, const std::vector<std::string>& args);
 void del(gamekid::runner& runner, const std::vector<std::string>& args);
 void breakpoints(gamekid::runner& runner, const std::vector<std::string>& args);
-
-void sdl_handler();
+void dump_screen(gamekid::runner& runner, const std::vector<std::string>& args);
 
 const std::map<std::string, command> commands =
 {
@@ -38,14 +39,14 @@ const std::map<std::string, command> commands =
     { "help", help },
     { "view", view},
     { "del", del},
-    { "breakpoints", breakpoints}
+    { "breakpoints", breakpoints},
+    { "dump_screen", dump_screen}
 };
 
 bool debugger_running;
 
 int main(const int argc, const char* argv[]) {
     debugger_running = true;
-    std::thread sdl_handler_thread(sdl_handler);
 
     welcome();
 
@@ -72,16 +73,6 @@ int main(const int argc, const char* argv[]) {
     }
 
     exit(0);
-}
-
-void sdl_handler() {
-    gamekid::debugger::window _window;
-    _window.put_pixel({ 0, 0 }, gamekid::debugger::colors::A);
-
-    while (debugger_running) {
-        _window.poll_events();
-        SDL_Delay(500);
-    }
 }
 
 void welcome() {
@@ -217,7 +208,17 @@ void del(gamekid::runner& runner, const std::vector<std::string>& args) {
         return;
     }
 
+    // delete all 
     if (args[1] == "*") {
+        if (runner.breakpoints().empty()) {
+            std::cout << "No breakpoints to delete." << std::endl;
+            return;
+        }
+
+        for (word addr : runner.breakpoints()) {
+            std::cout << "Deleting 0x" << gamekid::utils::convert::to_hex(addr) << std::endl;
+        }
+
         runner.delete_all_breakpoints();
         return;
     }
@@ -247,4 +248,43 @@ void breakpoints(gamekid::runner& runner, const std::vector<std::string>& args) 
     for (word bp : bps) {
         std::cout << "Breakpoint at address 0x" << gamekid::utils::convert::to_hex<word>(bp) << std::endl;
     }
+}
+
+const std::array<byte, 4> palette = {0b00, 0b11, 0b11, 0b11 };
+
+void write_tile(gamekid::debugger::window& wnd, const gamekid::video::io::tile& t, gamekid::debugger::point p) {
+
+    for (byte y = 0; y<8; ++y) {
+        for (byte x = 0; x<8; ++x) {
+            const byte color_index = t.get_color(x, y);
+            const byte color_value = palette.at(color_index);
+            const SDL2pp::Color& color = gamekid::debugger::colors.at(color_value);
+            wnd.put_pixel(gamekid::debugger::point(p.x + x, p.y + y), color);
+        }
+    }
+}
+
+void dump_screen(gamekid::runner& runner, const std::vector<std::string>& args) {
+    gamekid::debugger::window wnd;
+    
+    std::vector<byte> tile_data = runner.dump(0x8000, 0x1000);
+    std::vector<byte> tile_map = runner.dump(0x9800, 1024);
+
+    auto tile_data_ptr = reinterpret_cast<std::array<gamekid::video::io::tile, 256>*>(tile_data.data());
+
+    for (int y=0; y<32; ++y) {
+        for (int x=0; x<32; ++x) {
+            const int tile_index = tile_map.at(y * 32 + x);
+            write_tile(wnd, tile_data_ptr->at(tile_index), gamekid::debugger::point(x*8, y*8));
+        }
+    }
+
+    wnd.render();
+    wnd.show();
+
+    while (true) {
+        wnd.poll_events();
+        SDL_Delay(100);
+    }
+
 }
