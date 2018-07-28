@@ -26,7 +26,7 @@ namespace gamekid::cpu::operands {
         }
 
         void store(byte value) override {
-            return _system.memory().store(load_address(), value);
+            return _system.memory().store_byte(load_address(), value);
         }
 
         std::vector<byte> encode(const std::string& operand) const override {

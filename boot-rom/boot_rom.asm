@@ -53,8 +53,10 @@ ROM:001C        ld      [hl], a
 ROM:001D        ld      a, $FC
 ROM:001F        ld      [$FF47], a
 
-				; Copy bytes to VRAM
+				; Copy Nintendo Logo to VRAM
+				; 0x104 is the Nintendo Logo offset when the rom is in memory
 ROM:0021        ld      de, $104
+				; 0x8010 is the address of the second tile in the tile data
 ROM:0024        ld      hl, $8010
 ROM:0027
 ROM:0027 loc_27:                        ; CODE XREF: boot_gb+32↓j

@@ -1,3 +1,38 @@
+/*
+	Very wierd function.
+	Changes the C register, 
+	but the value of C is not used anywhere after the calloc
+	also does this wierd 'push bc' 'pop bc' thing
+*/
+void sub_96 (register c){
+	// loop from b=4 to b=0
+	/* Close to source
+	for (register b=4; b>=0; --b){
+		rla
+		rl c
+		rla
+	}
+	*/
+	// Actually does this
+	rl c, 4 // the value of c is not actually used anywhere. :(
+	rl a, 8 // does nothing ???? :( nintendo is not cool
+	
+	*hl = a;
+	hl += 2;
+	*hl = a;
+	hl += 2;
+}
+
+/*
+	Just calls the sub_96 function.
+	This is basically useless since C is not used anywhere
+*/
+void sub_95 (register a){
+	register c = a;
+	sub_96(c);
+	
+}
+
 void boot(){
 	set_stack_ptr(0xFFFE);
 	

@@ -18,7 +18,7 @@ namespace gamekid::cpu::operands {
         }
 
         void store(byte s) override {
-            _mem.store<byte>(_reg.load(), s);
+            _mem.store_byte(_reg.load(), s);
         }
 
         std::string to_str(const byte* next) const override {

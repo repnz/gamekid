@@ -3,18 +3,12 @@
 using gamekid::cpu::operands::reg16_with_offset;
 
 word reg16_with_offset::load() const {
-
-    const byte offset = _system.cpu().immidiate<byte>();
-
-    if (offset <= CHAR_MAX) {
-        return  _reg16.load() + offset;
-    }
-
-    return _reg16.load() - (offset - CHAR_MAX);
+    const auto offset = _system.cpu().immidiate<char>();
+    return _reg16.load() + offset;
 }
 
 std::string reg16_with_offset::to_str(const byte* next) const  {
-    const char value = *(char*)(next);
+    const char value = utils::bytes::read_value<char>(next);
 
     if (value < 0) {
         return _reg16.name() + std::to_string(value);

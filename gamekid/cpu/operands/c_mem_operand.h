@@ -19,11 +19,11 @@ namespace gamekid::cpu::operands {
         }
 
         std::string to_str(const byte* next) const override {
-            return "[c]";
+            return "[$FF00+c]";
         }
 
         void store(byte value) override {
-            return _system.memory().store(load_address(), value);
+            return _system.memory().store_byte(load_address(), value);
         }
     };
 }
