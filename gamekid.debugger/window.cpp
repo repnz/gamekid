@@ -6,7 +6,7 @@
 namespace gamekid::debugger {
 
     const int screen_size = 256;
-    const int zoom = 2;
+    const int zoom = 3;
 
     void window::poll_events() {
         SDL_Event e;

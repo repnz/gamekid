@@ -28,11 +28,11 @@ static void base_rl_operation(cpu& cpu, operand<byte>& op){
 }
 
 void rotation::rl_operation(cpu& cpu, operand<byte>& op){
-    base_rl_operation<false>(cpu, op);
+    base_rl_operation<true>(cpu, op);
 }
 
 void rotation::rlc_operation(cpu& cpu, operand<byte>& op){
-    base_rl_operation<true>(cpu, op);
+    base_rl_operation<false>(cpu, op);
 }
 
 void rotation::rla_operation(cpu& cpu) {
@@ -64,11 +64,11 @@ static void base_rr_operation(cpu& cpu, operand<byte>& op){
 }
 
 void rotation::rr_operation(cpu& cpu, operand<byte>& op) {
-    base_rr_operation<false>(cpu, op);
+    base_rr_operation<true>(cpu, op);
 }
 
 void rotation::rrc_operation(cpu& cpu, operand<byte>& op){
-    base_rr_operation<true>(cpu, op);
+    base_rr_operation<false>(cpu, op);
 }
 
 
