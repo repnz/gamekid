@@ -271,20 +271,19 @@ void dump_screen(gamekid::runner& runner, const std::vector<std::string>& args) 
     std::vector<byte> tile_map = runner.dump(0x9800, 1024);
 
     auto tile_data_ptr = reinterpret_cast<std::array<gamekid::video::io::tile, 256>*>(tile_data.data());
-
+    
     for (int y=0; y<32; ++y) {
         for (int x=0; x<32; ++x) {
-            const int tile_index = tile_map.at(y * 32 + x);
+            const byte tile_index = tile_map.at(y * 32 + x);
             write_tile(wnd, tile_data_ptr->at(tile_index), gamekid::debugger::point(x*8, y*8));
         }
     }
 
-    wnd.render();
     wnd.show();
+    wnd.render();
 
-    while (true) {
-        wnd.poll_events();
-        SDL_Delay(100);
+    while (wnd.poll_events()) {
+        SDL_Delay(500);
     }
 
 }

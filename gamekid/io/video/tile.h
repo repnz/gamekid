@@ -20,7 +20,6 @@ namespace gamekid::video::io {
         byte get_color(byte x, byte y) const {
             return get_color(y * 8 + x);
         }
-
     };
 
     static_assert(sizeof(tile) == sizeof(byte[16]));

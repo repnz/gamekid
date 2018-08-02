@@ -1,18 +1,21 @@
 #include "window.h"
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL.h>
-#include "gamekid/utils/bytes.h"
 
 namespace gamekid::debugger {
 
     const int screen_size = 256;
-    const int zoom = 3;
+    const int zoom = 5;
 
-    void window::poll_events() {
+    bool window::poll_events() {
         SDL_Event e;
         
         while (!SDL_PollEvent(&e)) {   
+            if (e.type == SDL_QUIT)
+                return false;
         }
+        
+        return true;
     }
 
     window::window() :

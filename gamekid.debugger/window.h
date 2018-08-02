@@ -24,7 +24,7 @@ namespace gamekid::debugger {
         SDL2pp::Renderer _renderer;
     public:
         window();
-        void poll_events();
+        bool poll_events();
         void put_pixel(point location, SDL2pp::Color value);
         void render();
         void show();

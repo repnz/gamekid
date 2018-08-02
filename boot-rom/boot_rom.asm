@@ -14,7 +14,7 @@ ROM:0007
 ROM:0007 .clear_vram_loop:                         ; CODE XREF: boot_gb+A↓j
 ROM:0007        ldd     [hl], a        ; zero byte in VRAM
 ROM:0008        bit     7, h           ; check if it the end of VRAM by checking the last bit
-ROM:000A        jr      nz, .clear_vram_loop
+ROM:000A        jr      nz, .clear_vram_loop ; break when the value of hl is 0x7f
 
 
 ; Start making the boot sound

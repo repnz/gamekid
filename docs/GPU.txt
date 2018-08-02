@@ -6,7 +6,6 @@ screen:
 	- 8 kb vram
 	- background scrolling: SCX and SCY control the viewport of the vram
 	- background scrolling wraps around
-	
 tiles:
 -  20x18 background tiles on the screen
 -  32x32 tiles in the video ram
@@ -34,7 +33,7 @@ window:
 	
 sprites:
 	- 10 sprites per line
-	- OAM -> object attribute map -> fits into 4 bytes -> in OAM ram
+	- OAM -> object attribute map -> oam entry fits into 4 bytes -> in OAM ram
 		- position_X
 		- position_Y
 		- tile_number

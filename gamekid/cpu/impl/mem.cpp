@@ -215,8 +215,8 @@ void mem::ldd_operation(cpu& cpu, operand<byte>& dst, operand<byte>& src){
 }
 
 void mem::push(cpu& cpu, word value) {
-    cpu.memory().store<word>(cpu.SP.load(), value);
     cpu.SP.store(cpu.SP.load() - 2);
+    cpu.memory().store<word>(cpu.SP.load(), value);
 }
 
 void mem::push_operation(cpu& cpu, operand<word>& dst){
@@ -225,13 +225,15 @@ void mem::push_operation(cpu& cpu, operand<word>& dst){
 }
 
 word mem::pop(cpu& cpu) {
-    // increment the stack pointer
-    cpu.SP.store(cpu.SP.load() + 2);
 
     // load the value from the stack
-    return cpu.memory().load<word>(cpu.SP.load());
-}
+    const word value_from_stack = cpu.memory().load<word>(cpu.SP.load());
 
+    // increment the stack pointer
+    cpu.SP.store(cpu.SP.load() + 2);
+    
+    return value_from_stack;
+}
 void mem::pop_operation(cpu& cpu, operand<word>& dst){
     dst.store(pop(cpu));
 }
