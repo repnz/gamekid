@@ -61,25 +61,4 @@ namespace gamekid::tests {
         ASSERT_EQ(true, utils::bits::check_carry_down(0x00, 0xFF, 7));
         ASSERT_EQ(false, utils::bits::check_carry_down(0xFF, 0xFE, 8));
     }
-
-    TEST(UTILS, TEST_BITS_ARRAY) {
-        
-        std::array<byte, 16> bytes;
-
-        for (byte i = 0; i < 16; ++i) {
-            bytes[i] = i;
-        }
-
-        using colors_array = utils::bits::bits_array<2, 64>;
-
-        colors_array arr(bytes);
-        
-        for (byte i=0; i<16; ++i) {
-            ASSERT_EQ(bytes[i] >> 6 & 0b11, arr.get(i*4+0));
-            ASSERT_EQ(bytes[i] >> 4 & 0b11, arr.get(i*4+1));
-            ASSERT_EQ(bytes[i] >> 2 & 0b11, arr.get(i*4+2));
-            ASSERT_EQ(bytes[i] >> 0 & 0b11, arr.get(i*4+3));
-        }
-
-    }
 }

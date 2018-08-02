@@ -2,6 +2,7 @@
 #include <gamekid/utils/types.h>
 #include <array>
 #include "gamekid/utils/bits.h"
+#include "gamekid/utils/bytes.h"
 
 namespace gamekid::video::io {
     struct tile {
@@ -9,16 +10,16 @@ namespace gamekid::video::io {
 
         // 64 colors
         // each color is 2 bits
-        utils::bits::bits_array<2, 64> colors;
+        std::array<byte, 16> colors;
 
-        // Index can be value from 0 to 64 (represents the index of the color)
+        // x and y can be between 0 to 7 (represents the location of the color)
         // the color can be 0 to 3 (the index from the pallete)
-        byte  get_color(byte color_index) const {
-            return colors.get(color_index);
-        }
-
         byte get_color(byte x, byte y) const {
-            return get_color(y * 8 + x);
+            const word row_word = utils::bytes::read_value<word>(&colors[y * 2]);
+            const bool b1 = utils::bits::check_bit(row_word, 7 - x);
+            const bool b2 = utils::bits::check_bit(row_word, 15 - x);
+            const byte res = utils::bits::set_bit(0, 0, b1);
+            return utils::bits::set_bit(res, 1, b2);
         }
     };
 
